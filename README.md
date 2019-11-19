@@ -49,3 +49,13 @@ git checkout <branchName>
 ```
 git branch -d <branchName>
 ```
+
+#### Reset changes to last pull request
+```
+git reset HEAD~1 --hard
+```
+
+#### Remove commit without losing changes
+```
+git reset HEAD~1 --soft
+```
