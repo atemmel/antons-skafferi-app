@@ -21,7 +21,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="knapp"
-        tools:layout_editor_absoluteX="167dp"
+        tools:layout_editor_absoluteX="145dp"
         tools:layout_editor_absoluteY="445dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TestKnapp"
+        tools:layout_editor_absoluteX="150dp"
+        tools:layout_editor_absoluteY="550dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
