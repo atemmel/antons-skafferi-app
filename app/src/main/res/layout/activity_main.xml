@@ -20,7 +20,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RestaurangKnapp"
+        android:text="knapp"
         tools:layout_editor_absoluteX="167dp"
         tools:layout_editor_absoluteY="445dp" />
 
