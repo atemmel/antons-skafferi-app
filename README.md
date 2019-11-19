@@ -3,8 +3,19 @@ Projektarbete för kursen DT142G - Java Applikationsutveckling HT19. Projektet �
 
 Utvecklingsmiljö: Android Studio
 
-För att klona se bilder i [Adams guide.](https://docs.google.com/document/d/1ufNdwTazG2tit8k_iSulZLnm6E7eNeJMvaXDqLmW_AI/edit#heading=h.paciw9n4ad7k)
+## Klona i Android Studio
+Här beskrivs hur projektet klonas i Android Studio för att kunna testköra applikationen på egen dator. 
 
+1. Öppna Android Studio och välj *Check out project from Version Control*.
+   ![alt text](img/Android_Studio_Clone.png)
+
+2. Skriv in projektets URL (https://github.com/atemmel/antons-skafferi-app.git) och välj vart projektet ska sparas lokalt. 
+   ![alt text](/img/Clone_URL.png)
+
+3. Du kan nu behöva logga in med ditt GitHub användarnamn + lösenord. 
+
+4. Vänta på att projektet synkas färdigt. Om allting inte är grönt prova ta bort allt och börja om. 
+   ![alt test](/img/Gradle_Sync.png)
 
 ## Funktionalitet
 Appen är tänkt att fungera för personal och för restaurangverksamheten. Personalen ska ha en egen inloggning vars största syfte är att hålla en översikt över aktuellt schema och för att hålla kommunikation med restaurangen på ett smidigt sätt. Detta för att bland annat enkelt meddela sjukdom eller annan frånvaro. 
