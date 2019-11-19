@@ -1,11 +1,10 @@
 # antons-skafferi-app
 Projektarbete för kursen DT142G - Java Applikationsutveckling HT19. Projektet är ett arbete med 10 deltagare där arbetet är uppdelat parvis för utvecklandet av en komplett miljö för en restaurang innehållande app och webbsida med tillhörande backend server. Nedan följer en beskrivning av applikationen..
 
-```
 Utvecklingsmiljö: Android Studio
 
 För att klona se bilder i [Adams guide.](https://docs.google.com/document/d/1ufNdwTazG2tit8k_iSulZLnm6E7eNeJMvaXDqLmW_AI/edit#heading=h.paciw9n4ad7k)
-```
+
 
 ## Funktionalitet
 Appen är tänkt att fungera för personal och för restaurangverksamheten. Personalen ska ha en egen inloggning vars största syfte är att hålla en översikt över aktuellt schema och för att hålla kommunikation med restaurangen på ett smidigt sätt. Detta för att bland annat enkelt meddela sjukdom eller annan frånvaro. 
