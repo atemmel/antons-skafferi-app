@@ -32,20 +32,20 @@ Masterbranchen innehåller alla de senaste funktionerna. Varje commit/merge till
 
 Development är den aktiva utvecklingsbranchen. När en ny funktion ska implementeras branchar man från development, där efter branchar man igen lokalt. Detta för att om flera jobbar på samma funktion samtidigt så uppstår färre konflikter. När man är klar med sin lokala branch så gör man en pull request för den senaste commiten från den funktion man jobbar på, och rebasear på den. Sen mergas funktionsbranchen in i development.
 
-## Git howTo guide:
+## Git howTo guide
 Några bra-att-ha kommandon för git
 
-### Check branch
+#### Check branch
 ```
 git branch
 ```
 
-### Change branch
+#### Change branch
 ```
 git checkout <branchName>
 ```
 
-### Remove branch locally
+#### Remove branch locally
 ```
 git branch -d <branchName>
 ```
