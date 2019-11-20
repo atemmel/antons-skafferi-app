@@ -82,7 +82,7 @@ git branch -d <branchName>
 
 #### Reset changes to last pull request
 ```
-git reset HEAD~1 --hard
+git reset --hard
 ```
 
 #### Remove commit without losing changes
