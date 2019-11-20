@@ -8,8 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class LoginActivity extends AppCompatActivity
 {
+    public static final String IS_ADMIN = "IS_ADMIN";
+
+    private ArrayList<User> users = new ArrayList<>();
+
+    enum LoginResponse
+    {
+        AdminLogin,
+        UserLogin,
+        InvalidLogin
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,6 +41,9 @@ public class LoginActivity extends AppCompatActivity
                 evaluateLogin();
             }
         });
+
+        users.add(new User("admin", "asd", true));
+        users.add(new User("user", "asd", false));
     }
 
     public void evaluateLogin()
@@ -52,9 +69,21 @@ public class LoginActivity extends AppCompatActivity
 
         if(emptyFields) return;
 
-        if(validLogin(username, password))
+        LoginResponse loginResponse = evaluateLogin(username, password);
+
+
+
+        if(loginResponse != LoginResponse.InvalidLogin)
         {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+            boolean isAdmin = false;
+
+            if(loginResponse == LoginResponse.AdminLogin) isAdmin = true;
+
+            intent.putExtra(IS_ADMIN, isAdmin);
+
+            startActivity(intent);
         }
         else
         {
@@ -62,13 +91,38 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    public boolean validLogin(String username, String password)
+    public LoginResponse evaluateLogin(String username, String password)
     {
-        //Checka mot databas här senare...
+        //Iterator<User> iterator = users.iterator();
 
-        String correctUsername = "admin";
-        String correctPassword = "asd";
+        //while(iterator.hasNext())
 
-        return username.equals(correctUsername) && password.equals(correctPassword);
+        for(int i = 0; i < users.size(); i++)
+        {
+            User user = users.get(i);
+
+            if(username.equals(user.username) && password.equals(user.password))
+                if(user.isAdmin)  return LoginResponse.AdminLogin;
+                else              return LoginResponse.UserLogin;
+        }
+
+        return LoginResponse.InvalidLogin;
+    }
+
+
+
+    //Ska bytas ut mot databas senare...
+    class User
+    {
+        public String username;
+        public String password;
+        public boolean isAdmin;
+
+        User(String username, String password, Boolean isAdmin)
+        {
+            this.username = username;
+            this.password = password;
+            this.isAdmin = isAdmin;
+        }
     }
 }
