@@ -4,5 +4,5 @@
 
     <item
         android:id="@+id/logoutButton"
-        android:title="logga ut" />
+        android:title="@string/logout_text" />
 </menu>
