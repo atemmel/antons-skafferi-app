@@ -19,6 +19,7 @@ public class SettingsActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment()).commit();
 
+        //Kopiera dessa två rader för att lägga en tillbaka-pil uppe till vänster
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
