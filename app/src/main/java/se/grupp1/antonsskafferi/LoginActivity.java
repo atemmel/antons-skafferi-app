@@ -3,7 +3,6 @@ package se.grupp1.antonsskafferi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,37 +24,42 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                EditText usernameEditText = findViewById(R.id.usernameEditText);
-                String username = usernameEditText.getText().toString();
-
-                EditText passwordEditText = findViewById(R.id.passwordEditText);
-                String password = passwordEditText.getText().toString();
-
-                boolean emptyFields = false;
-
-                if(username.isEmpty())
-                {
-                    emptyFields = true;
-                    usernameEditText.setError("Skriv in ett användarnamn");
-                }
-                if(password.isEmpty())
-                {
-                    emptyFields = true;
-                    passwordEditText.setError("Skriv in ett lösenord");
-                }
-
-                if(emptyFields) return;
-
-                if(validLogin(username, password))
-                {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-                else
-                {
-                    passwordEditText.setError("Username and password didn't match");
-                }
+                evaluateLogin();
             }
         });
+    }
+
+    public void evaluateLogin()
+    {
+        EditText usernameEditText = findViewById(R.id.usernameEditText);
+        String username = usernameEditText.getText().toString();
+
+        EditText passwordEditText = findViewById(R.id.passwordEditText);
+        String password = passwordEditText.getText().toString();
+
+        boolean emptyFields = false;
+
+        if(username.isEmpty())
+        {
+            emptyFields = true;
+            usernameEditText.setError("Skriv in ett användarnamn");
+        }
+        if(password.isEmpty())
+        {
+            emptyFields = true;
+            passwordEditText.setError("Skriv in ett lösenord");
+        }
+
+        if(emptyFields) return;
+
+        if(validLogin(username, password))
+        {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+        else
+        {
+            passwordEditText.setError("Username and password didn't match");
+        }
     }
 
     public boolean validLogin(String username, String password)
@@ -63,7 +67,7 @@ public class LoginActivity extends AppCompatActivity
         //Checka mot databas här senare...
 
         String correctUsername = "admin";
-        String correctPassword = "123";
+        String correctPassword = "asd";
 
         return username.equals(correctUsername) && password.equals(correctPassword);
     }
