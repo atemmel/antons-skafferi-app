@@ -6,11 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ScheduleActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Schema"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="178dp" />
+    <CalendarView
+        android:id="@+id/simpleCalendarView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:firstDayOfWeek="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
