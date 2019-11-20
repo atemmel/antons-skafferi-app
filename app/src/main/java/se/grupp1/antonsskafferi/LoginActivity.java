@@ -65,13 +65,6 @@ public class LoginActivity extends AppCompatActivity
         String correctUsername = "admin";
         String correctPassword = "123";
 
-        if(username.equals(correctUsername) && password.equals(correctPassword))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return username.equals(correctUsername) && password.equals(correctPassword);
     }
 }
