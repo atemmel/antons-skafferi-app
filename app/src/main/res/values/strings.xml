@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Antons Skafferi</string>
+    <string name="login_button_text">Logga In</string>
+    <string name="username_ghost_text">Användarnamn</string>
+    <string name="password_ghost_text">Lösenord</string>
+    <string name="logout_text">Logga ut</string>
 
 </resources>
