@@ -3,6 +3,18 @@
     <string name="login_button_text">Logga In</string>
     <string name="username_ghost_text">Användarnamn</string>
     <string name="password_ghost_text">Lösenord</string>
-    <string name="logout_text">Logga ut</string>
+    <string name="logout_buton_text">Logga ut</string>
+    <string name="settings_button_text">Inställningar</string>
+
+    <string name="title_activity_settings">Inställningar</string>
+
+    <!-- Preference Titles -->
+    <string name="example_header">Exempel</string>
+
+    <!-- Example Preferences -->
+    <string name="first_setting_title">Detta är en inställning</string>
+    <string name="other_setting_title">Denna inställning beror av ovan</string>
+    <string name="example_setting_summary_on">Inställningen är aktiverad</string>
+    <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
 
 </resources>
