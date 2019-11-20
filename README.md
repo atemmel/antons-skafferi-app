@@ -1,4 +1,4 @@
-# antons-skafferi-app
+# Antons Skafferi App
 Projektarbete för kursen DT142G - Java Applikationsutveckling HT19. Projektet är ett arbete med 10 deltagare där arbetet är uppdelat parvis för utvecklandet av en komplett miljö för en restaurang innehållande app och webbsida med tillhörande backend server. Nedan följer en beskrivning av applikationen..
 
 Utvecklingsmiljö: Android Studio
@@ -16,6 +16,25 @@ Här beskrivs hur projektet klonas i Android Studio för att kunna testköra app
 
 4. Vänta på att projektet synkas färdigt. Om allting inte är grönt prova ta bort allt och börja om. 
    ![alt test](/img/Gradle_Sync.png)
+
+## Titta på olika branches
+Om du nu vill titta på något som är under utveckling behöver du välja branchen för denna funktion. 
+
+#### Du kan antingen göra detta manuellt:
+```
+git branch <branchname>
+```
+
+#### Eller så kan du använda Android Studios inbyggda branch-hantering:
+
+1. Visa samtliga branches med hjälp av denna knapp i nedre höra hörnet:
+   ![alt text](/img/show_branches.png)
+
+2. Välj den branch du vill se och välj *Checkout As...*
+   ![alt text](/img/select_branch.png)
+
+3. Om det är första gången du tittar på denna branch kommer Android Studio fråga om du vill skapa den lokalt, välj *OK*. 
+    ![alt text](/img/create_local_branch.png)
 
 ## Funktionalitet
 Appen är tänkt att fungera för personal och för restaurangverksamheten. Personalen ska ha en egen inloggning vars största syfte är att hålla en översikt över aktuellt schema och för att hålla kommunikation med restaurangen på ett smidigt sätt. Detta för att bland annat enkelt meddela sjukdom eller annan frånvaro. 
