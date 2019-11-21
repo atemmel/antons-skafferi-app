@@ -7,8 +7,9 @@
     tools:context=".ScheduleActivity">
 
     <CalendarView
-        android:id="@+id/simpleCalendarView"
+        android:id="@+id/calendar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:firstDayOfWeek="2"/>
+        android:firstDayOfWeek="2"
+        android:showWeekNumber="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

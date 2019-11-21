@@ -11,7 +11,7 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        CalendarView calendar = (CalendarView) findViewById(R.id.simpleCalendarView); // get the reference of CalendarView
+        CalendarView calendar = (CalendarView) findViewById(R.id.calendar); // get the reference of CalendarView
         calendar.setDate(System.currentTimeMillis()); // set selected date 22 May 2016 in milliseconds
         calendar.setShowWeekNumber(true);
 
