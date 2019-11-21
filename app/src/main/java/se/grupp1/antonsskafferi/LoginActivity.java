@@ -1,20 +1,17 @@
 package se.grupp1.antonsskafferi;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity
 {
-    public static final String IS_ADMIN = "IS_ADMIN";
+    private static boolean isAdmin = false;
 
     private ArrayList<User> users = new ArrayList<>();
 
@@ -75,15 +72,10 @@ public class LoginActivity extends AppCompatActivity
 
         if(loginResponse != LoginResponse.InvalidLogin)
         {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-            boolean isAdmin = false;
-
             if(loginResponse == LoginResponse.AdminLogin) isAdmin = true;
+            else                                          isAdmin = false;
 
-            intent.putExtra(IS_ADMIN, isAdmin);
-
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         else
         {
@@ -93,23 +85,24 @@ public class LoginActivity extends AppCompatActivity
 
     public LoginResponse evaluateLogin(String username, String password)
     {
-        //Iterator<User> iterator = users.iterator();
-
-        //while(iterator.hasNext())
-
         for(int i = 0; i < users.size(); i++)
         {
             User user = users.get(i);
 
-            if(username.equals(user.username) && password.equals(user.password))
-                if(user.isAdmin)  return LoginResponse.AdminLogin;
-                else              return LoginResponse.UserLogin;
+            if (username.equals(user.username) && password.equals(user.password))
+            {
+                if (user.isAdmin)   return LoginResponse.AdminLogin;
+                else                return LoginResponse.UserLogin;
+            }
         }
 
         return LoginResponse.InvalidLogin;
     }
 
-
+    public static boolean isAdmin()
+    {
+        return isAdmin;
+    }
 
     //Ska bytas ut mot databas senare...
     class User
@@ -125,4 +118,6 @@ public class LoginActivity extends AppCompatActivity
             this.isAdmin = isAdmin;
         }
     }
+
+
 }

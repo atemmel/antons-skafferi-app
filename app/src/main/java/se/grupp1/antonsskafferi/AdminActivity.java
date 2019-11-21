@@ -16,6 +16,9 @@ public class AdminActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        setTitle("Admin");
+
+
         //Kopiera dessa två rader för att lägga en tillbaka-pil uppe till vänster
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
