@@ -6,9 +6,8 @@
     <string name="logout_buton_text">Logga ut</string>
     <string name="settings_button_text">Inställningar</string>
 
-    <string name="title_activity_settings">Inställningar</string>
-
     <!-- Preference Titles -->
+    <string name="title_activity_settings">Inställningar</string>
     <string name="example_header">Exempel</string>
 
     <!-- Example Preferences -->
@@ -16,5 +15,13 @@
     <string name="other_setting_title">Denna inställning beror av ovan</string>
     <string name="example_setting_summary_on">Inställningen är aktiverad</string>
     <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
+
+
+    <!-- Admin Page -->
+    <string name="title_activity_admin">Admin</string>
+
+    <string name="edit_lunch_label">Ändra Lunch</string>
+    <string name="edit_dinner_menu_label">Ändra Kvällsmeny</string>
+    <string name="title_activity_edit_lunch">EditLunchActivity</string>
 
 </resources>
