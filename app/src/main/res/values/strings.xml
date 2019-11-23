@@ -20,7 +20,7 @@
     <!-- Admin Page -->
     <string name="title_activity_admin">Admin</string>
 
-    <string name="edit_lunch_label">Ändra Lunch</string>
+    <string name="edit_lunch_label">Redigera Lunchmeny</string>
     <string name="edit_dinner_menu_label">Ändra Kvällsmeny</string>
     <string name="title_activity_edit_lunch">EditLunchActivity</string>
 
