@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 public class AdminActivity extends AppCompatActivity
 {
@@ -15,9 +16,21 @@ public class AdminActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        setTitle("Admin");
+
+
         //Kopiera dessa två rader för att lägga en tillbaka-pil uppe till vänster
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        findViewById(R.id.editLunchButton).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(getApplicationContext(), EditLunchActivity.class));
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item)
