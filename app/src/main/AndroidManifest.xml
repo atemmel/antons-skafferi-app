@@ -17,10 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".ScheduleFragment" />
         <activity android:name=".BookingActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".AdminFragment" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".EditLunchActivity" />
     </application>

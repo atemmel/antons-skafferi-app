@@ -8,7 +8,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +41,7 @@ public class EditLunchActivity extends AppCompatActivity
 
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        Intent myIntent = new Intent(getApplicationContext(), AdminActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), AdminFragment.class);
         startActivity(myIntent);
         return true;
     }
