@@ -28,14 +28,14 @@ public class AdminFragment extends Fragment
         //ActionBar actionBar = getSupportActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
 
-        /*findViewById(R.id.editLunchButton).setOnClickListener(new View.OnClickListener()
+        root.findViewById(R.id.editLunchButton).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(getApplicationContext(), EditLunchActivity.class));
+                startActivity(new Intent(getActivity(), EditLunchActivity.class));
             }
-        });*/
+        });
         return root;
     }
 

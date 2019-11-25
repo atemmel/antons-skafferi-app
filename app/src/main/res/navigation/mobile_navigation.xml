@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/scheduleActivity">
-    <activity
-        android:id="@+id/scheduleActivity"
+    app:startDestination="@id/navigation_schedule">
+    <fragment
+        android:id="@+id/navigation_schedule"
         android:name="se.grupp1.antonsskafferi.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
-    <activity
-        android:id="@+id/adminActivity"
+    <fragment
+        android:id="@+id/navigation_admin"
         android:name="se.grupp1.antonsskafferi.AdminFragment"
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin" />

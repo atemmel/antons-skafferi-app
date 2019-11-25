@@ -119,6 +119,4 @@ public class LoginActivity extends AppCompatActivity
             this.isAdmin = isAdmin;
         }
     }
-
-
 }
