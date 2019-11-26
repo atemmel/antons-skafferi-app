@@ -18,10 +18,20 @@
         android:id="@+id/navigation_settings"
         android:name="se.grupp1.antonsskafferi.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_navigation_settings_to_editLunchFragment"
+            app:destination="@id/navigation_edit_lunch"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_takeorder"
         android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
         android:label="fragment_takeorder"
         tools:layout="@layout/fragment_takeorder" />
+    <fragment
+        android:id="@+id/navigation_edit_lunch"
+        android:name="se.grupp1.antonsskafferi.EditLunchFragment"
+        android:label="fragment_edit_lunch"
+        tools:layout="@layout/fragment_edit_lunch" />
 </navigation>

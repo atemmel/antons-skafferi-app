@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private static boolean isAdmin = false;
+    public static boolean IS_ADMIN = false;
 
     private ArrayList<User> users = new ArrayList<>();
 
@@ -73,8 +73,8 @@ public class LoginActivity extends AppCompatActivity
 
         if(loginResponse != LoginResponse.InvalidLogin)
         {
-            if(loginResponse == LoginResponse.AdminLogin) isAdmin = true;
-            else                                          isAdmin = false;
+            if(loginResponse == LoginResponse.AdminLogin) IS_ADMIN = true;
+            else                                          IS_ADMIN = false;
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
@@ -98,11 +98,6 @@ public class LoginActivity extends AppCompatActivity
         }
 
         return LoginResponse.InvalidLogin;
-    }
-
-    public static boolean isAdmin()
-    {
-        return isAdmin;
     }
 
     //Ska bytas ut mot databas senare...

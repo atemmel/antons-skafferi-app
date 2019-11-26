@@ -1,0 +1,25 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:visibility="gone"
+        app:title="Admin">
+        <Preference
+            android:key="editLunchPreference"
+            android:summary="Klicka här för att rediga veckans lunch"
+            android:title="Redigera Lunch">
+
+        </Preference>
+
+        <Preference
+            android:key="editDinnerPreference"
+            android:summary="Klicka här för att redigera kvällsmenyn"
+            android:title="Redigera Kvällsmeny">
+
+
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
