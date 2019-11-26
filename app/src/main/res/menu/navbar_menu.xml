@@ -9,8 +9,8 @@
         android:id="@+id/navigation_booking"
         android:title="Booking" />
     <item
-        android:id="@+id/navigation_admin"
-        android:title="Admin" />
+        android:id="@+id/navigation_takeorder"
+        android:title="Take order" />
     <item
         android:id="@+id/navigation_settings"
         android:title="Settings" />

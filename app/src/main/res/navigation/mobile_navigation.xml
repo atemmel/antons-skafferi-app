@@ -10,11 +10,6 @@
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
     <fragment
-        android:id="@+id/navigation_admin"
-        android:name="se.grupp1.antonsskafferi.AdminFragment"
-        android:label="fragment_admin"
-        tools:layout="@layout/fragment_admin" />
-    <fragment
         android:id="@+id/navigation_booking"
         android:name="se.grupp1.antonsskafferi.BookingFragment"
         android:label="fragment_booking"
@@ -24,4 +19,9 @@
         android:name="se.grupp1.antonsskafferi.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/navigation_takeorder"
+        android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
+        android:label="fragment_takeorder"
+        tools:layout="@layout/fragment_takeorder" />
 </navigation>
