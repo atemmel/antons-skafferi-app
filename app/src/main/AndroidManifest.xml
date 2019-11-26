@@ -18,10 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ScheduleFragment" />
-        <activity android:name=".BookingActivity" />
+        <activity android:name=".BookingFragment" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AdminFragment" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsFragment" />
         <activity android:name=".EditLunchActivity" />
     </application>
 

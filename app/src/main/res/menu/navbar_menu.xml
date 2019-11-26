@@ -6,6 +6,12 @@
         android:id="@+id/navigation_schedule"
         android:title="Schedule" />
     <item
+        android:id="@+id/navigation_booking"
+        android:title="Booking" />
+    <item
         android:id="@+id/navigation_admin"
         android:title="Admin" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="Settings" />
 </menu>

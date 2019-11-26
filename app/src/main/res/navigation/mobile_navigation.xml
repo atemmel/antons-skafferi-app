@@ -14,4 +14,14 @@
         android:name="se.grupp1.antonsskafferi.AdminFragment"
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin" />
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="se.grupp1.antonsskafferi.BookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_booking" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="se.grupp1.antonsskafferi.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
