@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookingActivity">
+    tools:context=".ScheduleFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Boka bord"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="226dp" />
+    <CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:firstDayOfWeek="2"
+        android:showWeekNumber="true"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

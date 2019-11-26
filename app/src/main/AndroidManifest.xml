@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,9 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScheduleActivity" />
-        <activity android:name=".BookingActivity" />
+        <activity android:name=".ScheduleFragment" />
+        <activity android:name=".BookingFragment" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".AdminFragment" />
+        <activity android:name=".SettingsFragment" />
+        <activity android:name=".EditLunchActivity" />
     </application>
 
 </manifest>

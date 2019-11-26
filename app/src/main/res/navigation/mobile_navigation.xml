@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_schedule">
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="se.grupp1.antonsskafferi.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="se.grupp1.antonsskafferi.BookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_booking" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="se.grupp1.antonsskafferi.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/navigation_takeorder"
+        android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
+        android:label="fragment_takeorder"
+        tools:layout="@layout/fragment_takeorder" />
+</navigation>
