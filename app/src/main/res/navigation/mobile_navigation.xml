@@ -23,6 +23,9 @@
             android:id="@+id/action_navigation_settings_to_editLunchFragment"
             app:destination="@id/navigation_edit_lunch"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_navigation_settings_to_editDinnerFragment"
+            app:destination="@id/navigation_edit_dinner" />
     </fragment>
     <fragment
         android:id="@+id/navigation_takeorder"
@@ -34,4 +37,9 @@
         android:name="se.grupp1.antonsskafferi.EditLunchFragment"
         android:label="fragment_edit_lunch"
         tools:layout="@layout/fragment_edit_lunch" />
+    <fragment
+        android:id="@+id/navigation_edit_dinner"
+        android:name="se.grupp1.antonsskafferi.EditDinnerFragment"
+        android:label="fragment_edit_dinner"
+        tools:layout="@layout/fragment_edit_dinner" />
 </navigation>
