@@ -20,9 +20,8 @@
         <activity android:name=".ScheduleFragment" />
         <activity android:name=".BookingFragment" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AdminFragment" />
         <activity android:name=".SettingsFragment" />
-        <activity android:name=".EditLunchActivity" />
+        <activity android:name=".EditLunchFragment" />
     </application>
 
 </manifest>

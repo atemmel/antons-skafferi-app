@@ -6,33 +6,62 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 
-public class SettingsFragment extends Fragment
+public class SettingsFragment extends PreferenceFragmentCompat
 {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey)
     {
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment2()).commit();
-
-        return root;
+        if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
     }
 
-    public static class SettingsFragment2 extends PreferenceFragmentCompat
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey)
-        {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        super.onViewCreated(view, savedInstanceState);
+
+        if(LoginActivity.IS_ADMIN) {
+
+            final NavController navController = Navigation.findNavController(getView());
+
+            Preference lunchPreference = findPreference("editLunchPreference");
+            lunchPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    navController.navigate(R.id.navigation_edit_lunch);
+
+                    return true;
+                }
+            });
+
+            Preference dinnerPreference = findPreference("editDinnerPreference");
+            dinnerPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    navController.navigate(R.id.navigation_edit_dinner);
+
+                    return true;
+                }
+            });
         }
     }
 }
