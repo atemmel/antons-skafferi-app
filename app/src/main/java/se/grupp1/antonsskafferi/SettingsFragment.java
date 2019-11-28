@@ -29,7 +29,17 @@ public class SettingsFragment extends PreferenceFragmentCompat
     {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
+        Preference logoutButtonPreference = findPreference("logoutButtonPreference");
+        logoutButtonPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity().getApplication(), LoginActivity.class));
+                return true;
+            }
+        });
+
         if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
+
     }
 
     @Override

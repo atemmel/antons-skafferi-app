@@ -15,5 +15,13 @@
             app:title="@string/other_setting_title" />
 
     </PreferenceCategory>
+    <PreferenceCategory android:title="Övrigt">
+        <Preference
+            android:defaultValue="true"
+            android:key="logoutButtonPreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Logga ut" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
