@@ -15,6 +15,8 @@ public class MenuObject extends LinearLayout
 {
     private int numberOfItems = 0;
 
+    private String name;
+
     public MenuObject(Context context, String text)
     {
         super(context);
@@ -26,6 +28,8 @@ public class MenuObject extends LinearLayout
         TextView textView = (TextView) getChildAt(0);
 
         textView.setText(text);
+
+        this.name = text;
 
         //this.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
@@ -80,6 +84,16 @@ public class MenuObject extends LinearLayout
         TextView counter = (TextView) getChildAt(3);
 
         counter.setText( Integer.toString(numberOfItems));
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getCount()
+    {
+        return numberOfItems;
     }
 
 }
