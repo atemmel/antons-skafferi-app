@@ -9,7 +9,7 @@
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:firstDayOfWeek="2"
         android:showWeekNumber="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,11 +19,9 @@
         android:id="@+id/todaysDate"
         android:layout_width="412dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="230dp"
         android:background="#3700BCD4"
         android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/calendar"
@@ -33,20 +31,21 @@
     <TextView
         android:id="@+id/textView5"
         android:layout_width="415dp"
-        android:layout_height="49dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="414dp"
         android:background="@drawable/rectangle_background"
         android:gravity="center"
         android:text="Anton"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendar" />
+        app:layout_constraintTop_toBottomOf="@+id/todaysDate"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="67dp"
-        android:layout_height="47dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="344dp"
         android:layout_marginRight="344dp"
         android:layout_marginBottom="414dp"
@@ -55,7 +54,9 @@
         android:text="14:00  16:00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/calendar" />
+        app:layout_constraintTop_toBottomOf="@+id/todaysDate"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
