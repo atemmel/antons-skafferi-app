@@ -33,11 +33,11 @@
         android:label="fragment_takeorder"
         tools:layout="@layout/fragment_takeorder" >
         <action
-            android:id="@+id/action_navigation_takeorder_to_navigation_new_order2"
-            app:destination="@id/navigation_new_order" />
-        <action
             android:id="@+id/action_navigation_takeorder_to_viewOrdersFragment"
             app:destination="@id/navigation_view_orders" />
+        <action
+            android:id="@+id/action_navigation_takeorder_to_navigation_new_order2"
+            app:destination="@id/navigation_new_order2" />
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
@@ -51,13 +51,13 @@
         tools:layout="@layout/fragment_edit_dinner" />
 
     <fragment
-        android:id="@+id/navigation_new_order"
-        android:name="se.grupp1.antonsskafferi.NewOrderFragment"
-        android:label="fragment_new_order"
-        tools:layout="@layout/fragment_new_order" />
-    <fragment
         android:id="@+id/navigation_view_orders"
         android:name="se.grupp1.antonsskafferi.ViewOrdersFragment"
         android:label="fragment_view_orders"
         tools:layout="@layout/fragment_view_orders" />
+    <fragment
+        android:id="@+id/navigation_new_order2"
+        android:name="se.grupp1.antonsskafferi.NewOrderFragment2"
+        android:label="Ny Beställning"
+        tools:layout="@layout/fragment_new_order2" />
 </navigation>

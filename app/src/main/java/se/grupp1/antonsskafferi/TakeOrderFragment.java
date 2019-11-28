@@ -33,7 +33,7 @@ public class TakeOrderFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                navController.navigate(R.id.navigation_new_order);
+                navController.navigate(R.id.navigation_new_order2);
             }
         });
 

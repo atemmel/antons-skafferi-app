@@ -13,7 +13,6 @@
     <string name="example_setting_summary_on">Inställningen är aktiverad</string>
     <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
 
-
     <!-- Admin Page -->
     <string name="title_activity_admin">Admin</string>
 
