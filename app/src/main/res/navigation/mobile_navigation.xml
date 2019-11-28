@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_navigation_takeorder_to_navigation_new_order2"
             app:destination="@id/navigation_new_order" />
+        <action
+            android:id="@+id/action_navigation_takeorder_to_viewOrdersFragment"
+            app:destination="@id/navigation_view_orders" />
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
@@ -52,4 +55,9 @@
         android:name="se.grupp1.antonsskafferi.NewOrderFragment"
         android:label="fragment_new_order"
         tools:layout="@layout/fragment_new_order" />
+    <fragment
+        android:id="@+id/navigation_view_orders"
+        android:name="se.grupp1.antonsskafferi.ViewOrdersFragment"
+        android:label="fragment_view_orders"
+        tools:layout="@layout/fragment_view_orders" />
 </navigation>

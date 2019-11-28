@@ -37,5 +37,13 @@ public class TakeOrderFragment extends Fragment {
             }
         });
 
+
+        view.findViewById(R.id.viewOrdersButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                navController.navigate(R.id.navigation_view_orders);
+            }
+        });
     }
 }
