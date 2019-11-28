@@ -23,5 +23,14 @@
         android:id="@+id/navigation_takeorder"
         android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
         android:label="fragment_takeorder"
-        tools:layout="@layout/fragment_takeorder" />
+        tools:layout="@layout/fragment_takeorder" >
+        <action
+            android:id="@+id/action_navigation_takeorder_to_newOrderFragment"
+            app:destination="@id/navigation_new_order" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_new_order"
+        android:name="se.grupp1.antonsskafferi.NewOrderFragment"
+        android:label="fragment_new_order"
+        tools:layout="@layout/fragment_new_order" />
 </navigation>
