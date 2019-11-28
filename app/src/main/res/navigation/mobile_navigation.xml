@@ -36,8 +36,8 @@
             android:id="@+id/action_navigation_takeorder_to_viewOrdersFragment"
             app:destination="@id/navigation_view_orders" />
         <action
-            android:id="@+id/action_navigation_takeorder_to_navigation_new_order2"
-            app:destination="@id/navigation_new_order2" />
+            android:id="@+id/action_navigation_takeorder_to_newOrderFragment"
+            app:destination="@id/navigation_pick_table" />
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
@@ -56,8 +56,17 @@
         android:label="fragment_view_orders"
         tools:layout="@layout/fragment_view_orders" />
     <fragment
-        android:id="@+id/navigation_new_order2"
-        android:name="se.grupp1.antonsskafferi.NewOrderFragment2"
+        android:id="@+id/navigation_new_order"
+        android:name="se.grupp1.antonsskafferi.NewOrderFragment"
         android:label="Ny Beställning"
-        tools:layout="@layout/fragment_new_order2" />
+        tools:layout="@layout/fragment_new_order" />
+    <fragment
+        android:id="@+id/navigation_pick_table"
+        android:name="se.grupp1.antonsskafferi.PickTableFragment"
+        android:label="Välj ett bord"
+        tools:layout="@layout/fragment_pick_table">
+        <action
+            android:id="@+id/action_newOrderFragment_to_navigation_new_order2"
+            app:destination="@id/navigation_new_order" />
+    </fragment>
 </navigation>

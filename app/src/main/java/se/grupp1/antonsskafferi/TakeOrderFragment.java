@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +32,7 @@ public class TakeOrderFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                navController.navigate(R.id.navigation_new_order2);
+                navController.navigate(R.id.navigation_pick_table);
             }
         });
 
