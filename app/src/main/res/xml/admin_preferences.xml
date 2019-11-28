@@ -19,6 +19,13 @@
 
 
         </Preference>
+        <Preference
+            android:defaultValue="Default value"
+            android:key="editEventPreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Redigera event"
+            app:summary="Klicka här för att ändra ett event" />
 
     </PreferenceCategory>
 
