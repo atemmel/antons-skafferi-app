@@ -72,6 +72,16 @@ public class SettingsFragment extends PreferenceFragmentCompat
                     return true;
                 }
             });
+
+            Preference eventPreference = findPreference("editEventPreference");
+            eventPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    navController.navigate(R.id.navigation_edit_dinner);
+
+                    return true;
+                }
+            });
         }
     }
 }

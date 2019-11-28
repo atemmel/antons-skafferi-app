@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/nav_host_fragment"
     app:startDestination="@id/navigation_schedule">
     <fragment
         android:id="@+id/navigation_schedule"
@@ -18,7 +18,7 @@
         android:id="@+id/navigation_settings"
         android:name="se.grupp1.antonsskafferi.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_navigation_settings_to_editLunchFragment"
             app:destination="@id/navigation_edit_lunch"
@@ -26,12 +26,15 @@
         <action
             android:id="@+id/action_navigation_settings_to_editDinnerFragment"
             app:destination="@id/navigation_edit_dinner" />
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_event2"
+            app:destination="@id/navigation_event" />
     </fragment>
     <fragment
         android:id="@+id/navigation_takeorder"
         android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
         android:label="fragment_takeorder"
-        tools:layout="@layout/fragment_takeorder" >
+        tools:layout="@layout/fragment_takeorder">
         <action
             android:id="@+id/action_navigation_takeorder_to_navigation_new_order2"
             app:destination="@id/navigation_new_order" />
@@ -60,4 +63,9 @@
         android:name="se.grupp1.antonsskafferi.ViewOrdersFragment"
         android:label="fragment_view_orders"
         tools:layout="@layout/fragment_view_orders" />
+    <fragment
+        android:id="@+id/navigation_event"
+        android:name="se.grupp1.antonsskafferi.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" />
 </navigation>
