@@ -26,6 +26,16 @@
             android:singleLine="true"
             android:title="Redigera event"
             app:summary="Klicka här för att ändra ett event" />
+        <Preference
+            android:id="@+id/Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="Default value"
+            android:key="editSchedulePreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Redigera schema"
+            app:summary="Klicka här för att göra en ändring i schemat" />
 
     </PreferenceCategory>
 

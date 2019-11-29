@@ -82,6 +82,16 @@ public class SettingsFragment extends PreferenceFragmentCompat
                     return true;
                 }
             });
+
+            Preference schedulePreference = findPreference("editSchedulePreference");
+            schedulePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    navController.navigate(R.id.navigation_edit_schedule);
+
+                    return true;
+                }
+            });
         }
     }
 }

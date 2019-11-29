@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_event2"
             app:destination="@id/navigation_event" />
+        <action
+            android:id="@+id/action_navigation_settings_to_editScheduleFragment"
+            app:destination="@id/navigation_edit_schedule" />
     </fragment>
     <fragment
         android:id="@+id/navigation_takeorder"
@@ -78,4 +81,9 @@
         android:name="se.grupp1.antonsskafferi.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" />
+    <fragment
+        android:id="@+id/navigation_edit_schedule"
+        android:name="se.grupp1.antonsskafferi.EditScheduleFragment"
+        android:label="fragment_edit_schedule"
+        tools:layout="@layout/fragment_edit_schedule" />
 </navigation>
