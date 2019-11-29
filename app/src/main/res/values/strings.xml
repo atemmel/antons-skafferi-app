@@ -23,13 +23,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="boka">Boka</string>
-    <string name="boka_bord">Boka Bord</string>
-    <string name="datum">Datum</string>
     <string name="skriv_telenr">Skriv TeleNr</string>
     <string name="skriv_antal_kunder">Skriv Antal kunder</string>
     <string name="skriv_namn">Skriv Namn</string>
-    <string name="skriv_tid">Skriv Tid</string>
     <string name="skriv_efternamn">Skriv Efternamn</string>
     <string name="skriv_f_rnamn">Skriv Förnamn</string>
+    <string name="datum_yyyy_mm_dd">Datum YYYY-MM-DD</string>
+    <string name="tid_hh_mm">Tid HH:MM</string>
 
 </resources>
