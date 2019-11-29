@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/navigation_booking"
         android:name="se.grupp1.antonsskafferi.BookingFragment"
-        android:label="fragment_booking"
+        android:label="Boka Bord"
         tools:layout="@layout/fragment_booking" />
     <fragment
         android:id="@+id/navigation_settings"
