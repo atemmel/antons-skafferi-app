@@ -17,10 +17,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/titleEventEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/titleEventInputText"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Titel"
@@ -29,41 +29,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventTitleView" />
 
-    <TextView
-        android:id="@+id/descriptionEventEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/descriptionEventInputText"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Beskrivning"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEventEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/titleEventInputText" />
 
-    <TextView
-        android:id="@+id/photoEventEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/dateEventInputText"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
         android:layout_marginTop="50dp"
         android:gravity="center"
-        android:text="Bild"
+        android:text="Datum"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEventEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEventInputText"/>
+
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateEventInputText"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/photoEventTextView"
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="date"
+            android:text="Välj en bild:  "
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            tools:srcCompat="@tools:sample/avatars[0]" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
         android:gravity="center"
+        android:padding="20dp"
         android:text="Lägg till"
         android:textSize="18sp"
-        android:padding="20dp"
-        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoEventEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
