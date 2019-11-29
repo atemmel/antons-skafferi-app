@@ -3,4 +3,7 @@
     <color name="colorPrimary">@android:color/holo_blue_dark</color>
     <color name="colorPrimaryDark">@android:color/holo_blue_dark</color>
     <color name="colorAccent">#A31621</color>
+
+    <color name="bookedTableColor">#EC4E27</color>
+    <color name="unbookedTableColor">#07DA5C</color>
 </resources>
