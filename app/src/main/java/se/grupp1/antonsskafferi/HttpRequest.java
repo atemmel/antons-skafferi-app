@@ -17,9 +17,15 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
     public Response delegate = null;
 
+    private String requestMethod;
+
     public HttpRequest(Response delegate)
     {
         this.delegate = delegate;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
     }
 
     @Override
@@ -38,7 +44,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod(requestMethod);
 
             int i = 0;
 
@@ -77,7 +83,9 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
         return content;
     }
 
-    protected void onProgressUpdate(Integer... progress) {
+    protected void onProgressUpdate(Integer... progress)
+    {
+
     }
 
     @Override

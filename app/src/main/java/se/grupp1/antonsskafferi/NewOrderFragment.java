@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -34,27 +37,16 @@ public class NewOrderFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 
 
-        food.add("Carbonara");
+        /*food.add("Carbonara");
         food.add("Lasagne");
         food.add("Oxfilé");
         food.add("Köttbullar");
 
         drinks.add("Coca Cola");
         drinks.add("Fanta");
-        drinks.add("Ramlösa");
+        drinks.add("Ramlösa");*/
 
-        LinearLayout drinksList = view.findViewById(R.id.drinksList);
-        for(int i = 0; i < drinks.size(); i++)
-        {
-            drinksList.addView(new MenuObject(this.getContext(), drinks.get(i)));
-        }
-
-        LinearLayout foodList = view.findViewById(R.id.foodList);
-
-        for(int i = 0; i < food.size(); i++)
-        {
-            foodList.addView(new MenuObject(this.getContext(), food.get(i)));
-        }
+        getDishes();
 
 
         view.findViewById(R.id.summaryButton).setOnClickListener(new View.OnClickListener() {
@@ -77,6 +69,52 @@ public class NewOrderFragment extends Fragment
         });
     }
 
+    void getDishes()
+    {
+        final String urlString = "http://82.196.113.65:8080/dish";
+
+        HttpRequest request = new HttpRequest(new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output) {
+                try
+                {
+                    System.out.println(output);
+
+                    JSONArray jsonArr = new JSONArray(output);
+                    for(int i = 0; i < jsonArr.length(); i++)
+                    {
+                        JSONObject c = jsonArr.getJSONObject(i);
+
+                        String title = c.getString("title");
+
+                        System.out.println("FOOD: " + title);
+
+                        food.add(title);
+                    }
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    LinearLayout foodList = getView().findViewById(R.id.foodList);
+
+                    for(int i = 0; i < food.size(); i++)
+                    {
+                        foodList.addView(new MenuObject(getContext(), food.get(i)));
+                    }
+                }
+
+            }
+        });
+
+        request.setRequestMethod("GET");
+
+        request.execute(urlString);
+    }
+
     ArrayList<Order> getOrders()
     {
         ArrayList<Order> orders = new ArrayList<>();
@@ -88,8 +126,9 @@ public class NewOrderFragment extends Fragment
         {
             MenuObject item = (MenuObject)foodList.getChildAt(i);
 
-            if(item.getCount() > 0)
+            if(item.getCount() > 0) {
                 orders.add(new Order(item.getName(), item.getCount()));
+            }
         }
 
         return orders;

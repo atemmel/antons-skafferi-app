@@ -55,7 +55,8 @@ public class MenuObject extends LinearLayout
 
     }
 
-    public MenuObject(Context context, AttributeSet attr) {
+    public MenuObject(Context context, AttributeSet attr)
+    {
         super(context,attr);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

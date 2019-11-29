@@ -28,11 +28,6 @@ public class OrderSummaryFragment extends DialogFragment {
     public static OrderSummaryFragment newInstance()
     {
         OrderSummaryFragment fragment = new OrderSummaryFragment();
-        /*Bundle args = new Bundle();
-        args.putParcelableArray(ARG_ORDERS, orders);
-        fragment.setArguments(args);*/
-
-        //orders = orders;x
 
         return fragment;
     }

@@ -11,7 +11,7 @@ public class DatabaseFetcher
     }
 
     //Ip adressen är den lokala IP-adressen till datorn, går ej att använda localhost eftersom simulatorn har egen IP
-    final static private String urlString = "http://10.250.119.141:8080/customers";
+    final static private String urlString = "http://82.196.113.65:8080/dish";
 
     String allBookingsString;   //En sträng som visar samtliga bokningar, endast för att visa vad som funkar atm...
 
