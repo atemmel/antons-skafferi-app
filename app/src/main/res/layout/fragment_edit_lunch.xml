@@ -26,7 +26,7 @@
             android:id="@+id/titleLunchInputText"
             android:layout_width="301dp"
             android:layout_height="55dp"
-            android:layout_marginTop="50dp"
+            android:ems="12"
             android:gravity="center"
             android:text="Titel"
             android:textSize="18sp"
@@ -38,7 +38,7 @@
             android:id="@+id/descriptionLunchInputText"
             android:layout_width="301dp"
             android:layout_height="55dp"
-            android:layout_marginTop="50dp"
+            android:ems="12"
             android:gravity="center"
             android:text="Beskrivning"
             android:textSize="18sp"
@@ -48,11 +48,10 @@
 
         <EditText
             android:id="@+id/dateLunchInputText"
-            android:ems="10"
             android:inputType="date"
             android:layout_width="301dp"
             android:layout_height="55dp"
-            android:layout_marginTop="50dp"
+            android:ems="12"
             android:gravity="center"
             android:text="Datum"
             android:textSize="18sp"
@@ -61,10 +60,10 @@
             app:layout_constraintTop_toBottomOf="@+id/descriptionLunchInputText"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/addLunchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:ems="12"
             android:gravity="center"
             android:text="Lägg till"
             android:textSize="18sp"
