@@ -21,9 +21,9 @@
         android:id="@+id/titleEventInputText"
         android:layout_width="301dp"
         android:layout_height="55dp"
-        android:layout_marginTop="50dp"
+        android:ems="12"
         android:gravity="center"
-        android:text="Titel"
+        android:hint="Titel"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +33,9 @@
         android:id="@+id/descriptionEventInputText"
         android:layout_width="301dp"
         android:layout_height="55dp"
-        android:layout_marginTop="50dp"
+        android:ems="12"
         android:gravity="center"
-        android:text="Beskrivning"
+        android:hint="Beskrivning"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,14 +43,13 @@
 
     <EditText
         android:id="@+id/dateEventInputText"
-        android:ems="10"
         android:inputType="date"
         android:layout_width="301dp"
         android:layout_height="55dp"
-        android:layout_marginTop="50dp"
+        android:ems="12"
         android:gravity="center"
-        android:text="Datum"
         android:textSize="18sp"
+        android:hint="Datum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptionEventInputText"/>
@@ -65,14 +64,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateEventInputText"
-        android:layout_marginTop="20dp">
+        android:ems="12"
+        >
 
         <TextView
             android:id="@+id/photoEventTextView"
             android:layout_width="111dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:ems="10"
             android:gravity="right"
             android:inputType="date"
             android:text="Välj en bild:  "
@@ -86,10 +84,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addEventButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:ems="12"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:padding="20dp"
