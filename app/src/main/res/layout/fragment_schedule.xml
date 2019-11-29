@@ -21,7 +21,7 @@
         android:layout_height="47dp"
         android:background="#3700BCD4"
         android:gravity="center"
-        android:text="TextView"
+        android:text="Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/calendar"
