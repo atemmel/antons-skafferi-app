@@ -20,6 +20,7 @@
     <string name="edit_dinner_menu_label">Ändra Kvällsmeny</string>
     <string name="title_activity_edit_lunch">EditLunchActivity</string>
 
+    <!-- Book table form -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="boka">Boka</string>
     <string name="boka_bord">Boka Bord</string>
@@ -30,5 +31,14 @@
     <string name="skriv_tid">Skriv Tid</string>
     <string name="skriv_efternamn">Skriv Efternamn</string>
     <string name="skriv_f_rnamn">Skriv Förnamn</string>
+
+    <!-- Popup: booked table -->
+    <string name="popup_take_order_button">Ta beställning</string>
+    <string name="popup_wipe_table_button">Rensa bord</string>
+    <string name="popup_show_check_button">Visa nota</string>
+
+    <!-- Popup: unbooked table -->
+    <string name="popup_place_customer_button">Placera kund</string>
+
 
 </resources>

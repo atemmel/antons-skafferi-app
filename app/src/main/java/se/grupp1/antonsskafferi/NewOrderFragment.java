@@ -36,15 +36,14 @@ public class NewOrderFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-
         /*food.add("Carbonara");
         food.add("Lasagne");
         food.add("Oxfilé");
-        food.add("Köttbullar");
+        food.add("Köttbullar");*/
 
         drinks.add("Coca Cola");
         drinks.add("Fanta");
-        drinks.add("Ramlösa");*/
+        drinks.add("Ramlösa");
 
         getDishes();
 
@@ -69,7 +68,7 @@ public class NewOrderFragment extends Fragment
         });
     }
 
-    void getDishes()
+    private void getDishes()
     {
         final String urlString = "http://82.196.113.65:8080/items";
 
@@ -105,6 +104,13 @@ public class NewOrderFragment extends Fragment
                     {
                         foodList.addView(new MenuObject(getContext(), food.get(i)));
                     }
+
+                    LinearLayout drinksList = getView().findViewById(R.id.drinksList);
+
+                    for(int i = 0; i < drinks.size(); i++)
+                    {
+                        drinksList.addView(new MenuObject(getContext(), drinks.get(i)));
+                    }
                 }
 
             }
@@ -115,7 +121,7 @@ public class NewOrderFragment extends Fragment
         request.execute(urlString);
     }
 
-    ArrayList<Order> getOrders()
+    private ArrayList<Order> getOrders()
     {
         ArrayList<Order> orders = new ArrayList<>();
 
