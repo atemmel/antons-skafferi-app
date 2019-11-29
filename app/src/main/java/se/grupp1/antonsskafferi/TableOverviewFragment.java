@@ -3,6 +3,7 @@ package se.grupp1.antonsskafferi;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -71,7 +72,9 @@ public class TableOverviewFragment extends Fragment {
 
     public void setTable2Booked()
     {
-        ((CardView)getView().findViewById(R.id.table2Card)).setCardBackgroundColor(getResources().getColor(R.color.bookedTableColor));
+        CardView cardView = getView().findViewById(R.id.table2Card);
+
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.bookedTableColor));
     }
 
 }
