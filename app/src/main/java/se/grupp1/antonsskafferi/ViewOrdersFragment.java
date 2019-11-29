@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class ViewOrdersFragment extends Fragment {
+public class ViewOrdersFragment extends Fragment
+{
 
 }
