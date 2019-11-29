@@ -34,5 +34,8 @@
     <string name="skriv_telenr">Skriv TeleNr</string>
     <string name="skriv_antal_kunder">Skriv Antal kunder</string>
     <string name="skriv_namn">Skriv Namn</string>
+    <string name="skriv_tid">Skriv Tid</string>
+    <string name="skriv_efternamn">Skriv Efternamn</string>
+    <string name="skriv_f_rnamn">Skriv Förnamn</string>
 
 </resources>
