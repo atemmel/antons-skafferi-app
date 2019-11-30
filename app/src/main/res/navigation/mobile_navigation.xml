@@ -7,17 +7,12 @@
     <fragment
         android:id="@+id/navigation_schedule"
         android:name="se.grupp1.antonsskafferi.ScheduleFragment"
-        android:label="fragment_schedule"
+        android:label="Schema"
         tools:layout="@layout/fragment_schedule" />
-    <fragment
-        android:id="@+id/navigation_booking"
-        android:name="se.grupp1.antonsskafferi.BookingFragment"
-        android:label="Boka Bord"
-        tools:layout="@layout/fragment_booking" />
     <fragment
         android:id="@+id/navigation_settings"
         android:name="se.grupp1.antonsskafferi.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="Inställningar"
         tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_navigation_settings_to_editLunchFragment"
@@ -34,56 +29,52 @@
             app:destination="@id/navigation_edit_schedule" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_takeorder"
-        android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
-        android:label="fragment_takeorder"
-        tools:layout="@layout/fragment_takeorder">
-        <action
-            android:id="@+id/action_navigation_takeorder_to_viewOrdersFragment"
-            app:destination="@id/navigation_view_orders" />
-        <action
-            android:id="@+id/action_navigation_takeorder_to_newOrderFragment"
-            app:destination="@id/navigation_pick_table" />
-    </fragment>
-    <fragment
         android:id="@+id/navigation_edit_lunch"
         android:name="se.grupp1.antonsskafferi.EditLunchFragment"
-        android:label="fragment_edit_lunch"
+        android:label="Redigera Lunch"
         tools:layout="@layout/fragment_edit_lunch" />
     <fragment
         android:id="@+id/navigation_edit_dinner"
         android:name="se.grupp1.antonsskafferi.EditDinnerFragment"
-        android:label="fragment_edit_dinner"
+        android:label="Redigera kvällsmeny"
         tools:layout="@layout/fragment_edit_dinner" />
 
     <fragment
         android:id="@+id/navigation_view_orders"
         android:name="se.grupp1.antonsskafferi.ViewOrdersFragment"
-        android:label="fragment_view_orders"
+        android:label="Se beställningar"
         tools:layout="@layout/fragment_view_orders" />
     <fragment
         android:id="@+id/navigation_new_order"
         android:name="se.grupp1.antonsskafferi.NewOrderFragment"
         android:label="Ny Beställning"
         tools:layout="@layout/fragment_new_order" />
-    <fragment
-        android:id="@+id/navigation_pick_table"
-        android:name="se.grupp1.antonsskafferi.PickTableFragment"
-        android:label="Välj ett bord"
-        tools:layout="@layout/fragment_pick_table">
-        <action
-            android:id="@+id/action_newOrderFragment_to_navigation_new_order2"
-            app:destination="@id/navigation_new_order" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"
         android:name="se.grupp1.antonsskafferi.EventFragment"
-        android:label="fragment_event"
+        android:label="Lägg till event"
         tools:layout="@layout/fragment_event" />
     <fragment
         android:id="@+id/navigation_edit_schedule"
         android:name="se.grupp1.antonsskafferi.EditScheduleFragment"
-        android:label="fragment_edit_schedule"
+        android:label="Redigera Schema"
         tools:layout="@layout/fragment_edit_schedule" />
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="se.grupp1.antonsskafferi.BookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_booking" />
+    <fragment
+        android:id="@+id/navigation_table_overview"
+        android:name="se.grupp1.antonsskafferi.TableOverviewFragment"
+        android:label="Bordsöverblick"
+        tools:layout="@layout/fragment_table_overview">
+        <action
+            android:id="@+id/action_navigation_booking_overview_to_navigation_booking"
+            app:destination="@id/navigation_booking" />
+        <action
+            android:id="@+id/action_navigation_booking_overview_to_navigation_new_order2"
+            app:destination="@id/navigation_new_order" />
+    </fragment>
 </navigation>

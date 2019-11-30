@@ -37,15 +37,14 @@ public class NewOrderFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-
         /*food.add("Carbonara");
         food.add("Lasagne");
         food.add("Oxfilé");
-        food.add("Köttbullar");
+        food.add("Köttbullar");*/
 
         drinks.add("Coca Cola");
         drinks.add("Fanta");
-        drinks.add("Ramlösa");*/
+        drinks.add("Ramlösa");
 
         getDishes();
 
@@ -106,6 +105,13 @@ public class NewOrderFragment extends Fragment
                     for(int i = 0; i < food.size(); i++)
                     {
                         foodList.addView(new MenuObject(getContext(), food.get(i)));
+                    }
+
+                    LinearLayout drinksList = getView().findViewById(R.id.drinksList);
+
+                    for(int i = 0; i < drinks.size(); i++)
+                    {
+                        drinksList.addView(new MenuObject(getContext(), drinks.get(i)));
                     }
                 }
 

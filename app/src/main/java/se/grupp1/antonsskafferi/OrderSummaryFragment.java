@@ -1,16 +1,12 @@
 package se.grupp1.antonsskafferi;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
@@ -37,14 +33,32 @@ public class OrderSummaryFragment extends DialogFragment {
     {
         View v = inflater.inflate(R.layout.fragment_order_summary, container, false);
 
+        //getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
+
         LinearLayout list = v.findViewById(R.id.summaryItemsList);
 
         for(int i = 0; i < orders.size(); i++)
         {
-            list.addView(new MenuObject(this.getContext(), orders.get(i).getName()));
+            list.addView(new MenuObject(this.getContext(), orders.get(i).getName(), orders.get(i).getCount()));
         }
 
+        v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
     public void setOrders(ArrayList<NewOrderFragment.Order> orders)

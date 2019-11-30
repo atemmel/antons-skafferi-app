@@ -25,6 +25,24 @@ public class MenuObject extends LinearLayout
 
         inflater.inflate(R.layout.object_menu_item, this, true);
 
+        init(text, numberOfItems);
+    }
+
+    public MenuObject(Context context, String text, int numberOfItems)
+    {
+        super(context);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        inflater.inflate(R.layout.object_menu_item, this, true);
+
+        init(text, numberOfItems);
+    }
+
+    public void init(String text, int numberOfItems)
+    {
+        this.numberOfItems = numberOfItems;
+
         TextView textView = (TextView) getChildAt(0);
 
         textView.setText(text);
@@ -52,7 +70,6 @@ public class MenuObject extends LinearLayout
                 increaseCount();
             }
         });
-
     }
 
     public MenuObject(Context context, AttributeSet attr)
