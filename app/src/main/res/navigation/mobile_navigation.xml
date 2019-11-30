@@ -29,18 +29,6 @@
             app:destination="@id/navigation_edit_schedule" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_takeorder"
-        android:name="se.grupp1.antonsskafferi.TakeOrderFragment"
-        android:label="Beställningar"
-        tools:layout="@layout/fragment_takeorder">
-        <action
-            android:id="@+id/action_navigation_takeorder_to_viewOrdersFragment"
-            app:destination="@id/navigation_view_orders" />
-        <action
-            android:id="@+id/action_navigation_takeorder_to_newOrderFragment"
-            app:destination="@id/navigation_pick_table" />
-    </fragment>
-    <fragment
         android:id="@+id/navigation_edit_lunch"
         android:name="se.grupp1.antonsskafferi.EditLunchFragment"
         android:label="Redigera Lunch"
@@ -61,15 +49,6 @@
         android:name="se.grupp1.antonsskafferi.NewOrderFragment"
         android:label="Ny Beställning"
         tools:layout="@layout/fragment_new_order" />
-    <fragment
-        android:id="@+id/navigation_pick_table"
-        android:name="se.grupp1.antonsskafferi.PickTableFragment"
-        android:label="Välj ett bord"
-        tools:layout="@layout/fragment_pick_table">
-        <action
-            android:id="@+id/action_navigation_pick_table_to_navigation_new_order"
-            app:destination="@id/navigation_new_order" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_event"

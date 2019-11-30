@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_overview_24dp"
         android:title="Överblick" />
     <item
-        android:id="@+id/navigation_takeorder"
+        android:id="@+id/navigation_view_orders"
         android:icon="@drawable/ic_orders_24dp"
         android:title="Beställningar" />
     <item
