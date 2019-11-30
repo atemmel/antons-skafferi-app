@@ -4,11 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.LinearLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class NewOrderFragment extends Fragment
@@ -61,7 +58,7 @@ public class NewOrderFragment extends Fragment
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                OrderSummaryFragment newFragment = OrderSummaryFragment.newInstance();
+                OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
 
                 newFragment.setOrders(getOrders());
 
@@ -135,7 +132,7 @@ public class NewOrderFragment extends Fragment
             MenuObject item = (MenuObject)foodList.getChildAt(i);
 
             if(item.getCount() > 0) {
-                orders.add(new Order(item.getName(), item.getCount()));
+                orders.add(new Order(item.getName(), item.getCount(), item.getNote()));
             }
         }
 
@@ -146,11 +143,13 @@ public class NewOrderFragment extends Fragment
     {
         private String name;
         private int count;
+        private String note;
 
-        Order(String name, int count)
+        Order(String name, int count, String note)
         {
             this.name = name;
             this.count = count;
+            this.note = note;
         }
 
         public String getName()
@@ -161,6 +160,11 @@ public class NewOrderFragment extends Fragment
         public int getCount()
         {
             return count;
+        }
+
+        public String getNote()
+        {
+            return note;
         }
     }
 }

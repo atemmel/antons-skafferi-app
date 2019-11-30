@@ -10,20 +10,20 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
-public class OrderSummaryFragment extends DialogFragment {
+public class OrderSummaryPopup extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private ArrayList<NewOrderFragment.Order> orders = new ArrayList<>();
 
 
 
-    public OrderSummaryFragment() {
+    public OrderSummaryPopup() {
         // Required empty public constructor
     }
 
 
-    public static OrderSummaryFragment newInstance()
+    public static OrderSummaryPopup newInstance()
     {
-        OrderSummaryFragment fragment = new OrderSummaryFragment();
+        OrderSummaryPopup fragment = new OrderSummaryPopup();
 
         return fragment;
     }
@@ -39,7 +39,9 @@ public class OrderSummaryFragment extends DialogFragment {
 
         for(int i = 0; i < orders.size(); i++)
         {
-            list.addView(new MenuObject(this.getContext(), orders.get(i).getName(), orders.get(i).getCount()));
+            NewOrderFragment.Order order = orders.get(i);
+
+            list.addView(new MenuObject(this.getContext(), order.getName(), order.getCount(), order.getNote()));
         }
 
         v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {

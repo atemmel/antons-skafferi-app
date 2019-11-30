@@ -1,12 +1,17 @@
 package se.grupp1.antonsskafferi;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -14,6 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MenuObject extends LinearLayout
 {
     private int numberOfItems = 0;
+
+    private String note = "";
 
     private String name;
 
@@ -25,10 +32,10 @@ public class MenuObject extends LinearLayout
 
         inflater.inflate(R.layout.object_menu_item, this, true);
 
-        init(text, numberOfItems);
+        init(text, numberOfItems, note);
     }
 
-    public MenuObject(Context context, String text, int numberOfItems)
+    public MenuObject(Context context, String text, int numberOfItems, String note)
     {
         super(context);
 
@@ -36,12 +43,16 @@ public class MenuObject extends LinearLayout
 
         inflater.inflate(R.layout.object_menu_item, this, true);
 
-        init(text, numberOfItems);
+        init(text, numberOfItems, note);
     }
 
-    public void init(String text, int numberOfItems)
+    public void init(String text, int numberOfItems, String note)
     {
         this.numberOfItems = numberOfItems;
+
+        this.note = note;
+
+        updateText();
 
         TextView textView = (TextView) getChildAt(0);
 
@@ -49,11 +60,30 @@ public class MenuObject extends LinearLayout
 
         this.name = text;
 
-        //this.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
         this.setPadding(0, 32, 0, 0);
 
-        FloatingActionButton minusButton = (FloatingActionButton)getChildAt(2);
+        final ImageButton editButton = (ImageButton)getChildAt(2);
+
+        editButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                FragmentActivity parent = (FragmentActivity)getContext();
+                FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
+
+                MultilineTextPopup editPopup = MultilineTextPopup.newInstance(new MultilineTextPopup.Response() {
+                    @Override
+                    public void getResponse(String text) {
+                        setNote(text);
+                    }
+                }, getNote());
+
+                editPopup.show(ft, "dialog");
+            }
+        });
+
+
+        FloatingActionButton minusButton = (FloatingActionButton)getChildAt(3);
 
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -62,7 +92,7 @@ public class MenuObject extends LinearLayout
             }
         });
 
-        FloatingActionButton plusButton = (FloatingActionButton)getChildAt(4);
+        FloatingActionButton plusButton = (FloatingActionButton)getChildAt(5);
 
         plusButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -99,9 +129,14 @@ public class MenuObject extends LinearLayout
 
     private void updateText()
     {
-        TextView counter = (TextView) getChildAt(3);
+        TextView counter = (TextView) getChildAt(4);
 
         counter.setText( Integer.toString(numberOfItems));
+    }
+
+    public void setNote(String note)
+    {
+        this.note = note;
     }
 
     public String getName()
@@ -114,4 +149,5 @@ public class MenuObject extends LinearLayout
         return numberOfItems;
     }
 
+    public String getNote() { return note;}
 }
