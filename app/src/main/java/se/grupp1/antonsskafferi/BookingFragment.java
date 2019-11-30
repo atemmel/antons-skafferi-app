@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.util.Locale;
 
 public class BookingFragment extends Fragment {
     class BookingData {
@@ -27,7 +28,7 @@ public class BookingFragment extends Fragment {
          String time;
          String date;
          String email;
-         int dinnertableid;
+         int dinnerTableId;
     }
 
     @Override
@@ -56,8 +57,6 @@ public class BookingFragment extends Fragment {
                 String date = BookingDate.getText().toString();
 
                 boolean emptyFields = false;
-
-
 
                 if(firstName.isEmpty())
                 {
@@ -115,14 +114,14 @@ public class BookingFragment extends Fragment {
                 data.peopleAmount = peopleAmount;
                 data.phoneNr = phoneNr;
                 data.time = time;
-                data.email = "a@b.c";
-                data.dinnertableid = 1;
+                data.email = "a@b.c";   //TODO: Add this field to form
+                data.dinnerTableId = 1; //TODO: Add this field to form
 
 
-                if(!emptyFields || true) {  //TODO: EDIT
+                if(!emptyFields) {
+                    System.out.println("Sent to backend");
                     sendToDatabase(data);
                 }
-                System.out.println("Sent to backend");
             }
 
             });
@@ -130,8 +129,8 @@ public class BookingFragment extends Fragment {
         return root;
     }
 
-    private boolean dateTimeIsValid(String str, String pattern) {
-        DateFormat timeFormat = new SimpleDateFormat(pattern);
+    private boolean dateTimeIsValid(String str, String pattern) {   //TODO: Remove this and replace it with actual date/time pickers
+        DateFormat timeFormat = new SimpleDateFormat(pattern, Locale.GERMAN);
         try {
             Date dummyDate = timeFormat.parse(str);
         }
@@ -142,7 +141,7 @@ public class BookingFragment extends Fragment {
     }
 
     private void sendToDatabase(BookingData data) {
-        final String urlString = "http://82.196.113.65:8080/post/customers";  //TODO: Move to a global constant of some sorts
+        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";  //TODO: Move to a global constant of some sorts
 
         JSONObject object = new JSONObject();
 
@@ -154,7 +153,7 @@ public class BookingFragment extends Fragment {
             object.put("bookingdate", data.date);
             object.put("bookingtime", data.time);
             object.put("email", data.email);
-            object.put("dinnertableid", data.dinnertableid);
+            object.put("dinnertableid", data.dinnerTableId);
 
             HttpRequest.Response response = new HttpRequest.Response() {
                 @Override
