@@ -39,7 +39,7 @@ public class OrderSummaryFragment extends DialogFragment {
 
         for(int i = 0; i < orders.size(); i++)
         {
-            list.addView(new MenuObject(this.getContext(), orders.get(i).getName()));
+            list.addView(new MenuObject(this.getContext(), orders.get(i).getName(), orders.get(i).getCount()));
         }
 
         v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
