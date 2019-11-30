@@ -40,7 +40,7 @@ public class TableOverviewFragment extends Fragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
 
-                popup = new BookedTablePopupFragment();
+                popup = new OccupiedTablePopupFragment();
 
                 popup.show(getChildFragmentManager(), "popup");
             }
@@ -53,6 +53,18 @@ public class TableOverviewFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 popup = new UnbookedTablePopupFragment();
+
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
+
+        root.findViewById(R.id.tableId4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+
+                popup = new BookedTablePopupFragment();
 
                 popup.show(getChildFragmentManager(), "popup");
             }
@@ -74,7 +86,27 @@ public class TableOverviewFragment extends Fragment {
     {
         CardView cardView = getView().findViewById(R.id.table2Card);
 
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.bookedTableColor));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
+    }
+    public void setTable4Unbooked()
+    {
+        CardView cardView = getView().findViewById(R.id.table4Card);
+
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
+    }
+
+    public void setTable4Booked()
+    {
+        CardView cardView = getView().findViewById(R.id.table4Card);
+
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
+    }
+
+    public void setTable1Unbooked()
+    {
+        CardView cardView = getView().findViewById(R.id.table1Card);
+
+        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
     }
 
 }

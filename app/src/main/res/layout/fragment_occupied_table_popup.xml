@@ -35,18 +35,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/popup_place_customer_button" />
-
-        <Button
-            android:id="@+id/showBookingButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/popup_show_booking_button"/>
+            android:text="@string/popup_take_order_button" />
 
         <Button
             android:id="@+id/clearTableButton"
@@ -59,6 +48,16 @@
             android:layout_marginRight="16dp"
             android:text="@string/popup_wipe_table_button" />
 
+        <Button
+            android:id="@+id/showCheckButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/popup_show_check_button"/>
     </LinearLayout>
 
 
