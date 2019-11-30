@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 public class EditLunchFragment extends Fragment
 {
@@ -23,7 +24,7 @@ public class EditLunchFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View root = inflater.inflate(R.layout.fragment_edit_lunch, container, false);
+        final View root = inflater.inflate(R.layout.fragment_edit_lunch, container, false);
 
 
         FloatingActionButton fab = root.findViewById(R.id.fab);
@@ -35,8 +36,50 @@ public class EditLunchFragment extends Fragment
             }
         });
 
+        root.findViewById(R.id.addLunchButton).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EditText titleEditText = root.findViewById(R.id.titleLunchInputText);
+                String title = titleEditText.getText().toString();
 
+                EditText descriptionEditText = root.findViewById(R.id.descriptionLunchInputText);
+                String description = descriptionEditText.getText().toString();
+
+                EditText dateEditText = root.findViewById(R.id.dateLunchInputText);
+                String date = dateEditText.getText().toString();
+
+                boolean emptyInputField = false;
+
+                if(title.isEmpty()){
+                    emptyInputField = true;
+
+                    titleEditText.setError("Lägg till en titel");
+                }
+                if(description.isEmpty()){
+                    emptyInputField = true;
+                    descriptionEditText.setError("Lägg till en beskrivning");
+
+                }
+                if(date.isEmpty()){
+                    emptyInputField = true;
+                    dateEditText.setError("Lägg till ett datum");
+
+                }
+
+                if(emptyInputField) return;
+
+                addLunch(title, description, date);
+            }
+        });
 
         return root;
     }
+
+    public void addLunch(String title, String description,String date){
+        //Send to POST request
+    }
+
+
 }
