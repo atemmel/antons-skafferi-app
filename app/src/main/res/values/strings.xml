@@ -35,6 +35,8 @@
     <string name="popup_take_order_button">Ta beställning</string>
     <string name="popup_wipe_table_button">Rensa bord</string>
     <string name="popup_show_check_button">Visa nota</string>
+    <string name="popup_show_booking_button">Visa bokning</string>
+    <string name="popup_edit_booking_button">Redigera bokning</string>
 
     <!-- Popup: unbooked table -->
     <string name="popup_place_customer_button">Placera kund</string>

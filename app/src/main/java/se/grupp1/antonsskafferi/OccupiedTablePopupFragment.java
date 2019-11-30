@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
 
-public class BookedTablePopupFragment extends DialogFragment
+public class OccupiedTablePopupFragment extends DialogFragment
 {
-    public BookedTablePopupFragment() {}
+    public OccupiedTablePopupFragment() {
+        // Required empty public constructor
+    }
 
 
-    public static BookedTablePopupFragment newInstance()
+    public static OccupiedTablePopupFragment newInstance()
     {
-        BookedTablePopupFragment fragment = new BookedTablePopupFragment();
+        OccupiedTablePopupFragment fragment = new OccupiedTablePopupFragment();
 
         return fragment;
     }
@@ -22,7 +24,7 @@ public class BookedTablePopupFragment extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_booked_table_popup, container, false);
+        View v = inflater.inflate(R.layout.fragment_occupied_table_popup, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
@@ -36,15 +38,14 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Booked();
-                dismiss();
+                ((TableOverviewFragment) getParentFragment()).newOrder();
             }
         });
 
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
+                ((TableOverviewFragment) getParentFragment()).setTable1Unbooked();
                 dismiss();
             }
         });
