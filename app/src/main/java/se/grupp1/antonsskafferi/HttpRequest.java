@@ -3,9 +3,14 @@ package se.grupp1.antonsskafferi;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class HttpRequest extends AsyncTask<String, Integer, String>
 {
@@ -15,17 +20,24 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     }
 
 
-    public Response delegate = null;
+    private Response delegate;
 
     private String requestMethod;
+    private String payload;
+    private boolean isPost;
 
-    public HttpRequest(Response delegate)
+    HttpRequest(Response delegate)
     {
         this.delegate = delegate;
     }
 
-    public void setRequestMethod(String requestMethod) {
+    void setRequestMethod(String requestMethod) {
         this.requestMethod = requestMethod;
+        isPost = requestMethod.toUpperCase().equals("POST");
+    }
+
+    void setPayload(String payload) {
+        this.payload = payload;
     }
 
     @Override
@@ -34,9 +46,8 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     }
 
     protected String doInBackground(String... urls) {
-
-        String content = "", line;
-
+        StringBuilder content = new StringBuilder();
+        String line;
 
         try
         {
@@ -45,13 +56,32 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod(requestMethod);
+            if(isPost) {
+                System.out.println("POSTING DATA");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                connection.setRequestProperty("Content-Length", String.valueOf(payload.length()));
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
 
-            int i = 0;
+                try {
+                    OutputStream os = connection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                    writer.write(payload);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-            while(connection.getResponseCode() != 200 && i++ != 10)
+            int attempts = 0;
+
+            while(connection.getResponseCode() != 200 && attempts++ != 10)
             {
                 connection = (HttpURLConnection) url.openConnection();
-                System.out.println("Failed to connect, trying again");
+                System.out.println("Failed to connect, trying again. Recieved error code: " + connection.getResponseCode());
             }
 
             try
@@ -60,7 +90,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
                 while ((line = rd.readLine()) != null)
                 {
-                    content += line + "\n";
+                    content.append(line).append("\n");
                 }
 
                 rd.close();
@@ -80,7 +110,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
         }
 
 
-        return content;
+        return content.toString();
     }
 
     protected void onProgressUpdate(Integer... progress)
