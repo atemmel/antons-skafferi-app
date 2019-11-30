@@ -71,7 +71,7 @@ public class NewOrderFragment extends Fragment
 
     void getDishes()
     {
-        final String urlString = "http://82.196.113.65:8080/dish";
+        final String urlString = "http://82.196.113.65:8080/items";
 
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
