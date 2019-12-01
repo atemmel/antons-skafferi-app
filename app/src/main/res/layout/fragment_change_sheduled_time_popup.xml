@@ -27,16 +27,40 @@
         tools:layout_editor_absoluteX="208dp"
         tools:ignore="MissingConstraints">
 
+        <TextView
+            android:id="@+id/changeTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Byt tid med Tim: 14:00-18:00" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Välj den tid du vill byta ut:" />
+
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="11:00-14:00" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="18:00-21:00" />
+
         <Button
             android:id="@+id/clearTableButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:text="Skicka förfrågan" />
+
 
     </LinearLayout>
 
