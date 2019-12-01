@@ -27,14 +27,14 @@ public class EditLunchFragment extends Fragment
         final View root = inflater.inflate(R.layout.fragment_edit_lunch, container, false);
 
 
-        FloatingActionButton fab = root.findViewById(R.id.fab);
+        /*FloatingActionButton fab = root.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Lägga till ny lunchmeny", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         root.findViewById(R.id.addLunchButton).setOnClickListener(new View.OnClickListener()
         {
@@ -47,8 +47,8 @@ public class EditLunchFragment extends Fragment
                 EditText descriptionEditText = root.findViewById(R.id.descriptionLunchInputText);
                 String description = descriptionEditText.getText().toString();
 
-                EditText dateEditText = root.findViewById(R.id.dateLunchInputText);
-                String date = dateEditText.getText().toString();
+                //EditText dateEditText = root.findViewById(R.id.dateLunchInputText);
+                //String date = dateEditText.getText().toString();
 
                 boolean emptyInputField = false;
 
@@ -62,22 +62,22 @@ public class EditLunchFragment extends Fragment
                     descriptionEditText.setError("Lägg till en beskrivning");
 
                 }
-                if(date.isEmpty()){
+                /*if(date.isEmpty()){
                     emptyInputField = true;
                     dateEditText.setError("Lägg till ett datum");
 
-                }
+                }*/
 
                 if(emptyInputField) return;
 
-                addLunch(title, description, date);
+                addLunch(title, description);
             }
         });
 
         return root;
     }
 
-    public void addLunch(String title, String description,String date){
+    public void addLunch(String title, String description){
         //Send to POST request
     }
 
