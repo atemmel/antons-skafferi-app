@@ -281,12 +281,17 @@
         </GridLayout>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/addBookingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_add_24dp"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|right" />
+        android:paddingLeft="32dp"
+        android:paddingTop="16dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="16dp"
+        android:text="Ny bokning"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </FrameLayout>
