@@ -1,0 +1,42 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:visibility="gone"
+        app:title="Admin">
+        <Preference
+            android:key="editLunchPreference"
+            android:summary="Klicka här för att rediga veckans lunch"
+            android:title="Redigera Lunch">
+
+        </Preference>
+
+        <Preference
+            android:key="editDinnerPreference"
+            android:summary="Klicka här för att redigera kvällsmenyn"
+            android:title="Redigera Kvällsmeny">
+
+
+        </Preference>
+        <Preference
+            android:defaultValue="Default value"
+            android:key="editEventPreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Redigera event"
+            app:summary="Klicka här för att ändra ett event" />
+        <Preference
+            android:id="@+id/Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="Default value"
+            android:key="editSchedulePreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Redigera schema"
+            app:summary="Klicka här för att göra en ändring i schemat" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
