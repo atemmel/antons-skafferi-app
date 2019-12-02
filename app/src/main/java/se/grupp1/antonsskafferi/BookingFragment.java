@@ -23,18 +23,18 @@ import java.util.Calendar;
 public class BookingFragment extends Fragment {
 
     //DatePicker
-    TextView mTv;
-    Button mBtn;
-    DatePickerDialog dpd;
-    Calendar c;
+    private TextView mTv;
+    private Button mBtn;
+    private DatePickerDialog dpd;
+    private Calendar c;
     //-------
 
     //Timepicker
-    TextView tv;
-    Button Btn;
-    Calendar currentTime;
-    int hour, minute;
-    String format;
+    private TextView tv;
+    private Button Btn;
+    private Calendar currentTime;
+    private int hour, minute;
+    private String format;
     //-------
 
 
@@ -52,7 +52,7 @@ public class BookingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View root = inflater.inflate(R.layout.fragment_booking, container, false);
+        final View root = inflater.inflate(R.layout.fragment_booking, container, false);
 
         //TimePicker
         tv = root.findViewById(R.id.BookingTime);
@@ -72,7 +72,7 @@ public class BookingFragment extends Fragment {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        tv.setText(hour+ ":" + minute);
+                        tv.setText(hour + ":" + minute);
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -95,7 +95,7 @@ public class BookingFragment extends Fragment {
                 dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                        mTv.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
+                        mTv.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
                     }
                 }, year, month, day);
                 dpd.show();
@@ -108,12 +108,12 @@ public class BookingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EditText BookingFirstName = v.findViewById(R.id.BookingFirstName);
-                EditText BookingLastName = v.findViewById(R.id.BookingLastName);
-                EditText BookingPeopleAmount =  v.findViewById(R.id.BookingPeopleAmount);
-                EditText BookingPhoneNr =  v.findViewById(R.id.BookingPhoneNr);
-                EditText BookingTime =  v.findViewById(R.id.BookingTime);
-                EditText BookingDate =  v.findViewById(R.id.BookingDate);
+                EditText BookingFirstName = root.findViewById(R.id.BookingFirstName);
+                EditText BookingLastName = root.findViewById(R.id.BookingLastName);
+                EditText BookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
+                EditText BookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
+                TextView BookingTime =  root.findViewById(R.id.BookingTime);
+                TextView BookingDate =  root.findViewById(R.id.BookingDate);
 
                 String firstName = BookingFirstName.getText().toString();
                 String lastName = BookingLastName.getText().toString();
@@ -148,13 +148,12 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     BookingPhoneNr.setError("Skriv in ett teleNr");
                 }
-                if(time.isEmpty())
+                if(time.isEmpty() || time.equals(getString(R.string.tid)))
                 {
-
                     emptyFields = true;
                     BookingTime.setError("Skriv in bokad tid");
                 }
-                if(date.isEmpty())
+                if(date.isEmpty() || date.equals(getString(R.string.datum)))
                 {
 
                     emptyFields = true;
@@ -197,7 +196,7 @@ public class BookingFragment extends Fragment {
             object.put("bookingdate", data.date);
             object.put("bookingtime", data.time);
             object.put("email", data.email);
-            object.put("dinnertableid", data.dinnerTableId);
+            object.put("dinnertable", data.dinnerTableId);
 
             HttpRequest.Response response = new HttpRequest.Response() {
                 @Override
