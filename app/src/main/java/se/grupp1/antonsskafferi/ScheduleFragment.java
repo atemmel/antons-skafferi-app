@@ -1,7 +1,11 @@
 package se.grupp1.antonsskafferi;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +23,7 @@ import java.util.Locale;
 
 public class ScheduleFragment extends Fragment {
 
+    DialogFragment popup;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -48,12 +53,22 @@ public class ScheduleFragment extends Fragment {
         intent.putExtra("title", "A Test Event from android app");
         startActivity(intent);*/
 
+
+        root.findViewById(R.id.changeTimeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+
+                popup = new ChangeScheduledTimePopupFragment();
+
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
+
         return root;
-
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
 
     }
 
