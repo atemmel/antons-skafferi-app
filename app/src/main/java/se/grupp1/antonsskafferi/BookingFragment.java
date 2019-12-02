@@ -1,6 +1,7 @@
 package se.grupp1.antonsskafferi;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,19 +18,25 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class BookingFragment extends Fragment {
 
+    //DatePicker
     TextView mTv;
     Button mBtn;
     DatePickerDialog dpd;
     Calendar c;
+    //-------
+
+    //Timepicker
+    TextView tv;
+    Button Btn;
+    Calendar currentTime;
+    int hour, minute;
+    String format;
+    //-------
+
 
     class BookingData {
          String firstName;
@@ -46,7 +54,33 @@ public class BookingFragment extends Fragment {
     {
         View root = inflater.inflate(R.layout.fragment_booking, container, false);
 
+        //TimePicker
+        tv = root.findViewById(R.id.BookingTime);
+        Btn = root.findViewById(R.id.BtnTimePicker);
 
+        currentTime = Calendar.getInstance();
+
+        hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        minute = currentTime.get(Calendar.MINUTE);
+
+        //tv.setText(hour + ":" + minute);
+
+        Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+                        tv.setText(hour+ ":" + minute);
+                    }
+                }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
+        //End of TimePicker
+
+        //DatePicker
         mTv = root.findViewById(R.id.BookingDate);
         mBtn = root.findViewById(R.id.BtnDatePicker);
 
@@ -67,6 +101,7 @@ public class BookingFragment extends Fragment {
                 dpd.show();
             }
         });
+        // End of DatePicker
 
         Button SendBtn =  root.findViewById(R.id.SendBtn);
         SendBtn.setOnClickListener(new View.OnClickListener() {
@@ -119,22 +154,11 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     BookingTime.setError("Skriv in bokad tid");
                 }
-
-                if(!dateTimeIsValid(time, "HH:mm")){
-
-                    emptyFields = true;
-                    BookingTime.setError("Ogiltig tid");
-                }
                 if(date.isEmpty())
                 {
 
                     emptyFields = true;
                     BookingDate.setError("Skriv in datum");
-                }
-                if(!dateTimeIsValid(date, "yyyyMMdd")) {   //TODO: This check is not working as intended
-
-                    emptyFields = true;
-                    BookingDate.setError("Ogiltigt datum");
                 }
 
 
@@ -158,17 +182,6 @@ public class BookingFragment extends Fragment {
             });
 
         return root;
-    }
-
-    private boolean dateTimeIsValid(String str, String pattern) {   //TODO: Remove this and replace it with actual date/time pickers
-        DateFormat timeFormat = new SimpleDateFormat(pattern, Locale.GERMAN);
-        try {
-            Date dummyDate = timeFormat.parse(str);
-        }
-        catch (ParseException e) {
-            return false;
-        }
-        return true;
     }
 
     private void sendToDatabase(BookingData data) {
