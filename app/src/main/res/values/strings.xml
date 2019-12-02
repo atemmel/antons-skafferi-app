@@ -34,6 +34,7 @@
     <string name="pick_date">Pick Date</string>
     <string name="datum_yyyy_mm_dd">Datum YYYY-MM-DD</string>
     <string name="tid_hh_mm">Tid HH:MM</string>
+    <string name="v_lj_datum">Välj Datum</string>
 
     <!-- Popup: booked table -->
     <string name="popup_take_order_button">Ta beställning</string>
@@ -44,6 +45,7 @@
 
     <!-- Popup: unbooked table -->
     <string name="popup_place_customer_button">Placera kund</string>
+    <string name="skriv_tid">Skriv Tid</string>
 
 
 </resources>

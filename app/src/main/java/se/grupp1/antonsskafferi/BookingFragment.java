@@ -13,15 +13,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.Calendar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class BookingFragment extends Fragment {
@@ -49,7 +48,7 @@ public class BookingFragment extends Fragment {
 
 
         mTv = root.findViewById(R.id.BookingDate);
-        mBtn = root.findViewById(R.id.Datepicker);
+        mBtn = root.findViewById(R.id.BtnDatePicker);
 
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
