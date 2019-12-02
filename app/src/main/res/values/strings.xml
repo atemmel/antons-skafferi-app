@@ -41,5 +41,9 @@
     <!-- Popup: unbooked table -->
     <string name="popup_place_customer_button">Placera kund</string>
 
+    <!-- View Orders Page -->
+    <string name="table_id_header_text">Bord</string>
+    <string name="order_summary_header_text">Ordersummering</string>
+    <string name="order_status_header_text">Status</string>
 
 </resources>
