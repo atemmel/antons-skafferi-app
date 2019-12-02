@@ -28,8 +28,15 @@
     <string name="skriv_namn">Skriv Namn</string>
     <string name="skriv_efternamn">Skriv Efternamn</string>
     <string name="skriv_f_rnamn">Skriv Förnamn</string>
+    <string name="date">Date</string>
+    <string name="boka_bord">Boka Bord</string>
+    <string name="pick_date">Pick Date</string>
     <string name="datum_yyyy_mm_dd">Datum YYYY-MM-DD</string>
     <string name="tid_hh_mm">Tid HH:MM</string>
+    <string name="v_lj_datum">Välj Datum</string>
+    <string name="v_lj_tid">Välj Tid</string>
+    <string name="datum">Datum</string>
+    <string name="tid">Tid</string>
 
     <!-- Popup: booked table -->
     <string name="popup_take_order_button">Ta beställning</string>
