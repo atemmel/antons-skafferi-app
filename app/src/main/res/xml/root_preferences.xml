@@ -1,5 +1,5 @@
-
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="@string/example_header">
 
@@ -14,6 +14,14 @@
             app:summaryOn="@string/example_setting_summary_off"
             app:title="@string/other_setting_title" />
 
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Övrigt">
+        <Preference
+            android:defaultValue="true"
+            android:key="logoutButtonPreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Logga ut" />
     </PreferenceCategory>
 
 </PreferenceScreen>

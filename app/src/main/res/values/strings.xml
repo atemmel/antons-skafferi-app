@@ -4,12 +4,7 @@
     <string name="username_ghost_text">Användarnamn</string>
     <string name="password_ghost_text">Lösenord</string>
 
-    <string name="logout_text">Logga ut</string>
-    <string name="logout_buton_text">Logga ut</string>
-    <string name="settings_button_text">Inställningar</string>
-
     <!-- Preference Titles -->
-    <string name="title_activity_settings">Inställningar</string>
     <string name="example_header">Exempel</string>
 
     <!-- Example Preferences -->
@@ -18,7 +13,6 @@
     <string name="example_setting_summary_on">Inställningen är aktiverad</string>
     <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
 
-
     <!-- Admin Page -->
     <string name="title_activity_admin">Admin</string>
 
@@ -26,7 +20,37 @@
     <string name="edit_dinner_menu_label">Ändra Kvällsmeny</string>
     <string name="title_activity_edit_lunch">EditLunchActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Book table form -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="boka">Boka</string>
+    <string name="skriv_telenr">Skriv TeleNr</string>
+    <string name="skriv_antal_kunder">Skriv Antal kunder</string>
+    <string name="skriv_namn">Skriv Namn</string>
+    <string name="skriv_efternamn">Skriv Efternamn</string>
+    <string name="skriv_f_rnamn">Skriv Förnamn</string>
+    <string name="date">Date</string>
+    <string name="boka_bord">Boka Bord</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="datum_yyyy_mm_dd">Datum YYYY-MM-DD</string>
+    <string name="tid_hh_mm">Tid HH:MM</string>
+    <string name="v_lj_datum">Välj Datum</string>
+    <string name="v_lj_tid">Välj Tid</string>
+    <string name="datum">Datum</string>
+    <string name="tid">Tid</string>
+
+    <!-- Popup: booked table -->
+    <string name="popup_take_order_button">Ta beställning</string>
+    <string name="popup_wipe_table_button">Rensa bord</string>
+    <string name="popup_show_check_button">Visa nota</string>
+    <string name="popup_show_booking_button">Visa bokning</string>
+    <string name="popup_edit_booking_button">Redigera bokning</string>
+
+    <!-- Popup: unbooked table -->
+    <string name="popup_place_customer_button">Placera kund</string>
+
+    <!-- View Orders Page -->
+    <string name="table_id_header_text">Bord</string>
+    <string name="order_summary_header_text">Ordersummering</string>
+    <string name="order_status_header_text">Status</string>
 
 </resources>

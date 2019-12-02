@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/eventTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Redigera event"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/titleEventInputText"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
+        android:ems="12"
+        android:gravity="center"
+        android:hint="Titel"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventTitleView" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/descriptionEventInputText"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
+        android:ems="12"
+        android:gravity="center"
+        android:hint="Beskrivning"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleEventInputText" />
+
+    <EditText
+        android:id="@+id/dateEventInputText"
+        android:inputType="date"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
+        android:ems="12"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:hint="Datum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEventInputText"/>
+
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateEventInputText"
+        android:ems="12"
+        >
+
+        <TextView
+            android:id="@+id/photoEventTextView"
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:inputType="date"
+            android:ems="12"
+            android:text="Välj en bild:  "
+            android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:ems="12"
+            tools:srcCompat="@tools:sample/avatars[0]" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="12"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Lägg till"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
