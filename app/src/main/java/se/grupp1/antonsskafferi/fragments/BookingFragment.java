@@ -115,6 +115,7 @@ public class BookingFragment extends Fragment {
                 EditText BookingLastName = root.findViewById(R.id.BookingLastName);
                 EditText BookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
                 EditText BookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
+                EditText BookingEmail =  root.findViewById(R.id.BookingEmail);
                 TextView BookingTime =  root.findViewById(R.id.BookingTime);
                 TextView BookingDate =  root.findViewById(R.id.BookingDate);
 
@@ -122,6 +123,7 @@ public class BookingFragment extends Fragment {
                 String lastName = BookingLastName.getText().toString();
                 String peopleAmount = BookingPeopleAmount.getText().toString();
                 String phoneNr = BookingPhoneNr.getText().toString();
+                String email = BookingEmail.getText().toString();
                 String time = BookingTime.getText().toString();
                 String date = BookingDate.getText().toString();
 
@@ -162,6 +164,12 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     BookingDate.setError("Skriv in datum");
                 }
+                if(email.isEmpty())
+                {
+
+                    emptyFields = true;
+                    BookingEmail.setError("Skriv in Email");
+                }
 
 
                 BookingData data = new BookingData();
@@ -171,7 +179,7 @@ public class BookingFragment extends Fragment {
                 data.peopleAmount = peopleAmount;
                 data.phoneNr = phoneNr;
                 data.time = time;
-                data.email = "a@b.c";   //TODO: Add this field to form
+                data.email = email;
                 data.dinnerTableId = 1; //TODO: Add this field to form
 
 

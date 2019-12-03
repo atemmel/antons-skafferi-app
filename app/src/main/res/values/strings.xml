@@ -58,4 +58,5 @@
     <string name="booking_reference_text">Bokningsreferens</string>
     <string name="booking_time_text">Time</string>
     <string name="booking_persons_text">Antal</string>
+    <string name="skriv_email">Skriv Email</string>
 </resources>

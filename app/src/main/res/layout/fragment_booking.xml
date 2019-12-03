@@ -90,6 +90,15 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName" />
 
+        <EditText
+            android:id="@+id/BookingEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/skriv_email"
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no"/>
+
         <Button
             android:id="@+id/SendBtn"
             android:layout_width="wrap_content"
