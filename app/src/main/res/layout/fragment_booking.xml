@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tools:context=".fragments.BookingFragment">
 
     <LinearLayout
@@ -96,8 +97,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/skriv_email"
-            android:inputType="textEmailAddress"
-            android:importantForAutofill="no"/>
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/SendBtn"

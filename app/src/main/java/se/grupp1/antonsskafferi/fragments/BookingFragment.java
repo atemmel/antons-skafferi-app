@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import se.grupp1.antonsskafferi.classes.DatabaseURL;
 import se.grupp1.antonsskafferi.classes.HttpRequest;
 import se.grupp1.antonsskafferi.R;
 
@@ -195,8 +196,6 @@ public class BookingFragment extends Fragment {
     }
 
     private void sendToDatabase(BookingData data) {
-        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";  //TODO: Move to a global constant of some sorts
-
         JSONObject object = new JSONObject();
 
         try {
@@ -219,7 +218,7 @@ public class BookingFragment extends Fragment {
             httpRequest.setRequestMethod("POST");
             System.out.println(object.toString());
             httpRequest.setPayload(object.toString());
-            httpRequest.execute(urlString);
+            httpRequest.execute(DatabaseURL.insertCustomer);
         } catch(JSONException e) {
             e.printStackTrace();
         }
