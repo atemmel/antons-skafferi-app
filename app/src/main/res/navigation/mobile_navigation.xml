@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_view_bookings"
-        android:name="se.grupp1.antonsskafferi.ViewBookingsFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.ViewBookingsFragment"
         android:label="Bokningsöversikt"
         tools:layout="@layout/fragment_view_bookings" />
 </navigation>
