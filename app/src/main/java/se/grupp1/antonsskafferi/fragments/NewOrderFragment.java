@@ -65,7 +65,7 @@ public class NewOrderFragment extends Fragment
                 // Create and show the dialog.
                 OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
 
-                newFragment.setOrders(getOrders());
+                newFragment.setItems(getItems());
 
                 newFragment.show(ft, "dialog");
             }
@@ -125,9 +125,9 @@ public class NewOrderFragment extends Fragment
         request.execute(urlString);
     }
 
-    private ArrayList<Order> getOrders()
+    private ArrayList<Item> getItems()
     {
-        ArrayList<Order> orders = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
 
         LinearLayout foodList = getView().findViewById(R.id.foodList);
 
@@ -136,25 +136,33 @@ public class NewOrderFragment extends Fragment
         {
             MenuComponent item = (MenuComponent)foodList.getChildAt(i);
 
-            if(item.getCount() > 0) {
-                orders.add(new Order(item.getName(), item.getCount(), item.getNote()));
+            if(item.getCount() > 0)
+            {
+                items.add(new Item(item.getName(), item.getCount(), item.getNote()));
             }
         }
 
-        return orders;
+        return items;
     }
 
-    public class Order
+    public class Item
     {
+        private int id;
         private String name;
         private int count;
         private String note;
 
-        Order(String name, int count, String note)
+        Item(int id, String name, int count, String note)
         {
+            this.id = id;
             this.name = name;
             this.count = count;
             this.note = note;
+        }
+
+        public int getId()
+        {
+            return id;
         }
 
         public String getName()
