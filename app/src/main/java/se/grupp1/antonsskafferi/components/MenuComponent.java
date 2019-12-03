@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,15 +8,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 
-public class MenuObject extends LinearLayout
+
+public class MenuComponent extends LinearLayout
 {
     private int numberOfItems = 0;
 
@@ -24,24 +25,24 @@ public class MenuObject extends LinearLayout
 
     private String name;
 
-    public MenuObject(Context context, String text)
+    public MenuComponent(Context context, String text)
     {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.object_menu_item, this, true);
+        inflater.inflate(R.layout.component_menu_item, this, true);
 
         init(text, numberOfItems, note);
     }
 
-    public MenuObject(Context context, String text, int numberOfItems, String note)
+    public MenuComponent(Context context, String text, int numberOfItems, String note)
     {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.object_menu_item, this, true);
+        inflater.inflate(R.layout.component_menu_item, this, true);
 
         init(text, numberOfItems, note);
     }
@@ -102,13 +103,13 @@ public class MenuObject extends LinearLayout
         });
     }
 
-    public MenuObject(Context context, AttributeSet attr)
+    public MenuComponent(Context context, AttributeSet attr)
     {
         super(context,attr);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.object_menu_item, this, true);
+        inflater.inflate(R.layout.component_menu_item, this, true);
     }
 
     protected void increaseCount()

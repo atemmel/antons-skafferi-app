@@ -6,12 +6,12 @@
     app:startDestination="@id/navigation_schedule">
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="se.grupp1.antonsskafferi.ScheduleFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.ScheduleFragment"
         android:label="Schema"
         tools:layout="@layout/fragment_schedule" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="se.grupp1.antonsskafferi.SettingsFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.SettingsFragment"
         android:label="Inställningar"
         tools:layout="@layout/fragment_settings">
         <action
@@ -30,44 +30,44 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
-        android:name="se.grupp1.antonsskafferi.EditLunchFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.EditLunchFragment"
         android:label="Redigera Lunch"
         tools:layout="@layout/fragment_edit_lunch" />
     <fragment
         android:id="@+id/navigation_edit_dinner"
-        android:name="se.grupp1.antonsskafferi.EditDinnerFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.EditDinnerFragment"
         android:label="Redigera kvällsmeny"
         tools:layout="@layout/fragment_edit_dinner" />
 
     <fragment
         android:id="@+id/navigation_view_orders"
-        android:name="se.grupp1.antonsskafferi.ViewOrdersFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.ViewOrdersFragment"
         android:label="Se beställningar"
         tools:layout="@layout/fragment_view_orders" />
     <fragment
         android:id="@+id/navigation_new_order"
-        android:name="se.grupp1.antonsskafferi.NewOrderFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.NewOrderFragment"
         android:label="Ny Beställning"
         tools:layout="@layout/fragment_new_order" />
 
     <fragment
         android:id="@+id/navigation_event"
-        android:name="se.grupp1.antonsskafferi.EventFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.EventFragment"
         android:label="Lägg till event"
         tools:layout="@layout/fragment_event" />
     <fragment
         android:id="@+id/navigation_edit_schedule"
-        android:name="se.grupp1.antonsskafferi.EditScheduleFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.EditScheduleFragment"
         android:label="Redigera Schema"
         tools:layout="@layout/fragment_edit_schedule" />
     <fragment
         android:id="@+id/navigation_booking"
-        android:name="se.grupp1.antonsskafferi.BookingFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.BookingFragment"
         android:label="fragment_booking"
         tools:layout="@layout/fragment_booking" />
     <fragment
         android:id="@+id/navigation_table_overview"
-        android:name="se.grupp1.antonsskafferi.TableOverviewFragment"
+        android:name="se.grupp1.antonsskafferi.fragments.TableOverviewFragment"
         android:label="Bordsöverblick"
         tools:layout="@layout/fragment_table_overview">
         <action

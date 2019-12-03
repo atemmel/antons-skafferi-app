@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.fragments;
 
 import android.os.Bundle;
 
@@ -16,6 +16,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.components.MenuComponent;
+import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
+import se.grupp1.antonsskafferi.R;
 
 public class NewOrderFragment extends Fragment
 {
@@ -101,14 +106,14 @@ public class NewOrderFragment extends Fragment
 
                     for(int i = 0; i < food.size(); i++)
                     {
-                        foodList.addView(new MenuObject(getContext(), food.get(i)));
+                        foodList.addView(new MenuComponent(getContext(), food.get(i)));
                     }
 
                     LinearLayout drinksList = getView().findViewById(R.id.drinksList);
 
                     for(int i = 0; i < drinks.size(); i++)
                     {
-                        drinksList.addView(new MenuObject(getContext(), drinks.get(i)));
+                        drinksList.addView(new MenuComponent(getContext(), drinks.get(i)));
                     }
                 }
 
@@ -129,7 +134,7 @@ public class NewOrderFragment extends Fragment
         //Börja på 1 för att skippa första textobjektet
         for(int i = 1; i < foodList.getChildCount(); i++)
         {
-            MenuObject item = (MenuObject)foodList.getChildAt(i);
+            MenuComponent item = (MenuComponent)foodList.getChildAt(i);
 
             if(item.getCount() > 0) {
                 orders.add(new Order(item.getName(), item.getCount(), item.getNote()));
@@ -139,7 +144,7 @@ public class NewOrderFragment extends Fragment
         return orders;
     }
 
-    class Order
+    public class Order
     {
         private String name;
         private int count;

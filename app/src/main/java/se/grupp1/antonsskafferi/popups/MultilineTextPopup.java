@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.popups;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import se.grupp1.antonsskafferi.R;
 
 public class MultilineTextPopup extends DialogFragment
 {
