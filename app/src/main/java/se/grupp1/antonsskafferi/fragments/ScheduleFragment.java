@@ -1,13 +1,10 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopupFragment;
+import se.grupp1.antonsskafferi.R;
 
 
 public class ScheduleFragment extends Fragment {

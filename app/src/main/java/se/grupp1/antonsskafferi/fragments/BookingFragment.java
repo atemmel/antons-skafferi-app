@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,6 +19,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+
+import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.R;
 
 public class BookingFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.popups;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
 
-public class OccupiedTablePopupFragment extends DialogFragment
+import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
+
+public class BookedTablePopupFragment extends DialogFragment
 {
-    public OccupiedTablePopupFragment() {
-        // Required empty public constructor
-    }
+    public BookedTablePopupFragment() {}
 
 
-    public static OccupiedTablePopupFragment newInstance()
+    public static BookedTablePopupFragment newInstance()
     {
-        OccupiedTablePopupFragment fragment = new OccupiedTablePopupFragment();
+        BookedTablePopupFragment fragment = new BookedTablePopupFragment();
 
         return fragment;
     }
@@ -24,7 +25,7 @@ public class OccupiedTablePopupFragment extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_occupied_table_popup, container, false);
+        View v = inflater.inflate(R.layout.fragment_booked_table_popup, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
@@ -38,14 +39,15 @@ public class OccupiedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).newOrder();
+                ((TableOverviewFragment) getParentFragment()).setTable4Booked();
+                dismiss();
             }
         });
 
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable1Unbooked();
+                ((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
                 dismiss();
             }
         });

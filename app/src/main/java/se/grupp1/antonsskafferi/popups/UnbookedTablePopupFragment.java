@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.popups;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
+
+import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
 public class UnbookedTablePopupFragment extends DialogFragment {
     public UnbookedTablePopupFragment() {

@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.popups;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,9 +10,13 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
+import se.grupp1.antonsskafferi.components.MenuComponent;
+import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.fragments.NewOrderFragment;
+
 public class OrderSummaryPopup extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private ArrayList<NewOrderFragment.Order> orders = new ArrayList<>();
+    private ArrayList<se.grupp1.antonsskafferi.fragments.NewOrderFragment.Order> orders = new ArrayList<>();
 
 
 
@@ -41,7 +45,7 @@ public class OrderSummaryPopup extends DialogFragment {
         {
             NewOrderFragment.Order order = orders.get(i);
 
-            list.addView(new MenuObject(this.getContext(), order.getName(), order.getCount(), order.getNote()));
+            list.addView(new MenuComponent(this.getContext(), order.getName(), order.getCount(), order.getNote()));
         }
 
         v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {

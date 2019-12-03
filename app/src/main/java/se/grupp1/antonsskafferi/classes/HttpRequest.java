@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.classes;
 
 import android.os.AsyncTask;
 
@@ -26,17 +26,17 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     private String payload;
     private boolean isPost;
 
-    HttpRequest(Response delegate)
+    public HttpRequest(Response delegate)
     {
         this.delegate = delegate;
     }
 
-    void setRequestMethod(String requestMethod) {
+    public void setRequestMethod(String requestMethod) {
         this.requestMethod = requestMethod;
         isPost = requestMethod.toUpperCase().equals("POST");
     }
 
-    void setPayload(String payload) {
+    public void setPayload(String payload) {
         this.payload = payload;
     }
 
