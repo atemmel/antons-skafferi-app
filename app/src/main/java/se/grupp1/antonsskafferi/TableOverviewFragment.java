@@ -32,6 +32,14 @@ public class TableOverviewFragment extends Fragment {
             }
         });
 
+        root.findViewById(R.id.viewBookingsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigate(R.id.navigation_view_bookings);
+            }
+        });
+
         root.findViewById(R.id.tableId1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

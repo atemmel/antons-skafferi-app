@@ -76,5 +76,13 @@
         <action
             android:id="@+id/action_navigation_booking_overview_to_navigation_new_order2"
             app:destination="@id/navigation_new_order" />
+        <action
+            android:id="@+id/action_navigation_table_overview_to_navigation_view_bookings"
+            app:destination="@id/navigation_view_bookings" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_view_bookings"
+        android:name="se.grupp1.antonsskafferi.ViewBookingsFragment"
+        android:label="Bokningsöversikt"
+        tools:layout="@layout/fragment_view_bookings" />
 </navigation>
