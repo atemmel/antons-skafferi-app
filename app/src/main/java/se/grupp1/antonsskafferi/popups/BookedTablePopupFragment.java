@@ -39,7 +39,7 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Booked();
+                //((TableOverviewFragment) getParentFragment()).setTable4Booked();
                 dismiss();
             }
         });
@@ -47,7 +47,7 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
+                //((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
                 dismiss();
             }
         });

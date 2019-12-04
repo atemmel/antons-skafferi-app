@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import se.grupp1.antonsskafferi.classes.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.Item;
 import se.grupp1.antonsskafferi.fragments.NewOrderFragment;
 
 public class OrderSummaryPopup extends DialogFragment {
 
-    private ArrayList<se.grupp1.antonsskafferi.fragments.NewOrderFragment.Item> items = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
 
     public OrderSummaryPopup() {
         // Required empty public constructor
@@ -45,9 +46,9 @@ public class OrderSummaryPopup extends DialogFragment {
 
         for(int i = 0; i < items.size(); i++)
         {
-            NewOrderFragment.Item order = items.get(i);
+            Item order = items.get(i);
 
-            list.addView(new MenuComponent(this.getContext(), order.getName(), order.getCount(), order.getNote()));
+            list.addView(new MenuComponent(this.getContext(), order));
         }
 
         v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
@@ -77,7 +78,7 @@ public class OrderSummaryPopup extends DialogFragment {
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
-    public void setItems(ArrayList<NewOrderFragment.Item> items)
+    public void setItems(ArrayList<Item> items)
     {
         this.items = items;
     }
@@ -89,16 +90,17 @@ public class OrderSummaryPopup extends DialogFragment {
 
         for(int i = 0; i < items.size(); i++)
         {
-            NewOrderFragment.Item item = items.get(i);
+            Item item = items.get(i);
 
             JSONObject object = new JSONObject();
 
-            try {
-                object.put("amount", item.getCount());
+            try
+            {
+                object.put("item", item.getId());
+                object.put("amount", item.getAmount());
                 object.put("note", item.getNote());
                 object.put("ready", false);
                 object.put("dinnertable", 2);   //TODO: Make this not hardcoded
-                object.put("item", 3);          //TODO: Make this not hardcoded
 
                 HttpRequest.Response response = new HttpRequest.Response() {
                     @Override

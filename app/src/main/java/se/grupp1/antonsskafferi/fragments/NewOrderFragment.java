@@ -19,15 +19,12 @@ import java.util.ArrayList;
 
 import se.grupp1.antonsskafferi.classes.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
+import se.grupp1.antonsskafferi.data.Item;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
 import se.grupp1.antonsskafferi.R;
 
 public class NewOrderFragment extends Fragment
 {
-
-    private ArrayList<String> food = new ArrayList<>();
-    ArrayList<String> drinks = new ArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -44,11 +41,11 @@ public class NewOrderFragment extends Fragment
         food.add("Oxfilé");
         food.add("Köttbullar");*/
 
-        drinks.add("Coca Cola");
+        /*drinks.add("Coca Cola");
         drinks.add("Fanta");
-        drinks.add("Ramlösa");
+        drinks.add("Ramlösa");*/
 
-        getDishes();
+        getAllItems();
 
 
         view.findViewById(R.id.summaryButton).setOnClickListener(new View.OnClickListener() {
@@ -65,16 +62,19 @@ public class NewOrderFragment extends Fragment
                 // Create and show the dialog.
                 OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
 
-                newFragment.setItems(getItems());
+                newFragment.setItems(getOrderedItems());
 
                 newFragment.show(ft, "dialog");
             }
         });
     }
 
-    private void getDishes()
+    private void getAllItems()
     {
         final String urlString = "http://10.0.2.2:8080/items";
+
+        final LinearLayout foodList = getView().findViewById(R.id.foodList);
+        final LinearLayout drinksList = getView().findViewById(R.id.drinksList);
 
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
@@ -82,7 +82,7 @@ public class NewOrderFragment extends Fragment
             public void processFinish(String output) {
                 try
                 {
-                    System.out.println(output);
+                    //System.out.println(output);
 
                     JSONArray jsonArr = new JSONArray(output);
                     for(int i = 0; i < jsonArr.length(); i++)
@@ -90,33 +90,21 @@ public class NewOrderFragment extends Fragment
                         JSONObject c = jsonArr.getJSONObject(i);
 
                         String title = c.getString("title");
+                        int id = c.getInt("itemid");
+
 
                         System.out.println("FOOD: " + title);
 
-                        food.add(title);
+                        if(c.getString("type").toUpperCase().equals("DRYCK"))
+                            drinksList.addView(new MenuComponent(getContext(), new Item(id, title, 0, "")));
+                        else
+                            foodList.addView(new MenuComponent(getContext(), new Item(id, title, 0, "")));
                     }
 
                 } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-                finally
-                {
-                    LinearLayout foodList = getView().findViewById(R.id.foodList);
-
-                    for(int i = 0; i < food.size(); i++)
-                    {
-                        foodList.addView(new MenuComponent(getContext(), food.get(i)));
-                    }
-
-                    LinearLayout drinksList = getView().findViewById(R.id.drinksList);
-
-                    for(int i = 0; i < drinks.size(); i++)
-                    {
-                        drinksList.addView(new MenuComponent(getContext(), drinks.get(i)));
-                    }
-                }
-
             }
         });
 
@@ -125,9 +113,22 @@ public class NewOrderFragment extends Fragment
         request.execute(urlString);
     }
 
-    private ArrayList<Item> getItems()
+    private ArrayList<Item> getOrderedItems()
     {
         ArrayList<Item> items = new ArrayList<>();
+
+        LinearLayout drinksList = getView().findViewById(R.id.drinksList);
+
+        //Börja på 1 för att skippa första textobjektet
+        for(int i = 1; i < drinksList.getChildCount(); i++)
+        {
+            MenuComponent item = (MenuComponent)drinksList.getChildAt(i);
+
+            if(item.getAmount() > 0)
+            {
+                items.add(new Item(1, item.getTitle(), item.getAmount(), item.getNote()));
+            }
+        }
 
         LinearLayout foodList = getView().findViewById(R.id.foodList);
 
@@ -136,48 +137,12 @@ public class NewOrderFragment extends Fragment
         {
             MenuComponent item = (MenuComponent)foodList.getChildAt(i);
 
-            if(item.getCount() > 0)
+            if(item.getAmount() > 0)
             {
-                items.add(new Item(item.getName(), item.getCount(), item.getNote()));
+                items.add(new Item(1, item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
         return items;
-    }
-
-    public class Item
-    {
-        private int id;
-        private String name;
-        private int count;
-        private String note;
-
-        Item(int id, String name, int count, String note)
-        {
-            this.id = id;
-            this.name = name;
-            this.count = count;
-            this.note = note;
-        }
-
-        public int getId()
-        {
-            return id;
-        }
-
-        public String getName()
-        {
-            return name;
-        }
-
-        public int getCount()
-        {
-            return count;
-        }
-
-        public String getNote()
-        {
-            return note;
-        }
     }
 }
