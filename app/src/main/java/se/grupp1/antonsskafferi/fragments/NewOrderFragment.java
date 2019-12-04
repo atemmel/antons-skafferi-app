@@ -93,7 +93,6 @@ public class NewOrderFragment extends Fragment
                         String title = c.getString("title");
                         int id = c.getInt("itemid");
 
-
                         System.out.println("FOOD: " + title);
 
                         if(c.getString("type").toUpperCase().equals("DRYCK"))

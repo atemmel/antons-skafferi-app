@@ -8,16 +8,28 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
-public class UnbookedTablePopupFragment extends DialogFragment {
-    public UnbookedTablePopupFragment() {
-        // Required empty public constructor
+public class FreeTablePopupFragment extends DialogFragment {
+
+    public interface Callback
+    {
+        enum OptionClicked
+        {
+            PLACE_CUSTOMER
+        }
+
+        void clicked(OptionClicked optionClicked);
+    }
+
+    private Callback callback;
+
+    public FreeTablePopupFragment(Callback callback) {
+        this.callback = callback;
     }
 
 
-    public static UnbookedTablePopupFragment newInstance() {
-        UnbookedTablePopupFragment fragment = new UnbookedTablePopupFragment();
+    public static FreeTablePopupFragment newInstance(Callback callback) {
+        FreeTablePopupFragment fragment = new FreeTablePopupFragment(callback);
 
         return fragment;
     }
@@ -38,7 +50,7 @@ public class UnbookedTablePopupFragment extends DialogFragment {
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((TableOverviewFragment) getParentFragment()).setTable2Booked();
+                callback.clicked(Callback.OptionClicked.PLACE_CUSTOMER);
                 dismiss();
             }
         });

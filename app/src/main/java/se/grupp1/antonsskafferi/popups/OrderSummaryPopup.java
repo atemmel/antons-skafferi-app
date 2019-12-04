@@ -13,7 +13,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.Item;
@@ -85,9 +86,6 @@ public class OrderSummaryPopup extends DialogFragment {
 
     private void postOrder()
     {
-        final String urlString = "http://10.0.2.2:8080/post/orders?order=";  //TODO: Move to a global constant of some sorts
-
-
         for(int i = 0; i < items.size(); i++)
         {
             Item item = items.get(i);
@@ -114,7 +112,7 @@ public class OrderSummaryPopup extends DialogFragment {
 
                 System.out.println(object.toString());
                 httpRequest.setPayload(object.toString());
-                httpRequest.execute(urlString);
+                httpRequest.execute(DatabaseURL.insertOrder);
             }
             catch(JSONException e)
             {

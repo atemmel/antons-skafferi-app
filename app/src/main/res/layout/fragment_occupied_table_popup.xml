@@ -28,7 +28,7 @@
         tools:ignore="MissingConstraints">
 
         <Button
-            android:id="@+id/placeCustomerButton"
+            android:id="@+id/takeOrderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

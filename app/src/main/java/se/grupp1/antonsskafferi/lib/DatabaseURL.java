@@ -24,6 +24,18 @@ public class DatabaseURL {
     public static final String getItems = base + "items";
 
 
+    // --- Beställningar
+
+    //Lägg till
+    public static final String insertOrder = base + "post/orders?order=";
+
+
+    // --- Bord
+
+    //Hämta
+    public static final String getTables = base + "dinnertables";
+
+
     private DatabaseURL() {
     }
 }

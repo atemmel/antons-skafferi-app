@@ -4,11 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -17,17 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.ref.Reference;
+
 import se.grupp1.antonsskafferi.components.TableCardComponent;
-import se.grupp1.antonsskafferi.popups.BookedTablePopupFragment;
-import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.popups.UnbookedTablePopupFragment;
 
 
-public class TableOverviewFragment extends Fragment {
-
-    DialogFragment popup;
-
+public class TableOverviewFragment extends Fragment
+{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -58,24 +57,45 @@ public class TableOverviewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loadTables();
-
     }
 
     private void loadTables()
     {
-        GridLayout tableGrid = (GridLayout) getView().findViewById(R.id.tableGrid);
+        final GridLayout tableGrid = (GridLayout) getView().findViewById(R.id.tableGrid);
 
-        tableGrid.addView(new TableCardComponent(getContext(), "7"));
-        tableGrid.addView(new TableCardComponent(getContext(), "7"));
-        tableGrid.addView(new TableCardComponent(getContext(), "7"));
-        tableGrid.addView(new TableCardComponent(getContext(), "7"));
+        HttpRequest request = new HttpRequest(new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output) {
+                try
+                {
+                    JSONArray jsonArr = new JSONArray(output);
+
+                    for(int i = 0; i < jsonArr.length(); i++)
+                    {
+                        JSONObject c = jsonArr.getJSONObject(i);
+
+                        int id = c.getInt("dinnertableid");
+
+                        tableGrid.addView(new TableCardComponent(getContext(), id, TableCardComponent.Status.FREE, Navigation.findNavController(getView())));
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        request.setRequestMethod("GET");
+
+        request.execute(DatabaseURL.getTables);
     }
 
     public void newOrder()
     {
-        popup.dismiss();
-
-        NavController navController = Navigation.findNavController(getView());
-        navController.navigate(R.id.navigation_new_order);
+        //NavController navController =
+        //navController.navigate(R.id.navigation_new_order);
     }
 }

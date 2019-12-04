@@ -12,17 +12,24 @@ import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
 public class OccupiedTablePopupFragment extends DialogFragment
 {
-    public OccupiedTablePopupFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static OccupiedTablePopupFragment newInstance()
+    public interface Callback
     {
-        OccupiedTablePopupFragment fragment = new OccupiedTablePopupFragment();
+        enum OptionClicked
+        {
+            TAKE_ORDER,
+            WIPE_TABLE,
+            SHOW_BILL
+        }
 
-        return fragment;
+        void clicked(OptionClicked optionClicked);
     }
+
+    private Callback callback;
+
+    public OccupiedTablePopupFragment(Callback callback) {
+        this.callback = callback;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -38,17 +45,18 @@ public class OccupiedTablePopupFragment extends DialogFragment
             }
         });
 
-        v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.takeOrderButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).newOrder();
+                callback.clicked(Callback.OptionClicked.TAKE_ORDER);
+                dismiss();
             }
         });
 
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((TableOverviewFragment) getParentFragment()).setTable1Unbooked();
+                callback.clicked(Callback.OptionClicked.WIPE_TABLE);
                 dismiss();
             }
         });
