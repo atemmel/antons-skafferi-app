@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.fragments;
 
 import android.os.Bundle;
 
@@ -13,6 +13,11 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import se.grupp1.antonsskafferi.popups.BookedTablePopupFragment;
+import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
+import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.popups.UnbookedTablePopupFragment;
 
 
 public class TableOverviewFragment extends Fragment {
@@ -29,6 +34,14 @@ public class TableOverviewFragment extends Fragment {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(getView());
                 navController.navigate(R.id.navigation_booking);
+            }
+        });
+
+        root.findViewById(R.id.viewBookingsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigate(R.id.navigation_view_bookings);
             }
         });
 

@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-public class OrderListObject extends CardView
+import se.grupp1.antonsskafferi.R;
+
+public class OrderCardComponent extends CardView
 {
     private boolean readyStatus = false;
 
@@ -19,14 +21,14 @@ public class OrderListObject extends CardView
 
     //ArrayList<String> items = new ArrayList<>();
 
-    OrderListObject(Context context, String tableId)
+    public OrderCardComponent(Context context, String tableId)
     {
         super(context);
 
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.object_order, this, true);
+        inflater.inflate(R.layout.component_order, this, true);
 
         ((TextView) findViewById(R.id.tableIdLabel)).setText(tableId);
 
@@ -38,10 +40,10 @@ public class OrderListObject extends CardView
 
         setReady(readyStatus);
 
-        //inflate(context, R.layout.object_order, null);
+        //inflate(context, R.layout.component_order, null);
     }
 
-    OrderListObject(Context context, AttributeSet attrs)
+    OrderCardComponent(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }

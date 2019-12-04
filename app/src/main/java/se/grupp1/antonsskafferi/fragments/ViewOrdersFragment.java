@@ -1,19 +1,18 @@
-package se.grupp1.antonsskafferi;
+package se.grupp1.antonsskafferi.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import se.grupp1.antonsskafferi.components.OrderCardComponent;
+import se.grupp1.antonsskafferi.R;
 
 
 public class ViewOrdersFragment extends Fragment
@@ -31,7 +30,7 @@ public class ViewOrdersFragment extends Fragment
 
         LinearLayout orderList = view.findViewById(R.id.orderList);
 
-        OrderListObject order1 = new OrderListObject(getContext(), "3");
+        OrderCardComponent order1 = new OrderCardComponent(getContext(), "3");
 
         order1.setReady(true);
         order1.addItem(2, "Köttbullar");
@@ -41,7 +40,7 @@ public class ViewOrdersFragment extends Fragment
         orderList.addView(order1);
 
 
-        OrderListObject order2 = new OrderListObject(getContext(), "5");
+        OrderCardComponent order2 = new OrderCardComponent(getContext(), "5");
 
         order2.addItem(1, "Lasagne");
         order2.addItem(1, "Carbonara");

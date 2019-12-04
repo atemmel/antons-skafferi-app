@@ -14,18 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activites.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScheduleFragment" />
-        <activity android:name=".BookingFragment" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SettingsFragment" />
-        <activity android:name=".EditLunchFragment" />
+        <activity android:name=".fragments.ScheduleFragment" />
+        <activity android:name=".fragments.BookingFragment" />
+        <activity android:name=".activites.MainActivity" />
+        <activity android:name=".fragments.SettingsFragment" />
+        <activity android:name=".fragments.EditLunchFragment" />
     </application>
 
 </manifest>
