@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi.classes;
+package se.grupp1.antonsskafferi.lib;
 
 public class DatabaseURL {
     private static final String local = "http://10.0.2.2:8080/";

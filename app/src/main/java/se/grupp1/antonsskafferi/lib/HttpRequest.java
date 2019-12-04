@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi.classes;
+package se.grupp1.antonsskafferi.lib;
 
 import android.os.AsyncTask;
 

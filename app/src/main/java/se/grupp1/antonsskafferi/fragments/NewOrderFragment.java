@@ -17,8 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import se.grupp1.antonsskafferi.classes.DatabaseURL;
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
 import se.grupp1.antonsskafferi.R;
