@@ -21,4 +21,26 @@ public class StringFormatter {
 
         return in;
     }
+
+    public static String formatDate(String in) {
+        if(in.length() == 10) return in;
+
+        String[] arr = in.split("-");
+        String out = new String("");
+
+        for(int i = 1; i < arr.length; i++) {
+            if(arr[i].length() == 1) {
+                arr[i] = '0' + arr[i];
+            }
+        }
+
+        for(int i = 0; i < arr.length; i++) {
+            out = out + arr[i];
+            if(i != arr.length - 1) {
+                out = out + '-';
+            }
+        }
+
+        return out;
+    }
 }

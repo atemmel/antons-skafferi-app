@@ -85,7 +85,7 @@ public class BookingFragment extends Fragment {
                 dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                        mTv.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
+                        mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
                     }
                 }, year, month, day);
                 dpd.show();
