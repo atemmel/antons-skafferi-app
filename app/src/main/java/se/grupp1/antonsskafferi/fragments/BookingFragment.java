@@ -22,6 +22,7 @@ import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.BookingData;
+import se.grupp1.antonsskafferi.lib.StringFormatter;
 
 public class BookingFragment extends Fragment {
 
@@ -57,12 +58,10 @@ public class BookingFragment extends Fragment {
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //TODO: Make sure that the string returned has constant length
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        tv.setText(hour + ":" + minute);
+                        tv.setText(StringFormatter.formatTime(hour + ":" + minute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
