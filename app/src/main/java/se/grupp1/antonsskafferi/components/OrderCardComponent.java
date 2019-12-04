@@ -43,11 +43,6 @@ public class OrderCardComponent extends CardView
         //inflate(context, R.layout.component_order, null);
     }
 
-    OrderCardComponent(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
     public void setReady(boolean readyStatus)
     {
         this.readyStatus = readyStatus;

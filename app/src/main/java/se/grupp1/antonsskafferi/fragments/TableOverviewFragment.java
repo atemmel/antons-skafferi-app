@@ -2,6 +2,8 @@ package se.grupp1.antonsskafferi.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -13,7 +15,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 
+import se.grupp1.antonsskafferi.components.TableCardComponent;
 import se.grupp1.antonsskafferi.popups.BookedTablePopupFragment;
 import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
 import se.grupp1.antonsskafferi.R;
@@ -45,47 +49,27 @@ public class TableOverviewFragment extends Fragment {
             }
         });
 
-        root.findViewById(R.id.tableId1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new OccupiedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
-        root.findViewById(R.id.tableId2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new UnbookedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
-        root.findViewById(R.id.tableId4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new BookedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        loadTables();
+
+    }
+
+    private void loadTables()
+    {
+        GridLayout tableGrid = (GridLayout) getView().findViewById(R.id.tableGrid);
+
+        tableGrid.addView(new TableCardComponent(getContext(), "7"));
+        tableGrid.addView(new TableCardComponent(getContext(), "7"));
+        tableGrid.addView(new TableCardComponent(getContext(), "7"));
+        tableGrid.addView(new TableCardComponent(getContext(), "7"));
+    }
 
     public void newOrder()
     {
@@ -94,32 +78,4 @@ public class TableOverviewFragment extends Fragment {
         NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.navigation_new_order);
     }
-
-    public void setTable2Booked()
-    {
-        CardView cardView = getView().findViewById(R.id.table2Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
-    }
-    public void setTable4Unbooked()
-    {
-        CardView cardView = getView().findViewById(R.id.table4Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
-    }
-
-    public void setTable4Booked()
-    {
-        CardView cardView = getView().findViewById(R.id.table4Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
-    }
-
-    public void setTable1Unbooked()
-    {
-        CardView cardView = getView().findViewById(R.id.table1Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
-    }
-
 }

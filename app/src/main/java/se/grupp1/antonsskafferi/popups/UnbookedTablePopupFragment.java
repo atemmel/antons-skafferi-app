@@ -38,7 +38,7 @@ public class UnbookedTablePopupFragment extends DialogFragment {
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable2Booked();
+                //((TableOverviewFragment) getParentFragment()).setTable2Booked();
                 dismiss();
             }
         });

@@ -48,7 +48,7 @@ public class OccupiedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable1Unbooked();
+                //((TableOverviewFragment) getParentFragment()).setTable1Unbooked();
                 dismiss();
             }
         });

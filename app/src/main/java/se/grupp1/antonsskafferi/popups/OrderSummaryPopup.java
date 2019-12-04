@@ -8,17 +8,20 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.DialogFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import se.grupp1.antonsskafferi.classes.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.Item;
 import se.grupp1.antonsskafferi.fragments.NewOrderFragment;
 
 public class OrderSummaryPopup extends DialogFragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private ArrayList<se.grupp1.antonsskafferi.fragments.NewOrderFragment.Order> orders = new ArrayList<>();
 
-
+    private ArrayList<Item> items = new ArrayList<>();
 
     public OrderSummaryPopup() {
         // Required empty public constructor
@@ -41,16 +44,24 @@ public class OrderSummaryPopup extends DialogFragment {
 
         LinearLayout list = v.findViewById(R.id.summaryItemsList);
 
-        for(int i = 0; i < orders.size(); i++)
+        for(int i = 0; i < items.size(); i++)
         {
-            NewOrderFragment.Order order = orders.get(i);
+            Item order = items.get(i);
 
-            list.addView(new MenuComponent(this.getContext(), order.getName(), order.getCount(), order.getNote()));
+            list.addView(new MenuComponent(this.getContext(), order));
         }
 
         v.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        v.findViewById(R.id.popupOrderButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postOrder();
                 dismiss();
             }
         });
@@ -67,9 +78,49 @@ public class OrderSummaryPopup extends DialogFragment {
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
-    public void setOrders(ArrayList<NewOrderFragment.Order> orders)
+    public void setItems(ArrayList<Item> items)
     {
-        this.orders = orders;
+        this.items = items;
+    }
+
+    private void postOrder()
+    {
+        final String urlString = "http://10.0.2.2:8080/post/orders?order=";  //TODO: Move to a global constant of some sorts
+
+
+        for(int i = 0; i < items.size(); i++)
+        {
+            Item item = items.get(i);
+
+            JSONObject object = new JSONObject();
+
+            try
+            {
+                object.put("item", item.getId());
+                object.put("amount", item.getAmount());
+                object.put("note", item.getNote());
+                object.put("ready", false);
+                object.put("dinnertable", 2);   //TODO: Make this not hardcoded
+
+                HttpRequest.Response response = new HttpRequest.Response() {
+                    @Override
+                    public void processFinish(String output) {
+                        System.out.println(output);
+                    }
+                };
+
+                HttpRequest httpRequest = new HttpRequest(response);
+                httpRequest.setRequestMethod("POST");
+
+                System.out.println(object.toString());
+                httpRequest.setPayload(object.toString());
+                httpRequest.execute(urlString);
+            }
+            catch(JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
