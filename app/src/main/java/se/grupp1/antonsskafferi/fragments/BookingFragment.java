@@ -15,13 +15,12 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
 
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.classes.BookingData;
 
 public class BookingFragment extends Fragment {
 
@@ -40,18 +39,6 @@ public class BookingFragment extends Fragment {
     private String format;
     //-------
 
-
-    class BookingData {
-         String firstName;
-         String lastName;
-         String peopleAmount;
-         String phoneNr;
-         String time;
-         String date;
-         String email;
-         int dinnerTableId;
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -65,8 +52,6 @@ public class BookingFragment extends Fragment {
 
         hour = currentTime.get(Calendar.HOUR_OF_DAY);
         minute = currentTime.get(Calendar.MINUTE);
-
-        //tv.setText(hour + ":" + minute);
 
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,36 +180,18 @@ public class BookingFragment extends Fragment {
     }
 
     private void sendToDatabase(BookingData data) {
-        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";  //TODO: Move to a global constant of some sorts
-
-        JSONObject object = new JSONObject();
-
-        try {
-            object.put("firstname", data.firstName);
-            object.put("lastname", data.lastName);
-            object.put("sizeofcompany", data.peopleAmount);
-            object.put("phone", data.phoneNr);
-            object.put("bookingdate", data.date);
-            object.put("bookingtime", data.time);
-            object.put("email", data.email);
-            object.put("dinnertable", data.dinnerTableId);
-
-            HttpRequest.Response response = new HttpRequest.Response() {
-                @Override
-                public void processFinish(String output) {
-                    System.out.println(output);
-                }
-            };
-            HttpRequest httpRequest = new HttpRequest(response);
-            httpRequest.setRequestMethod("POST");
-            System.out.println(object.toString());
-            httpRequest.setPayload(object.toString());
-            httpRequest.execute(urlString);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output) {
+                System.out.println(output);
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("POST");
+        String payload = data.toJSONString();
+        System.out.println(payload);
+        httpRequest.setPayload(payload);
+        httpRequest.execute(DatabaseURL.insertCustomer);
     }
 
 

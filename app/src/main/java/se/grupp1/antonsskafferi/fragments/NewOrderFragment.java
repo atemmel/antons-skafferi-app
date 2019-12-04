@@ -17,7 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.data.Item;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
@@ -110,7 +111,7 @@ public class NewOrderFragment extends Fragment
 
         request.setRequestMethod("GET");
 
-        request.execute(urlString);
+        request.execute(DatabaseURL.getItems);
     }
 
     private ArrayList<Item> getOrderedItems()
