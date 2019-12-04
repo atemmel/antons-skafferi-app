@@ -1,4 +1,4 @@
-package se.grupp1.antonsskafferi.classes;
+package se.grupp1.antonsskafferi.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;

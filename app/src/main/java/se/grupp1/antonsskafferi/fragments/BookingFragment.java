@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.classes.BookingData;
+import se.grupp1.antonsskafferi.data.BookingData;
 
 public class BookingFragment extends Fragment {
 
@@ -57,6 +58,7 @@ public class BookingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                //TODO: Make sure that the string returned has constant length
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
@@ -80,6 +82,7 @@ public class BookingFragment extends Fragment {
                 int month = c.get(Calendar.MONTH);
                 int year =c.get(Calendar.YEAR);
 
+                //TODO: Make sure that the string returned has constant length
                 dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
@@ -96,65 +99,65 @@ public class BookingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EditText BookingFirstName = root.findViewById(R.id.BookingFirstName);
-                EditText BookingLastName = root.findViewById(R.id.BookingLastName);
-                EditText BookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
-                EditText BookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
-                EditText BookingEmail =  root.findViewById(R.id.BookingEmail);
-                TextView BookingTime =  root.findViewById(R.id.BookingTime);
-                TextView BookingDate =  root.findViewById(R.id.BookingDate);
+                EditText bookingFirstName = root.findViewById(R.id.BookingFirstName);
+                EditText bookingLastName = root.findViewById(R.id.BookingLastName);
+                EditText bookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
+                EditText bookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
+                EditText bookingEmail =  root.findViewById(R.id.BookingEmail);
+                TextView bookingTime =  root.findViewById(R.id.BookingTime);
+                TextView bookingDate =  root.findViewById(R.id.BookingDate);
 
-                String firstName = BookingFirstName.getText().toString();
-                String lastName = BookingLastName.getText().toString();
-                String peopleAmount = BookingPeopleAmount.getText().toString();
-                String phoneNr = BookingPhoneNr.getText().toString();
-                String email = BookingEmail.getText().toString();
-                String time = BookingTime.getText().toString();
-                String date = BookingDate.getText().toString();
+                String firstName = bookingFirstName.getText().toString();
+                String lastName = bookingLastName.getText().toString();
+                String peopleAmount = bookingPeopleAmount.getText().toString();
+                String phoneNr = bookingPhoneNr.getText().toString();
+                String email = bookingEmail.getText().toString();
+                String time = bookingTime.getText().toString();
+                String date = bookingDate.getText().toString();
 
                 boolean emptyFields = false;
 
                 if(firstName.isEmpty())
                 {
                     emptyFields = true;
-                    BookingFirstName.setError("Skriv in förnamn");
-                } else BookingFirstName.setError(null);
+                    bookingFirstName.setError("Skriv in förnamn");
+                } else bookingFirstName.setError(null);
 
                 if(lastName.isEmpty())
                 {
                     emptyFields = true;
-                    BookingLastName.setError("Skriv in efternamn");
-                } else BookingLastName.setError(null);
+                    bookingLastName.setError("Skriv in efternamn");
+                } else bookingLastName.setError(null);
 
                 if(peopleAmount.isEmpty())
                 {
                     emptyFields = true;
-                    BookingPeopleAmount.setError("Skriv in antal bokade platser");
-                } else BookingPeopleAmount.setError(null);
+                    bookingPeopleAmount.setError("Skriv in antal bokade platser");
+                } else bookingPeopleAmount.setError(null);
 
                 if(phoneNr.isEmpty())
                 {
                     emptyFields = true;
-                    BookingPhoneNr.setError("Skriv in ett teleNr");
-                } else BookingPhoneNr.setError(null);
+                    bookingPhoneNr.setError("Skriv in ett teleNr");
+                } else bookingPhoneNr.setError(null);
 
                 if(time.isEmpty() || time.equals(getString(R.string.tid)))
                 {
                     emptyFields = true;
-                    BookingTime.setError("Skriv in bokad tid");
-                } else BookingTime.setError(null);
+                    bookingTime.setError("Skriv in bokad tid");
+                } else bookingTime.setError(null);
 
                 if(date.isEmpty() || date.equals(getString(R.string.datum)))
                 {
                     emptyFields = true;
-                    BookingDate.setError("Skriv in datum");
-                } else BookingDate.setError(null);
+                    bookingDate.setError("Skriv in datum");
+                } else bookingDate.setError(null);
 
                 if(email.isEmpty())
                 {
                     emptyFields = true;
-                    BookingEmail.setError("Skriv in Email");
-                } else BookingEmail.setError(null);
+                    bookingEmail.setError("Skriv in Email");
+                } else bookingEmail.setError(null);
 
 
                 BookingData data = new BookingData(
@@ -182,8 +185,12 @@ public class BookingFragment extends Fragment {
     private void sendToDatabase(BookingData data) {
         HttpRequest.Response response = new HttpRequest.Response() {
             @Override
-            public void processFinish(String output) {
-                System.out.println(output);
+            public void processFinish(String output, int status) {
+                System.out.println(status);
+                Toast.makeText(getActivity(), status == 200
+                        ? "Bokningen genomförd" : "Kunde inte genomföra bokningen, var vänlig försök igen. Felkod: " + status,
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         };
         HttpRequest httpRequest = new HttpRequest(response);

@@ -1,13 +1,13 @@
 package se.grupp1.antonsskafferi.data;
 
-public class Item
+public class ItemData
 {
     private int id;
     private String title;
     private int amount;
     private String note;
 
-    public Item(int id, String title, int amount, String note)
+    public ItemData(int id, String title, int amount, String note)
     {
         this.id = id;
         this.title = title;

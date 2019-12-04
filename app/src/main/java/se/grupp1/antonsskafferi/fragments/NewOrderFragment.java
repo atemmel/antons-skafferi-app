@@ -17,10 +17,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import se.grupp1.antonsskafferi.data.ItemData;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
-import se.grupp1.antonsskafferi.data.Item;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
 import se.grupp1.antonsskafferi.R;
 
@@ -63,7 +63,7 @@ public class NewOrderFragment extends Fragment
                 // Create and show the dialog.
                 OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
 
-                newFragment.setItems(getOrderedItems());
+                newFragment.setItemData(getOrderedItems());
 
                 newFragment.show(ft, "dialog");
             }
@@ -80,7 +80,7 @@ public class NewOrderFragment extends Fragment
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
             @Override
-            public void processFinish(String output) {
+            public void processFinish(String output, int status) {
                 try
                 {
                     //System.out.println(output);
@@ -97,9 +97,9 @@ public class NewOrderFragment extends Fragment
                         System.out.println("FOOD: " + title);
 
                         if(c.getString("type").toUpperCase().equals("DRYCK"))
-                            drinksList.addView(new MenuComponent(getContext(), new Item(id, title, 0, "")));
+                            drinksList.addView(new MenuComponent(getContext(), new ItemData(id, title, 0, "")));
                         else
-                            foodList.addView(new MenuComponent(getContext(), new Item(id, title, 0, "")));
+                            foodList.addView(new MenuComponent(getContext(), new ItemData(id, title, 0, "")));
                     }
 
                 } catch (Exception e)
@@ -114,9 +114,9 @@ public class NewOrderFragment extends Fragment
         request.execute(DatabaseURL.getItems);
     }
 
-    private ArrayList<Item> getOrderedItems()
+    private ArrayList<ItemData> getOrderedItems()
     {
-        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<ItemData> itemData = new ArrayList<>();
 
         LinearLayout drinksList = getView().findViewById(R.id.drinksList);
 
@@ -127,7 +127,7 @@ public class NewOrderFragment extends Fragment
 
             if(item.getAmount() > 0)
             {
-                items.add(new Item(1, item.getTitle(), item.getAmount(), item.getNote()));
+                itemData.add(new ItemData(1, item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
@@ -140,10 +140,10 @@ public class NewOrderFragment extends Fragment
 
             if(item.getAmount() > 0)
             {
-                items.add(new Item(1, item.getTitle(), item.getAmount(), item.getNote()));
+                itemData.add(new ItemData(1, item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
-        return items;
+        return itemData;
     }
 }

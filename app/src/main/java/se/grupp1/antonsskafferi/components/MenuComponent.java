@@ -14,16 +14,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.data.Item;
-import se.grupp1.antonsskafferi.fragments.NewOrderFragment;
+import se.grupp1.antonsskafferi.data.ItemData;
 import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 
 
 public class MenuComponent extends LinearLayout
 {
-    private Item item;
+    private ItemData itemData;
 
-    public MenuComponent(Context context, Item item)
+    public MenuComponent(Context context, ItemData itemData)
     {
         super(context);
 
@@ -31,18 +30,18 @@ public class MenuComponent extends LinearLayout
 
         inflater.inflate(R.layout.component_menu_item, this, true);
 
-        init(item);
+        init(itemData);
     }
 
-    public void init(Item item)
+    public void init(ItemData itemData)
     {
-        this.item = item;
+        this.itemData = itemData;
 
         updateText();
 
         TextView textView = (TextView) getChildAt(0);
 
-        textView.setText(item.getTitle());
+        textView.setText(itemData.getTitle());
 
         this.setPadding(0, 32, 0, 0);
 
@@ -97,16 +96,16 @@ public class MenuComponent extends LinearLayout
 
     protected void increaseAmount()
     {
-        item.increaseAmount();
+        itemData.increaseAmount();
 
         updateText();
     }
 
     protected void decreaseAmount()
     {
-        item.decreaseAmount();
+        itemData.decreaseAmount();
 
-        if(item.getAmount() < 0) item.setAmount(0);
+        if(itemData.getAmount() < 0) itemData.setAmount(0);
 
         updateText();
     }
@@ -115,26 +114,26 @@ public class MenuComponent extends LinearLayout
     {
         TextView counter = (TextView) getChildAt(4);
 
-        counter.setText(Integer.toString(item.getAmount()));
+        counter.setText(Integer.toString(itemData.getAmount()));
     }
 
     public void setNote(String note)
     {
-        item.setNote(note);
+        itemData.setNote(note);
     }
 
     public String getTitle()
     {
-        return item.getTitle();
+        return itemData.getTitle();
     }
 
     public int getAmount()
     {
-        return item.getAmount();
+        return itemData.getAmount();
     }
 
     public String getNote()
     {
-        return item.getNote();
+        return itemData.getNote();
     }
 }
