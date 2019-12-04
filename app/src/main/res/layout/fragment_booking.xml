@@ -89,7 +89,7 @@
             android:ems="10"
             android:hint="@string/skriv_antal_kunder"
             android:importantForAutofill="no"
-            android:inputType="textPersonName" />
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/BookingEmail"

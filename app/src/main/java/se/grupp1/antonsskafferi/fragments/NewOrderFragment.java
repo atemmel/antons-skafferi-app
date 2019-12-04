@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import se.grupp1.antonsskafferi.classes.DatabaseURL;
 import se.grupp1.antonsskafferi.classes.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
@@ -26,7 +27,7 @@ public class NewOrderFragment extends Fragment
 {
 
     private ArrayList<String> food = new ArrayList<>();
-    ArrayList<String> drinks = new ArrayList<>();
+    private ArrayList<String> drinks = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -74,8 +75,6 @@ public class NewOrderFragment extends Fragment
 
     private void getDishes()
     {
-        final String urlString = "http://10.0.2.2:8080/items";
-
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
             @Override
@@ -122,7 +121,7 @@ public class NewOrderFragment extends Fragment
 
         request.setRequestMethod("GET");
 
-        request.execute(urlString);
+        request.execute(DatabaseURL.getItems);
     }
 
     private ArrayList<Order> getOrders()
