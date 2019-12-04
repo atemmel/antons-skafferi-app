@@ -4,14 +4,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BookingData {
-    public String firstName;
-    public String lastName;
-    public String peopleAmount;
-    public String phoneNr;
-    public String time;
-    public String date;
-    public String email;
-    public int dinnerTableId;
+    private String firstName;
+    private String lastName;
+    private String peopleAmount;
+    private String phoneNr;
+    private String time;
+    private String date;
+    private String email;
+    private int dinnerTableId;
+
+    public BookingData(String firstName, String lastName, String peopleAmount, String phoneNr, String time, String date, String email, int dinnerTableId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.peopleAmount = peopleAmount;
+        this.phoneNr = phoneNr;
+        this.time = time;
+        this.date = date;
+        this.email = email;
+        this.dinnerTableId = dinnerTableId;
+    }
 
     public String toJSONString() {
         JSONObject object = new JSONObject();

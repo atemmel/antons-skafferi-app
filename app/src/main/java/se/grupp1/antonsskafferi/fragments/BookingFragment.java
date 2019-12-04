@@ -116,57 +116,57 @@ public class BookingFragment extends Fragment {
 
                 if(firstName.isEmpty())
                 {
-
                     emptyFields = true;
                     BookingFirstName.setError("Skriv in förnamn");
-                }
+                } else BookingFirstName.setError(null);
+
                 if(lastName.isEmpty())
                 {
-
                     emptyFields = true;
                     BookingLastName.setError("Skriv in efternamn");
-                }
+                } else BookingLastName.setError(null);
+
                 if(peopleAmount.isEmpty())
                 {
-
                     emptyFields = true;
                     BookingPeopleAmount.setError("Skriv in antal bokade platser");
-                }
+                } else BookingPeopleAmount.setError(null);
+
                 if(phoneNr.isEmpty())
                 {
-
                     emptyFields = true;
                     BookingPhoneNr.setError("Skriv in ett teleNr");
-                }
+                } else BookingPhoneNr.setError(null);
+
                 if(time.isEmpty() || time.equals(getString(R.string.tid)))
                 {
                     emptyFields = true;
                     BookingTime.setError("Skriv in bokad tid");
-                }
+                } else BookingTime.setError(null);
+
                 if(date.isEmpty() || date.equals(getString(R.string.datum)))
                 {
-
                     emptyFields = true;
                     BookingDate.setError("Skriv in datum");
-                }
+                } else BookingDate.setError(null);
+
                 if(email.isEmpty())
                 {
-
                     emptyFields = true;
                     BookingEmail.setError("Skriv in Email");
-                }
+                } else BookingEmail.setError(null);
 
 
-                BookingData data = new BookingData();
-                data.date = date;
-                data.firstName = firstName;
-                data.lastName = lastName;
-                data.peopleAmount = peopleAmount;
-                data.phoneNr = phoneNr;
-                data.time = time;
-                data.email = email;
-                data.dinnerTableId = 1; //TODO: Add this field to form
-
+                BookingData data = new BookingData(
+                        firstName,
+                        lastName,
+                        peopleAmount,
+                        phoneNr,
+                        time,
+                        date,
+                        email,
+                        //TODO: Add this field to form
+                        1);
 
                 if(!emptyFields) {
                     System.out.println("Sent to backend");
