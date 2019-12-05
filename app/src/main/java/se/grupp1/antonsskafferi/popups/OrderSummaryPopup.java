@@ -25,20 +25,18 @@ public class OrderSummaryPopup extends DialogFragment {
 
     private ArrayList<ItemData> itemData = new ArrayList<>();
 
-    public OrderSummaryPopup() {
-        // Required empty public constructor
-    }
+    private int tableId;
 
-
-    public static OrderSummaryPopup newInstance()
+    public OrderSummaryPopup(int tableId)
     {
-        return new OrderSummaryPopup();
+        this.tableId = tableId;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_order_summary, container, false);
+        View v = inflater.inflate(R.layout.popup_order_summary, container, false);
 
         //getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
@@ -93,11 +91,16 @@ public class OrderSummaryPopup extends DialogFragment {
 
             try
             {
-                object.put("item", itemData.getId());
+                object.put("dinnertable", tableId);
+
+                int itemId = itemData.getId();
+
+                System.out.println(itemId);
+
+                object.put("item", itemId);
                 object.put("amount", itemData.getAmount());
                 object.put("note", itemData.getNote());
                 object.put("ready", false);
-                object.put("dinnertable", 2);   //TODO: Make this not hardcoded
 
                 HttpRequest.Response response = new HttpRequest.Response() {
                     @Override

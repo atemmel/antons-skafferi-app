@@ -122,6 +122,8 @@ public class MenuComponent extends LinearLayout
         itemData.setNote(note);
     }
 
+    public int getId() {return itemData.getId();}
+
     public String getTitle()
     {
         return itemData.getTitle();
