@@ -19,11 +19,11 @@ import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.data.ItemData;
+import se.grupp1.antonsskafferi.data.OrderItemData;
 
 public class OrderSummaryPopup extends DialogFragment {
 
-    private ArrayList<ItemData> itemData = new ArrayList<>();
+    private ArrayList<OrderItemData> itemData = new ArrayList<>();
 
     private int tableId;
 
@@ -44,7 +44,7 @@ public class OrderSummaryPopup extends DialogFragment {
 
         for(int i = 0; i < itemData.size(); i++)
         {
-            ItemData order = itemData.get(i);
+            OrderItemData order = itemData.get(i);
 
             list.addView(new MenuComponent(this.getContext(), order));
         }
@@ -76,7 +76,7 @@ public class OrderSummaryPopup extends DialogFragment {
         getDialog().getWindow().setAttributes(params);
     }
 
-    public void setItemData(ArrayList<ItemData> itemData)
+    public void setItemData(ArrayList<OrderItemData> itemData)
     {
         this.itemData = itemData;
     }
@@ -85,7 +85,7 @@ public class OrderSummaryPopup extends DialogFragment {
     {
         for(int i = 0; i < itemData.size(); i++)
         {
-            ItemData itemData = this.itemData.get(i);
+            OrderItemData itemData = this.itemData.get(i);
 
             JSONObject object = new JSONObject();
 

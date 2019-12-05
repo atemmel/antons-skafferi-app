@@ -62,4 +62,8 @@
 
     <!-- Ny beställningssida -->
     <string name="edit_item">Redigera</string>
+
+    <!-- Redigera kvällsmeny -->
+    <string name="delete_item">Ta bort</string>
+
 </resources>
