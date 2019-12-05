@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
 public class OccupiedTablePopupFragment extends DialogFragment
 {
@@ -34,7 +33,7 @@ public class OccupiedTablePopupFragment extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_occupied_table_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_occupied_table, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 

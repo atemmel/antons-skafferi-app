@@ -36,7 +36,7 @@ public class FreeTablePopupFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_unbooked_table_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_unbooked_table, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 

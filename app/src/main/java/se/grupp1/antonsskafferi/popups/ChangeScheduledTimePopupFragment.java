@@ -25,7 +25,7 @@ public class ChangeScheduledTimePopupFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_change_sheduled_time_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_change_sheduled_time, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
