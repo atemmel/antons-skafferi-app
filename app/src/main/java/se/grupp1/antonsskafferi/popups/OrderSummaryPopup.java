@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.DialogFragment;
@@ -17,12 +19,11 @@ import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.data.Item;
-import se.grupp1.antonsskafferi.fragments.NewOrderFragment;
+import se.grupp1.antonsskafferi.data.ItemData;
 
 public class OrderSummaryPopup extends DialogFragment {
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<ItemData> itemData = new ArrayList<>();
 
     public OrderSummaryPopup() {
         // Required empty public constructor
@@ -31,9 +32,7 @@ public class OrderSummaryPopup extends DialogFragment {
 
     public static OrderSummaryPopup newInstance()
     {
-        OrderSummaryPopup fragment = new OrderSummaryPopup();
-
-        return fragment;
+        return new OrderSummaryPopup();
     }
 
     @Override
@@ -45,9 +44,9 @@ public class OrderSummaryPopup extends DialogFragment {
 
         LinearLayout list = v.findViewById(R.id.summaryItemsList);
 
-        for(int i = 0; i < items.size(); i++)
+        for(int i = 0; i < itemData.size(); i++)
         {
-            Item order = items.get(i);
+            ItemData order = itemData.get(i);
 
             list.addView(new MenuComponent(this.getContext(), order));
         }
@@ -73,36 +72,36 @@ public class OrderSummaryPopup extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        getDialog().getWindow().setAttributes(params);
     }
 
-    public void setItems(ArrayList<Item> items)
+    public void setItemData(ArrayList<ItemData> itemData)
     {
-        this.items = items;
+        this.itemData = itemData;
     }
 
     private void postOrder()
     {
-        for(int i = 0; i < items.size(); i++)
+        for(int i = 0; i < itemData.size(); i++)
         {
-            Item item = items.get(i);
+            ItemData itemData = this.itemData.get(i);
 
             JSONObject object = new JSONObject();
 
             try
             {
-                object.put("item", item.getId());
-                object.put("amount", item.getAmount());
-                object.put("note", item.getNote());
+                object.put("item", itemData.getId());
+                object.put("amount", itemData.getAmount());
+                object.put("note", itemData.getNote());
                 object.put("ready", false);
                 object.put("dinnertable", 2);   //TODO: Make this not hardcoded
 
                 HttpRequest.Response response = new HttpRequest.Response() {
                     @Override
-                    public void processFinish(String output) {
+                    public void processFinish(String output, int status) {
                         System.out.println(output);
                     }
                 };

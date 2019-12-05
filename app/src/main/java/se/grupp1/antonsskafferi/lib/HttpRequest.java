@@ -16,7 +16,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 {
     public interface Response
     {
-        void processFinish(String output);
+        void processFinish(String output, int status);
     }
 
 
@@ -25,6 +25,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     private String requestMethod;
     private String payload;
     private boolean isPost;
+    private int status;
 
     public HttpRequest(Response delegate)
     {
@@ -84,6 +85,8 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
                 System.out.println("Failed to connect, trying again. Recieved error code: " + connection.getResponseCode());
             }
 
+            status = connection.getResponseCode();
+
             try
             {
                 BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -122,6 +125,6 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     protected void onPostExecute(String result)
     {
         //System.out.println("got response");
-        delegate.processFinish(result);
+        delegate.processFinish(result, status);
     }
 }

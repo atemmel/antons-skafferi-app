@@ -66,7 +66,7 @@ public class TableOverviewFragment extends Fragment
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
             @Override
-            public void processFinish(String output) {
+            public void processFinish(String output, int status) {
                 try
                 {
                     JSONArray jsonArr = new JSONArray(output);
