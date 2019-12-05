@@ -59,4 +59,7 @@
     <string name="booking_time_text">Time</string>
     <string name="booking_persons_text">Antal</string>
     <string name="skriv_email">Skriv Email</string>
+
+    <!-- Ny beställningssida -->
+    <string name="edit_item">Redigera</string>
 </resources>
