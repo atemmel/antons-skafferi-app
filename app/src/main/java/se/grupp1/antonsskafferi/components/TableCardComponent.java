@@ -1,6 +1,7 @@
 package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +35,14 @@ public class TableCardComponent extends CardView
 
     final NavController navController;
 
+    final int tableId;
+
     public TableCardComponent(Context context, int tableId, Status status, NavController navController)
     {
         super(context);
 
         this.navController = navController;
+        this.tableId = tableId;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -125,7 +129,10 @@ public class TableCardComponent extends CardView
                         switch(optionClicked)
                         {
                             case TAKE_ORDER:
-                                navController.navigate(R.id.navigation_new_order);
+                                Bundle args = new Bundle();
+                                args.putInt("tableId", tableId);
+
+                                navController.navigate(R.id.navigation_new_order, args);
                                 break;
                             case WIPE_TABLE:
                                 setStatus(Status.FREE);

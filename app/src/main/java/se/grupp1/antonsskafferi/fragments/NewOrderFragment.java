@@ -26,6 +26,8 @@ import se.grupp1.antonsskafferi.R;
 
 public class NewOrderFragment extends Fragment
 {
+    int tableId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -37,6 +39,8 @@ public class NewOrderFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
+        tableId = getArguments().getInt("tableId");
+
         /*food.add("Carbonara");
         food.add("Lasagne");
         food.add("Oxfilé");
@@ -47,7 +51,6 @@ public class NewOrderFragment extends Fragment
         drinks.add("Ramlösa");*/
 
         getAllItems();
-
 
         view.findViewById(R.id.summaryButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,19 +64,18 @@ public class NewOrderFragment extends Fragment
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
+                OrderSummaryPopup popup = new OrderSummaryPopup(tableId);
 
-                newFragment.setItemData(getOrderedItems());
+                popup.setItemData(getOrderedItems());
 
-                newFragment.show(ft, "dialog");
+
+                popup.show(ft, "dialog");
             }
         });
     }
 
     private void getAllItems()
     {
-        final String urlString = "http://10.0.2.2:8080/items";
-
         final LinearLayout foodList = getView().findViewById(R.id.foodList);
         final LinearLayout drinksList = getView().findViewById(R.id.drinksList);
 
@@ -83,8 +85,6 @@ public class NewOrderFragment extends Fragment
             public void processFinish(String output, int status) {
                 try
                 {
-                    //System.out.println(output);
-
                     JSONArray jsonArr = new JSONArray(output);
                     for(int i = 0; i < jsonArr.length(); i++)
                     {
@@ -93,12 +93,17 @@ public class NewOrderFragment extends Fragment
                         String title = c.getString("title");
                         int id = c.getInt("itemid");
 
-                        System.out.println("FOOD: " + title);
 
-                        if(c.getString("type").toUpperCase().equals("DRYCK"))
+                        if(c.getString("itemcategory").toUpperCase().equals("5"))   //5 är dryck
+                        {
                             drinksList.addView(new MenuComponent(getContext(), new ItemData(id, title, 0, "")));
-                        else
-                            foodList.addView(new MenuComponent(getContext(), new ItemData(id, title, 0, "")));
+                        }
+                        else {
+                            ItemData item = new ItemData(id, title, 0, "");
+                            System.out.println("ID: " + item.getId());
+
+                            foodList.addView(new MenuComponent(getContext(), item));
+                        }
                     }
 
                 } catch (Exception e)
@@ -126,7 +131,7 @@ public class NewOrderFragment extends Fragment
 
             if(item.getAmount() > 0)
             {
-                itemData.add(new ItemData(1, item.getTitle(), item.getAmount(), item.getNote()));
+                itemData.add(new ItemData(item.getId(), item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
@@ -139,7 +144,12 @@ public class NewOrderFragment extends Fragment
 
             if(item.getAmount() > 0)
             {
-                itemData.add(new ItemData(1, item.getTitle(), item.getAmount(), item.getNote()));
+                System.out.println("Item id: " + item.getId());
+                System.out.println("Item title: " + item.getTitle());
+                System.out.println("Item amount: " + item.getAmount());
+
+
+                itemData.add(new ItemData(item.getId(), item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
