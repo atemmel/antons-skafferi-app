@@ -14,15 +14,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.data.ItemData;
+import se.grupp1.antonsskafferi.data.OrderItemData;
 import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 
 
 public class MenuComponent extends LinearLayout
 {
-    private ItemData itemData;
+    private OrderItemData itemData;
 
-    public MenuComponent(Context context, ItemData itemData)
+    public MenuComponent(Context context, OrderItemData itemData)
     {
         super(context);
 
@@ -33,7 +33,7 @@ public class MenuComponent extends LinearLayout
         init(itemData);
     }
 
-    public void init(ItemData itemData)
+    public void init(OrderItemData itemData)
     {
         this.itemData = itemData;
 
