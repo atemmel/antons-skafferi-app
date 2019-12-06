@@ -37,13 +37,14 @@ public class ScheduleFragment extends Fragment {
 
         //create a date string.
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        //get hold of textview.
-        TextView date  = (TextView) root.findViewById(R.id.todaysDate);
+        //get hold of textview
+        final TextView dateView  = root.findViewById(R.id.todaysDate);
         //set it as current date.
-        date.setText(date_n);
+        dateView.setText(date_n);
 
 
         Calendar cal = Calendar.getInstance();
+
         /*Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", cal.getTimeInMillis());
@@ -54,11 +55,18 @@ public class ScheduleFragment extends Fragment {
         startActivity(intent);*/
 
 
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
+                dateView.setText(Date);
+            }
+        });
+
         root.findViewById(R.id.changeTimeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
 
