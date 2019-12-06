@@ -36,6 +36,11 @@ public class DatabaseURL {
     public static final String getTables = base + "dinnertables";
 
 
+    // --- Kategorier
+
+    //Hämta
+    public static final String getCategories = base + "itemcategorys";
+
     private DatabaseURL() {
     }
 }

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.EditDinnerFragment">
+    android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/dinnerMenuItemsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Redigera middag här" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".fragments.EditDinnerFragment">
 
-</FrameLayout>
+
+    </LinearLayout>
+</ScrollView>
+
