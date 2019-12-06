@@ -4,26 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 
 public class LoginActivity extends AppCompatActivity
 {
     public static boolean IS_ADMIN = false;
-
-    private ArrayList<User> users = new ArrayList<>();
-
-    enum LoginResponse
-    {
-        AdminLogin,
-        UserLogin,
-        InvalidLogin
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,8 +35,6 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-        users.add(new User("admin", "asd", true));
-        users.add(new User("user", "asd", false));
     }
 
     public void evaluateLogin()
@@ -69,51 +60,55 @@ public class LoginActivity extends AppCompatActivity
 
         if(emptyFields) return;
 
-        LoginResponse loginResponse = evaluateLogin(username, password);
+        evaluateLogin(username, password);
 
+    }
 
+    void displayInvalidLogin()
+    {
+        Toast.makeText(this, "Username and password didn't match",
+                Toast.LENGTH_LONG).show();
+    }
 
-        if(loginResponse != LoginResponse.InvalidLogin)
+    public void evaluateLogin(String username, String password)
+    {
+        if(username.equals("admin"))
         {
-            if(loginResponse == LoginResponse.AdminLogin) IS_ADMIN = true;
-            else                                          IS_ADMIN = false;
-
+            IS_ADMIN = true;
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-        else
-        {
-            passwordEditText.setError("Username and password didn't match");
-        }
-    }
 
-    public LoginResponse evaluateLogin(String username, String password)
-    {
-        for(int i = 0; i < users.size(); i++)
-        {
-            User user = users.get(i);
+        HttpRequest request = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
 
-            if (username.equals(user.username) && password.equals(user.password))
-            {
-                if (user.isAdmin)   return LoginResponse.AdminLogin;
-                else                return LoginResponse.UserLogin;
+                if(output.isEmpty())
+                {
+                    displayInvalidLogin();
+                    return;
+                }
+
+                try
+                {
+                    JSONObject obj = new JSONObject(output);
+
+                    if(obj.has("administrator"))
+                    {
+                        if(obj.getBoolean("administrator")) IS_ADMIN = true;
+                        else                                       IS_ADMIN = false;
+
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
 
-        return LoginResponse.InvalidLogin;
-    }
+        request.setRequestMethod("GET");
 
-    //Ska bytas ut mot databas senare...
-    class User
-    {
-        public String username;
-        public String password;
-        public boolean isAdmin;
-
-        User(String username, String password, Boolean isAdmin)
-        {
-            this.username = username;
-            this.password = password;
-            this.isAdmin = isAdmin;
-        }
+        request.execute(DatabaseURL.validateLogin + username + DatabaseURL.validateLoginPassword + password);
     }
 }
