@@ -66,4 +66,11 @@
     <!-- Redigera kvällsmeny -->
     <string name="delete_item">Ta bort</string>
 
+    <!-- Redigera kvällsmeny popup -->
+    <string name="title_hint">Titel</string>
+    <string name="description_hint">Beskrivning</string>
+    <string name="price_hint">Pris</string>
+    <string name="category_hint">Välj kategori</string>
+    <string name="update_button_text">Uppdatera</string>
+
 </resources>

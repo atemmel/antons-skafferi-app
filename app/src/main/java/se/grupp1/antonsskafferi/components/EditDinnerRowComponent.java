@@ -2,15 +2,19 @@ package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.MenuItemData;
 import se.grupp1.antonsskafferi.data.OrderItemData;
+import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 public class EditDinnerRowComponent extends CardView
 {
@@ -41,19 +45,29 @@ public class EditDinnerRowComponent extends CardView
 
         inflater.inflate(R.layout.component_edit_dinner_item, this, true);
 
-        //ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
 
-        //layoutParams.setMargins(16, 16, 16, 0);
-
-
+        findViewById(R.id.editButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startEdit();
+            }
+        });
 
         this.setRadius(32f);
-        //this.setCardElevation(16f);
-
 
         ((TextView)findViewById(R.id.titleText)).setText(itemData.getTitle());
     }
 
+    private void startEdit()
+    {
+        FragmentActivity parent = (FragmentActivity)getContext();
+        FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
+        String tag = "dialog";
+
+        EditDinnerMenuPopup popup = new EditDinnerMenuPopup(itemData);
+
+        popup.show(ft, tag);
+    }
 
 }

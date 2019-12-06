@@ -33,17 +33,6 @@ public class EditDinnerFragment extends Fragment
     {
         View root = inflater.inflate(R.layout.fragment_edit_dinner, container, false);
 
-        //((LinearLayout) root.findViewById(R.id.dinnerMenuItemsList)).addView(new EditDinnerRowComponent(getContext(), new MenuItemData(1, "Carbonara", "test", 115, 1)));
-
-        //((LinearLayout) root.findViewById(R.id.dinnerMenuItemsList)).addView(new EditDinnerRowComponent(getContext(), new MenuItemData(1, "Carbonara", "test", 115, 1)));
-
-        root.findViewById(R.id.editButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startEdit();
-            }
-        });
-
         return root;
     }
 
@@ -53,11 +42,6 @@ public class EditDinnerFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 
         loadAllItems();
-    }
-
-    private void startEdit()
-    {
-        //Starta popup här...
     }
 
     private void loadAllItems()
