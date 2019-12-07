@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity
 
         if(emptyFields) return;
 
-        evaluateLogin(username, password);
+        evaluateCredentials(username, password);
 
     }
 
@@ -70,35 +70,43 @@ public class LoginActivity extends AppCompatActivity
                 Toast.LENGTH_LONG).show();
     }
 
-    public void evaluateLogin(String username, String password)
+    public void evaluateCredentials(String username, String password)
     {
+        //TODO: När det känns lämpligt, ta bort detta
+        //Tillåt inloggning som admin även om backend ej är igång
         if(username.equals("admin"))
         {
             IS_ADMIN = true;
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            return;
         }
 
         HttpRequest request = new HttpRequest(new HttpRequest.Response() {
-            @Override
-            public void processFinish(String output, int status) {
 
+            //TODO: Visa någon form av laddningsanimation tills vi har fått ett svar från databasen
+
+            @Override
+            public void processFinish(String output, int status)
+            {
+
+                //Om det ej finns ett svar från databasen är inloggningen felaktig
                 if(output.isEmpty())
                 {
                     displayInvalidLogin();
                     return;
                 }
 
+                /*
+                    Annars är inloggningen korrekt, kolla om det är en admin-inloggning eller ej
+                    och skicka vidare användaren till appens startsida.
+                 */
                 try
                 {
                     JSONObject obj = new JSONObject(output);
 
-                    if(obj.has("administrator"))
-                    {
-                        if(obj.getBoolean("administrator")) IS_ADMIN = true;
-                        else                                       IS_ADMIN = false;
+                    IS_ADMIN = obj.getBoolean("administrator");
 
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
                 catch (Exception e)
                 {
@@ -108,7 +116,6 @@ public class LoginActivity extends AppCompatActivity
         });
 
         request.setRequestMethod("GET");
-
         request.execute(DatabaseURL.validateLogin + username + DatabaseURL.validateLoginPassword + password);
     }
 }
