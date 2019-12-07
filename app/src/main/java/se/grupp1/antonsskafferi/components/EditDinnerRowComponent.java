@@ -1,12 +1,15 @@
 package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,6 +17,9 @@ import androidx.fragment.app.FragmentTransaction;
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.MenuItemData;
 import se.grupp1.antonsskafferi.data.OrderItemData;
+import se.grupp1.antonsskafferi.fragments.EditDinnerFragment;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 public class EditDinnerRowComponent extends CardView
@@ -53,6 +59,13 @@ public class EditDinnerRowComponent extends CardView
             }
         });
 
+        findViewById(R.id.deleteButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog();
+            }
+        });
+
         this.setRadius(32f);
 
         ((TextView)findViewById(R.id.titleText)).setText(itemData.getTitle());
@@ -65,9 +78,70 @@ public class EditDinnerRowComponent extends CardView
 
         String tag = "dialog";
 
-        EditDinnerMenuPopup popup = new EditDinnerMenuPopup(itemData);
+        EditDinnerMenuPopup popup = new EditDinnerMenuPopup(itemData, new EditDinnerMenuPopup.Callback() {
+            @Override
+            public void onChanged(MenuItemData itemData)
+            {
+                updateData(itemData);
+            }
+        });
 
         popup.show(ft, tag);
     }
 
+    private void updateData(MenuItemData itemData)
+    {
+        this.itemData = itemData;
+
+        ((TextView)findViewById(R.id.titleText)).setText(itemData.getTitle());
+    }
+
+    private void deleteDialog()
+    {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        delete();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        String message =    "Du är påväg att ta bort \"" + itemData.getTitle() + "\" från menyn. \n" +
+                            "Är du säker?";
+
+        builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                .setNegativeButton("Avbryt", dialogClickListener).show();
+    }
+
+    private void delete()
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200) {
+                    Toast.makeText(getContext(), "Kunde inte ta bort objekt, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                killSelf();
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("DELETE");
+
+        httpRequest.execute(DatabaseURL.deleteItem + itemData.getId());
+    }
+
+    private void killSelf()
+    {
+        ((ViewGroup) getParent()).removeView(this);
+    }
 }

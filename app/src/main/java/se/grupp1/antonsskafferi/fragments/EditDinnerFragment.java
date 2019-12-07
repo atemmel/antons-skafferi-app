@@ -1,6 +1,7 @@
 package se.grupp1.antonsskafferi.fragments;
 
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -48,38 +49,45 @@ public class EditDinnerFragment extends Fragment
     {
         final LinearLayout itemsList = getView().findViewById(R.id.dinnerMenuItemsList);
 
+        itemsList.removeAllViews();
+
         HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
             @Override
             public void processFinish(String output, int status)
             {
-                try
+            try
+            {
+                JSONArray jsonArr = new JSONArray(output);
+
+                for(int i = 0; i < jsonArr.length(); i++)
                 {
-                    JSONArray jsonArr = new JSONArray(output);
+                    JSONObject c = jsonArr.getJSONObject(i);
 
-                    for(int i = 0; i < jsonArr.length(); i++)
-                    {
-                        JSONObject c = jsonArr.getJSONObject(i);
+                    int id = c.getInt("itemid");
+                    String title = c.getString("title");
+                    int price = c.getInt("price");
+                    String description = c.getString("description");
+                    int categoryId = c.getInt("itemcategory");
 
-                        int id = c.getInt("itemid");
-                        String title = c.getString("title");
-                        int price = c.getInt("price");
-                        String description = c.getString("description");
-                        int categoryId = c.getInt("itemcategory");
+                    MenuItemData item = new MenuItemData(id, title, description, price, categoryId);
 
-                        MenuItemData item = new MenuItemData(id, title, description, price, categoryId);
+                    itemsList.addView(new EditDinnerRowComponent(getContext(), item));
 
-                        itemsList.addView(new EditDinnerRowComponent(getContext(), item));
-
-                    }
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
                 }
+
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             }
         });
 
         httpRequest.setRequestMethod("GET");
         httpRequest.execute(DatabaseURL.getItems);
+    }
+
+    public void refresh()
+    {
+        loadAllItems();
     }
 }

@@ -60,7 +60,10 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
             if(isPost) {
                 System.out.println("POSTING DATA");
                 connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                connection.setRequestProperty("Content-Length", String.valueOf(payload.length()));
+
+                //TODO: Check to make sure this row is not important
+                //connection.setRequestProperty("Content-Length", String.valueOf(payload.length()));
+
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setDoOutput(true);
                 connection.setDoInput(true);

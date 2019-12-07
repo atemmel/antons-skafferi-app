@@ -5,7 +5,7 @@ public class DatabaseURL {
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
-    private static final boolean usingLocal = false;
+    private static final boolean usingLocal = true;
 
     private static final String base = usingLocal ? local : remote;
 
@@ -22,6 +22,12 @@ public class DatabaseURL {
 
     //Hämta
     public static final String getItems = base + "items";
+
+    //Lägg till/Redigera
+    public static final String insertItem = base + "post/items?item=";
+
+    //Ta bort
+    public static final String deleteItem = base + "items/delete/item?id=";
 
 
     // --- Beställningar

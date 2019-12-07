@@ -1,16 +1,20 @@
 package se.grupp1.antonsskafferi.popups;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import org.json.JSONArray;
@@ -38,10 +42,18 @@ public class EditDinnerMenuPopup extends DialogFragment
     private Map<Integer, String> category_map = new HashMap<>();
     private Map<String, Integer> inverse_category_map = new HashMap<>();
 
+    Callback callback;
 
-    public EditDinnerMenuPopup(MenuItemData itemData)
+    public interface Callback
+    {
+        void onChanged(MenuItemData itemData);
+    }
+
+    public EditDinnerMenuPopup(MenuItemData itemData, Callback callback)
     {
         this.itemData = itemData;
+
+        this.callback = callback;
     }
 
     @Override
@@ -67,7 +79,39 @@ public class EditDinnerMenuPopup extends DialogFragment
             }
         });
 
+        v.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
+
         return v;
+    }
+
+    @Override
+    public void dismiss()
+    {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                switch (which)
+                {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        EditDinnerMenuPopup.super.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        String message =    "Du kommer förlora dina ändringar \n" +
+                "Är du säker på att du vill fortsätta?";
+
+        builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                .setNegativeButton("Avbryt", dialogClickListener).show();
     }
 
     @Override
@@ -83,7 +127,7 @@ public class EditDinnerMenuPopup extends DialogFragment
     private void initialize_categories()
     {
 
-        //TODO: Move this so categories are only loaded once, not every time an item is edited
+        //TODO: Move this somewhere so categories are only loaded once, not every time an item is edited
         HttpRequest request = new HttpRequest(new HttpRequest.Response() {
             @Override
             public void processFinish(String output, int status) {
@@ -141,4 +185,55 @@ public class EditDinnerMenuPopup extends DialogFragment
 
         price.setText(Integer.toString(itemData.getPrice()));
     }
+
+    private void updateItemData()
+    {
+        EditText title = getView().findViewById(R.id.editTitleText);
+        itemData.setTitle(title.getText().toString());
+
+        EditText description = getView().findViewById(R.id.editDescriptionText);
+        itemData.setDescription(description.getText().toString());
+
+        EditText price = getView().findViewById(R.id.editPriceText);
+        itemData.setPrice(Integer.parseInt(price.getText().toString()));
+
+        Spinner categoryDropDown = getView().findViewById(R.id.category_dropdown);
+
+        String categoryName = categoryDropDown.getSelectedItem().toString();
+
+        itemData.setCategoryId(inverse_category_map.get(categoryName));
+    }
+
+    private void submit()
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                System.out.println(status);
+
+                if(status != 200)
+                {
+                    Toast.makeText(getActivity(), "Kunde inte genomföra redigera, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                callback.onChanged(itemData);
+
+                EditDinnerMenuPopup.super.dismiss();
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("POST");
+
+        updateItemData();
+
+        String payload = itemData.toJSONString();
+        System.out.println(payload);
+        httpRequest.setPayload(payload);
+
+        httpRequest.execute(DatabaseURL.insertItem);
+    }
+
+
 }
