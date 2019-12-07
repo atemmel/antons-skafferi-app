@@ -14,6 +14,7 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,53 +32,35 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_schedule, container, false);
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_schedule);
 
         CalendarView calendar = (CalendarView) root.findViewById(R.id.calendar); // get the reference of CalendarView
         calendar.setDate(System.currentTimeMillis()); // set selected date 22 May 2016 in milliseconds
         calendar.setShowWeekNumber(true);
 
         //create a date string.
-        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        String date_n = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date());
         //get hold of textview
         final TextView dateView  = root.findViewById(R.id.todaysDate);
         //set it as current date.
         dateView.setText(date_n);
 
-
-        Calendar cal = Calendar.getInstance();
-
-        /*Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("beginTime", cal.getTimeInMillis());
-        intent.putExtra("allDay", true);
-        intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-        intent.putExtra("title", "A Test Event from android app");
-        startActivity(intent);*/
-
-
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
+                month = month +1;
+                SimpleDateFormat monthParse = new SimpleDateFormat("MM");
+                SimpleDateFormat monthDisplay = new SimpleDateFormat("MMMM");
+
+                String Date = null;
+                try {
+                    Date = monthDisplay.format(monthParse.parse(Integer.toString(month))) + " " + dayOfMonth + ", " + year;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 dateView.setText(Date);
             }
         });
-
-        /*root.findViewById(R.id.changeTimeButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new ChangeScheduledTimePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });*/
 
         return root;
 
@@ -95,10 +78,15 @@ public class ScheduleFragment extends Fragment {
         worker1.addItem("Tim");
         workList.addView(worker1);
 
-        ScheduledTimesComponent worker2 = new ScheduledTimesComponent(getContext(), "21:00 - 00:00");
+        ScheduledTimesComponent worker2 = new ScheduledTimesComponent(getContext(), "20:00 - 00:00");
         worker2.showChangeButton(true);
         worker2.addItem("Ylva");
         workList.addView(worker2);
+
+        ScheduledTimesComponent worker3 = new ScheduledTimesComponent(getContext(), "20:00 - 00:00");
+        worker3.showChangeButton(false);
+        worker3.addItem("Anton");
+        workList.addView(worker3);
 
     }
 
