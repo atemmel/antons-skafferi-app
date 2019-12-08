@@ -35,6 +35,8 @@ public class DatabaseURL {
     //Lägg till
     public static final String insertOrder = base + "post/orders?order=";
 
+    //Hämta
+    public static final String getOrders = base + "orders";
 
     // --- Bord
 

@@ -21,7 +21,7 @@ public class OrderCardComponent extends CardView
 
     //ArrayList<String> items = new ArrayList<>();
 
-    public OrderCardComponent(Context context, String tableId)
+    public OrderCardComponent(Context context, int tableId)
     {
         super(context);
 
@@ -30,7 +30,7 @@ public class OrderCardComponent extends CardView
 
         inflater.inflate(R.layout.component_order, this, true);
 
-        ((TextView) findViewById(R.id.tableIdLabel)).setText(tableId);
+        ((TextView) findViewById(R.id.tableIdLabel)).setText(Integer.toString(tableId));
 
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -39,8 +39,6 @@ public class OrderCardComponent extends CardView
         requestLayout();
 
         setReady(readyStatus);
-
-        //inflate(context, R.layout.component_order, null);
     }
 
     public void setReady(boolean readyStatus)
