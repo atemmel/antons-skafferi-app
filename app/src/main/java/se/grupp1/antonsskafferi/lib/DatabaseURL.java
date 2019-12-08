@@ -12,10 +12,19 @@ public class DatabaseURL {
     // --- Bokningar
 
     //Hämta
+
+    //Alla
     public static final String getCustomers = base + "customers";
+
+    //För ett bord
+    public static final String getBookingsForTable = getCustomers + "/dinnertable?dinnerTable=";
 
     //Lägg till
     public static final String insertCustomer = base + "post/customers?customer=";
+
+
+    //Ta bort
+    public static final String deleteCustomer = base + "customers/delete/customer?id=";
 
 
     // --- Items

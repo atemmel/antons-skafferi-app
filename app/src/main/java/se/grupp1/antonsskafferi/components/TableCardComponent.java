@@ -1,13 +1,16 @@
 package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -15,9 +18,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.popups.BookedTablePopupFragment;
+import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 import se.grupp1.antonsskafferi.popups.FreeTablePopupFragment;
 import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
@@ -31,18 +40,21 @@ public class TableCardComponent extends CardView
         OCCUPIED
     }
 
+    private int customerId;
+
     private Status status;
 
     final NavController navController;
 
     final int tableId;
 
-    public TableCardComponent(Context context, int tableId, Status status, NavController navController)
+    public TableCardComponent(Context context, int tableId, int customerId, Status status, NavController navController)
     {
         super(context);
 
         this.navController = navController;
         this.tableId = tableId;
+        this.customerId = customerId;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -75,6 +87,12 @@ public class TableCardComponent extends CardView
         setStatus(status);
     }
 
+
+    public void setCustomerId(int id)
+    {
+        this.customerId = id;
+    }
+
     private void setStatus(Status status)
     {
         this.status = status;
@@ -92,6 +110,7 @@ public class TableCardComponent extends CardView
                 break;
         }
     }
+
 
     private void showPopup()
     {
@@ -135,8 +154,28 @@ public class TableCardComponent extends CardView
                                 navController.navigate(R.id.navigation_new_order, args);
                                 break;
                             case WIPE_TABLE:
-                                setStatus(Status.FREE);
+                            {
+                                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which) {
+                                            case DialogInterface.BUTTON_POSITIVE:
+                                                wipeTable();
+                                                break;
+                                        }
+                                    }
+                                };
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                                String message = "Du är påväg att rensa bord " + tableId + ". \n" +
+                                        "Är du säker på att du vill fortsätta?";
+
+                                builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                                        .setNegativeButton("Avbryt", dialogClickListener).show();
+
                                 break;
+                            }
                             case SHOW_BILL:
                                 break;
                         }
@@ -146,6 +185,29 @@ public class TableCardComponent extends CardView
                 break;
             }
         }
+    }
+
+    private void wipeTable()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getContext(), "Kunde inte rensa bordet, var vänlig försök igen. Felkod: ",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                setStatus(Status.FREE);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("DELETE");
+        request.execute(DatabaseURL.deleteCustomer + customerId);
     }
 
 }

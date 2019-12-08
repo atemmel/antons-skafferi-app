@@ -8,16 +8,22 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.ref.Reference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import se.grupp1.antonsskafferi.components.TableCardComponent;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
@@ -48,6 +54,19 @@ public class TableOverviewFragment extends Fragment
             }
         });
 
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                loadTables();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return root;
     }
 
@@ -61,30 +80,71 @@ public class TableOverviewFragment extends Fragment
 
     private void loadTables()
     {
-        final GridLayout tableGrid = (GridLayout) getView().findViewById(R.id.tableGrid);
+        final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
+
+        tableGrid.removeAllViews();
 
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
             @Override
             public void processFinish(String output, int status) {
-                try
-                {
-                    JSONArray jsonArr = new JSONArray(output);
+            try
+            {
+                JSONArray jsonArr = new JSONArray(output);
 
-                    for(int i = 0; i < jsonArr.length(); i++)
+                for(int i = 0; i < jsonArr.length(); i++)
+                {
+                    JSONObject c = jsonArr.getJSONObject(i);
+
+                    final int tableId = c.getInt("dinnertableid");
+
+                    //TODO: Move this somewhere else to make the code faster, there are too many loops in each other atm
+                    HttpRequest.Response response = new HttpRequest.Response()
                     {
-                        JSONObject c = jsonArr.getJSONObject(i);
+                        @Override
+                        public void processFinish(String output, int status)
+                        {
+                            TableCardComponent.Status tableStatus = TableCardComponent.Status.FREE;
 
-                        int id = c.getInt("dinnertableid");
+                            int customerId = -1;
 
-                        tableGrid.addView(new TableCardComponent(getContext(), id, TableCardComponent.Status.FREE, Navigation.findNavController(getView())));
-                    }
+                            try
+                            {
+                                JSONArray jsonArr = new JSONArray(output);
 
+                                for(int i = 0; i < jsonArr.length(); i++)
+                                {
+                                    JSONObject c = jsonArr.getJSONObject(i);
+
+                                    customerId = c.getInt("customerid");
+
+                                    String string_date = c.getString("bookingdate");
+                                    String string_time = c.getString("bookingtime");
+
+
+                                    if(isBookedNow(string_date, string_time))   tableStatus = TableCardComponent.Status.OCCUPIED;
+                                    else                                        tableStatus = TableCardComponent.Status.FREE;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                            tableGrid.addView(new TableCardComponent(getContext(), tableId, customerId, tableStatus, Navigation.findNavController(getView())));
+                        }
+                    };
+
+                    HttpRequest request = new HttpRequest(response);
+                    request.setRequestMethod("GET");
+                    request.execute(DatabaseURL.getBookingsForTable + tableId);
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             }
         });
 
@@ -93,9 +153,24 @@ public class TableOverviewFragment extends Fragment
         request.execute(DatabaseURL.getTables);
     }
 
-    public void newOrder()
+    private boolean isBookedNow(String date_string, String time_string)
     {
-        //NavController navController =
-        //navController.navigate(R.id.navigation_new_order);
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        String combined_strings = date_string + " " + time_string;
+
+        long milliseconds_date = 0;
+
+        try {
+            Date d = f.parse(combined_strings);
+            milliseconds_date = d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(!DateUtils.isToday(milliseconds_date)) return false;
+
+        if(System.currentTimeMillis() >= milliseconds_date) return true;
+        else                                                return false;
     }
 }
