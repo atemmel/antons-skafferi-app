@@ -40,9 +40,8 @@ public class ViewOrdersFragment extends Fragment
             @Override
             public void onRefresh()
             {
-                Toast.makeText(getActivity(), "Refresh",
-                        Toast.LENGTH_SHORT
-                ).show();
+
+                loadOrders();
 
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -83,6 +82,8 @@ public class ViewOrdersFragment extends Fragment
     private void loadOrders()
     {
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
+
+        orderList.removeAllViews();
 
         HttpRequest.Response response = new HttpRequest.Response()
         {
