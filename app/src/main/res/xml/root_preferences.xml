@@ -1,20 +1,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/example_header">
-
-        <SwitchPreferenceCompat
-            app:key="main_setting"
-            app:title="@string/first_setting_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="main_setting"
-            app:key="other_setting"
-            app:summaryOff="@string/example_setting_summary_on"
-            app:summaryOn="@string/example_setting_summary_off"
-            app:title="@string/other_setting_title" />
-
-    </PreferenceCategory>
     <PreferenceCategory android:title="Övrigt">
         <Preference
             android:defaultValue="true"
