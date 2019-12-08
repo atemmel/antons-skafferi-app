@@ -127,6 +127,8 @@ public class ViewOrdersFragment extends Fragment
 
                         int id = obj.getJSONObject("dinnertable").getInt("dinnertableid");
 
+                        boolean readyStatus = obj.getBoolean("ready");
+
                         if(id == prev_id)
                         {
                             OrderCardComponent order = (OrderCardComponent) orderList.getChildAt(orderList.getChildCount() -1);
@@ -135,6 +137,8 @@ public class ViewOrdersFragment extends Fragment
                         else
                         {
                             OrderCardComponent order = new OrderCardComponent(getContext(), id);
+
+                            order.setReady(readyStatus);
 
                             order.addItem(obj.getInt("amount"), obj.getJSONObject("item").getString("title"));
 
