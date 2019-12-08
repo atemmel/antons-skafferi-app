@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,11 @@ import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 public class ViewOrdersFragment extends Fragment
 {
+    public interface LoadingCallback
+    {
+        void finishedLoading();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -41,9 +47,14 @@ public class ViewOrdersFragment extends Fragment
             public void onRefresh()
             {
 
-                loadOrders();
+                loadOrders(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading()
+                    {
+                        swipeRefreshLayout.setRefreshing(false);
 
-                swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
@@ -76,10 +87,15 @@ public class ViewOrdersFragment extends Fragment
 
         orderList.addView(order2);*/
 
-        loadOrders();
+        loadOrders(new LoadingCallback() {
+            @Override
+            public void finishedLoading() {
+
+            }
+        });
     }
 
-    private void loadOrders()
+    private void loadOrders(final LoadingCallback callback)
     {
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
@@ -130,6 +146,10 @@ public class ViewOrdersFragment extends Fragment
                 catch (Exception e)
                 {
                     e.printStackTrace();
+                }
+                finally
+                {
+                    callback.finishedLoading();
                 }
             }
         };

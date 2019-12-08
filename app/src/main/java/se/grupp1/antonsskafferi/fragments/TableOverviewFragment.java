@@ -29,10 +29,16 @@ import se.grupp1.antonsskafferi.components.TableCardComponent;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 
 public class TableOverviewFragment extends Fragment
 {
+    public interface LoadingCallback
+    {
+        void finishedLoading();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -61,9 +67,12 @@ public class TableOverviewFragment extends Fragment
             @Override
             public void onRefresh()
             {
-                loadTables();
-
-                swipeRefreshLayout.setRefreshing(false);
+                loadTables(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
@@ -75,10 +84,15 @@ public class TableOverviewFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-        loadTables();
+        loadTables(new LoadingCallback() {
+            @Override
+            public void finishedLoading() {
+
+            }
+        });
     }
 
-    private void loadTables()
+    private void loadTables(final LoadingCallback callback)
     {
         final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
 
@@ -129,6 +143,10 @@ public class TableOverviewFragment extends Fragment
                             catch (Exception e)
                             {
                                 e.printStackTrace();
+                            }
+                            finally
+                            {
+                                callback.finishedLoading();
                             }
 
                             tableGrid.addView(new TableCardComponent(getContext(), tableId, customerId, tableStatus, Navigation.findNavController(getView())));
