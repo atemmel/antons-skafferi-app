@@ -37,7 +37,7 @@ import se.grupp1.antonsskafferi.lib.HttpRequest;
 
 public class EditDinnerMenuPopup extends DialogFragment
 {
-    private MenuItemData itemData;
+    private MenuItemData itemData = new MenuItemData();
 
     private Map<Integer, String> category_map = new HashMap<>();
     private Map<String, Integer> inverse_category_map = new HashMap<>();
@@ -47,6 +47,10 @@ public class EditDinnerMenuPopup extends DialogFragment
     public interface Callback
     {
         void onChanged(MenuItemData itemData);
+    }
+
+    public EditDinnerMenuPopup(Callback callback){
+        this.callback = callback;
     }
 
     public EditDinnerMenuPopup(MenuItemData itemData, Callback callback)
@@ -182,8 +186,11 @@ public class EditDinnerMenuPopup extends DialogFragment
         description.setText(itemData.getDescription());
 
         TextView price = getView().findViewById(R.id.editPriceText);
+        String priceString = price.getText().toString();
 
-        price.setText(Integer.toString(itemData.getPrice()));
+        if(priceString.equals("-1")){
+            price.setText(Integer.toString(itemData.getPrice()));
+        }
     }
 
     private void updateItemData()
@@ -204,8 +211,44 @@ public class EditDinnerMenuPopup extends DialogFragment
         itemData.setCategoryId(inverse_category_map.get(categoryName));
     }
 
+    private Boolean emptyFields(){
+
+        EditText titleEditText = getView().findViewById(R.id.editTitleText);
+        String title = titleEditText.getText().toString();
+
+        EditText descriptionEditText = getView().findViewById(R.id.editDescriptionText);
+        String description = descriptionEditText.getText().toString();
+
+        EditText priceEditText = getView().findViewById(R.id.editPriceText);
+        String price = priceEditText.getText().toString();
+
+        boolean emptyFields = false;
+
+        if(title.isEmpty())
+        {
+            emptyFields = true;
+            titleEditText.setError("Skriv in en titel");
+        }
+        if(description.isEmpty())
+        {
+            emptyFields = true;
+            descriptionEditText.setError("Skriv in en beskrivning");
+        }
+
+        if(price.isEmpty())
+        {
+            emptyFields = true;
+            priceEditText.setError("Skriv in ett pris");
+        }
+
+        if(emptyFields) return true;
+        else return false;
+    }
+
     private void submit()
     {
+        if(emptyFields())   return;
+
         HttpRequest.Response response = new HttpRequest.Response() {
             @Override
             public void processFinish(String output, int status) {

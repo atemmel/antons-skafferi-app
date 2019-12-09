@@ -200,5 +200,4 @@ public class BookingFragment extends Fragment {
         httpRequest.execute(DatabaseURL.insertCustomer);
     }
 
-
 }

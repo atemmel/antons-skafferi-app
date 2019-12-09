@@ -22,7 +22,6 @@ public class DatabaseURL {
     //Lägg till
     public static final String insertCustomer = base + "post/customers?customer=";
 
-
     //Ta bort
     public static final String deleteCustomer = base + "customers/delete/customer?id=";
 
