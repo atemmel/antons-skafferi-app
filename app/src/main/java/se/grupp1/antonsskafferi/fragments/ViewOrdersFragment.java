@@ -127,11 +127,13 @@ public class ViewOrdersFragment extends Fragment
 
                         int id = obj.getJSONObject("dinnertable").getInt("dinnertableid");
 
-                        boolean readyStatus = obj.getBoolean("ready");
+                        int readyStatus = obj.getInt("ready");
 
-                        if(id == prev_id)
+                        if(readyStatus == 2) continue;
+
+                        if (id == prev_id)
                         {
-                            OrderCardComponent order = (OrderCardComponent) orderList.getChildAt(orderList.getChildCount() -1);
+                            OrderCardComponent order = (OrderCardComponent) orderList.getChildAt(orderList.getChildCount() - 1);
                             order.addItem(obj.getInt("amount"), obj.getJSONObject("item").getString("title"));
                         }
                         else

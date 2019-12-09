@@ -47,6 +47,9 @@ public class DatabaseURL {
     //Hämta
     public static final String getOrders = base + "orders";
 
+    //Sätt levererad
+    public static final String setDelivered = base + "post/delivered?dinnertable=";
+
     // --- Bord
 
     //Hämta

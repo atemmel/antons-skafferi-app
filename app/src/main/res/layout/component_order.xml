@@ -44,6 +44,13 @@
                 android:gravity="center"
                 android:text="Beställt"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <ImageView
+                android:id="@+id/doneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                app:srcCompat="@drawable/ic_check_24dp" />
         </TableRow>
 
     </TableLayout>
