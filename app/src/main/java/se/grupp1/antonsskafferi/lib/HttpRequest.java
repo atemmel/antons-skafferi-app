@@ -2,6 +2,8 @@ package se.grupp1.antonsskafferi.lib;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
          * @param output En sträng med det svar som mottogs från APIn.
          * @param status Statuskoden för requesten
          */
-        void processFinish(String output, int status);
+        void processFinish(String output, int status) throws JSONException;
     }
 
     private Response delegate;
@@ -167,6 +169,10 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     protected void onPostExecute(String result)
     {
         //System.out.println("got response");
-        delegate.processFinish(result, status);
+        try {
+            delegate.processFinish(result, status);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
