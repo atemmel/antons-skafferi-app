@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,6 +28,7 @@ import se.grupp1.antonsskafferi.data.MenuItemData;
 import se.grupp1.antonsskafferi.data.OrderItemData;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
+import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 public class EditDinnerFragment extends Fragment
 {
@@ -34,6 +37,22 @@ public class EditDinnerFragment extends Fragment
     {
         View root = inflater.inflate(R.layout.fragment_edit_dinner, container, false);
 
+        FloatingActionButton fab = root.findViewById(R.id.fab_add_dinner);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tag = "dialog";
+                EditDinnerMenuPopup popup = new EditDinnerMenuPopup(new EditDinnerMenuPopup.Callback() {
+                    @Override
+                    public void onChanged(MenuItemData itemData)
+                    {
+                        //updateData(itemData);
+                    }
+                });
+                popup.show(getFragmentManager(), tag);
+            }
+        });
+
         return root;
     }
 
@@ -41,7 +60,6 @@ public class EditDinnerFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-
         loadAllItems();
     }
 

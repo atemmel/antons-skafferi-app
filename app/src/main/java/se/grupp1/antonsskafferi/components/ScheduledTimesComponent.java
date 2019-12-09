@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopupFragment;
+import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopup;
 
 public class ScheduledTimesComponent extends CardView
 {
@@ -52,7 +52,7 @@ public class ScheduledTimesComponent extends CardView
                 FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
                 String tag = "dialog";
-                ChangeScheduledTimePopupFragment popup = new ChangeScheduledTimePopupFragment();
+                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup();
 
                 popup.show(ft, tag);
             }
