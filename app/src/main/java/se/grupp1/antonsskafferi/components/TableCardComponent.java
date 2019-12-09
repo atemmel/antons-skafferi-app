@@ -119,6 +119,9 @@ public class TableCardComponent extends CardView
 
         String tag = "dialog";
 
+        final Bundle args = new Bundle();
+        args.putInt("tableId", tableId);
+
         switch(status)
         {
             case FREE: {
@@ -148,9 +151,6 @@ public class TableCardComponent extends CardView
                         switch(optionClicked)
                         {
                             case TAKE_ORDER:
-                                Bundle args = new Bundle();
-                                args.putInt("tableId", tableId);
-
                                 navController.navigate(R.id.navigation_new_order, args);
                                 break;
                             case WIPE_TABLE:
@@ -177,6 +177,7 @@ public class TableCardComponent extends CardView
                                 break;
                             }
                             case SHOW_BILL:
+                                navController.navigate(R.id.navigation_show_check, args);
                                 break;
                         }
                     }

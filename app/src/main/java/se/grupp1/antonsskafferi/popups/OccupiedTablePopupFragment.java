@@ -60,6 +60,14 @@ public class OccupiedTablePopupFragment extends DialogFragment
             }
         });
 
+        v.findViewById(R.id.showCheckButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.clicked(Callback.OptionClicked.SHOW_BILL);
+                dismiss();
+            }
+        });
+
         return v;
     }
 
