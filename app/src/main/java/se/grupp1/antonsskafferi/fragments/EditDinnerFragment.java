@@ -42,10 +42,17 @@ public class EditDinnerFragment extends Fragment
             @Override
             public void onClick(View view) {
                 String tag = "dialog";
-                EditDinnerMenuPopup popup = new EditDinnerMenuPopup();
+                EditDinnerMenuPopup popup = new EditDinnerMenuPopup(new EditDinnerMenuPopup.Callback() {
+                    @Override
+                    public void onChanged(MenuItemData itemData)
+                    {
+                        //updateData(itemData);
+                    }
+                });
                 popup.show(getFragmentManager(), tag);
             }
         });
+
         return root;
     }
 

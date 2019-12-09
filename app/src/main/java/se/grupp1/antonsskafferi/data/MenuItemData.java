@@ -7,10 +7,12 @@ import org.json.JSONObject;
 public class MenuItemData
 {
     private int id = -1;
-    private String title;
-    private String description;
-    private int price;
-    private int categoryId;
+    private String title = "";
+    private String description = "";
+    private int price = -1;
+    private int categoryId = 1;
+
+    public MenuItemData(){}
 
     public MenuItemData(String title, String description, int price, int categoryId)
     {
