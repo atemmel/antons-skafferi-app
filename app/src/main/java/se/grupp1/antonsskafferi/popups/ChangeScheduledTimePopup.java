@@ -10,14 +10,14 @@ import androidx.fragment.app.DialogFragment;
 import se.grupp1.antonsskafferi.R;
 
 
-public class ChangeScheduledTimePopupFragment extends DialogFragment {
+public class ChangeScheduledTimePopup extends DialogFragment {
 
-    public ChangeScheduledTimePopupFragment() {}
+    public ChangeScheduledTimePopup() {}
 
 
-    public static ChangeScheduledTimePopupFragment newInstance()
+    public static ChangeScheduledTimePopup newInstance()
     {
-        ChangeScheduledTimePopupFragment fragment = new ChangeScheduledTimePopupFragment();
+        ChangeScheduledTimePopup fragment = new ChangeScheduledTimePopup();
 
         return fragment;
     }
@@ -25,7 +25,7 @@ public class ChangeScheduledTimePopupFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_change_sheduled_time_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_change_sheduled_time, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 

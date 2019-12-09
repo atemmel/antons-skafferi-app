@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
 public class BookedTablePopupFragment extends DialogFragment
 {
@@ -25,7 +24,7 @@ public class BookedTablePopupFragment extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_booked_table_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_booked_table, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
@@ -39,7 +38,7 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Booked();
+                //((TableOverviewFragment) getParentFragment()).setTable4Booked();
                 dismiss();
             }
         });
@@ -47,7 +46,7 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
+                //((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
                 dismiss();
             }
         });

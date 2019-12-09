@@ -79,10 +79,18 @@
         <action
             android:id="@+id/action_navigation_table_overview_to_navigation_view_bookings"
             app:destination="@id/navigation_view_bookings" />
+        <action
+            android:id="@+id/action_navigation_table_overview_to_navigation_show_check"
+            app:destination="@id/navigation_show_check" />
     </fragment>
     <fragment
         android:id="@+id/navigation_view_bookings"
         android:name="se.grupp1.antonsskafferi.fragments.ViewBookingsFragment"
         android:label="Bokningsöversikt"
         tools:layout="@layout/fragment_view_bookings" />
+    <fragment
+        android:id="@+id/navigation_show_check"
+        android:name="se.grupp1.antonsskafferi.fragments.ShowCheckFragment"
+        android:label="Visa Nota"
+        tools:layout="@layout/fragment_show_check" />
 </navigation>

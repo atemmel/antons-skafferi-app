@@ -2,27 +2,42 @@ package se.grupp1.antonsskafferi.fragments;
 
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.Toast;
 
-import se.grupp1.antonsskafferi.popups.BookedTablePopupFragment;
-import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.ref.Reference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import se.grupp1.antonsskafferi.components.TableCardComponent;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.popups.UnbookedTablePopupFragment;
+import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 
 
-public class TableOverviewFragment extends Fragment {
-
-    DialogFragment popup;
+public class TableOverviewFragment extends Fragment
+{
+    public interface LoadingCallback
+    {
+        void finishedLoading();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -45,81 +60,135 @@ public class TableOverviewFragment extends Fragment {
             }
         });
 
-        root.findViewById(R.id.tableId1).setOnClickListener(new View.OnClickListener() {
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
             @Override
-            public void onClick(View v)
+            public void onRefresh()
             {
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new OccupiedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
-        root.findViewById(R.id.tableId2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new UnbookedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
-        root.findViewById(R.id.tableId4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack(null);
-
-                popup = new BookedTablePopupFragment();
-
-                popup.show(getChildFragmentManager(), "popup");
+                loadTables(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
         return root;
     }
 
-
-    public void newOrder()
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
-        popup.dismiss();
+        super.onViewCreated(view, savedInstanceState);
 
-        NavController navController = Navigation.findNavController(getView());
-        navController.navigate(R.id.navigation_new_order);
+        loadTables(new LoadingCallback() {
+            @Override
+            public void finishedLoading() {
+
+            }
+        });
     }
 
-    public void setTable2Booked()
+    private void loadTables(final LoadingCallback callback)
     {
-        CardView cardView = getView().findViewById(R.id.table2Card);
+        final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
 
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
+        tableGrid.removeAllViews();
+
+        HttpRequest request = new HttpRequest(new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status) {
+            try
+            {
+                JSONArray jsonArr = new JSONArray(output);
+
+                for(int i = 0; i < jsonArr.length(); i++)
+                {
+                    JSONObject c = jsonArr.getJSONObject(i);
+
+                    final int tableId = c.getInt("dinnertableid");
+
+                    //TODO: Move this somewhere else to make the code faster, there are too many loops in each other atm
+                    HttpRequest.Response response = new HttpRequest.Response()
+                    {
+                        @Override
+                        public void processFinish(String output, int status)
+                        {
+                            TableCardComponent.Status tableStatus = TableCardComponent.Status.FREE;
+
+                            int customerId = -1;
+
+                            try
+                            {
+                                JSONArray jsonArr = new JSONArray(output);
+
+                                for(int i = 0; i < jsonArr.length(); i++)
+                                {
+                                    JSONObject c = jsonArr.getJSONObject(i);
+
+                                    customerId = c.getInt("customerid");
+
+                                    String string_date = c.getString("bookingdate");
+                                    String string_time = c.getString("bookingtime");
+
+
+                                    if(isBookedNow(string_date, string_time))   tableStatus = TableCardComponent.Status.OCCUPIED;
+                                    else                                        tableStatus = TableCardComponent.Status.FREE;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                            finally
+                            {
+                                callback.finishedLoading();
+                            }
+
+                            tableGrid.addView(new TableCardComponent(getContext(), tableId, customerId, tableStatus, Navigation.findNavController(getView())));
+                        }
+                    };
+
+                    HttpRequest request = new HttpRequest(response);
+                    request.setRequestMethod("GET");
+                    request.execute(DatabaseURL.getBookingsForTable + tableId);
+                }
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            }
+        });
+
+        request.setRequestMethod("GET");
+
+        request.execute(DatabaseURL.getTables);
     }
-    public void setTable4Unbooked()
+
+    private boolean isBookedNow(String date_string, String time_string)
     {
-        CardView cardView = getView().findViewById(R.id.table4Card);
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
+        String combined_strings = date_string + " " + time_string;
+
+        long milliseconds_date = 0;
+
+        try {
+            Date d = f.parse(combined_strings);
+            milliseconds_date = d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(!DateUtils.isToday(milliseconds_date)) return false;
+
+        if(System.currentTimeMillis() >= milliseconds_date) return true;
+        else                                                return false;
     }
-
-    public void setTable4Booked()
-    {
-        CardView cardView = getView().findViewById(R.id.table4Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.occupiedTableColor));
-    }
-
-    public void setTable1Unbooked()
-    {
-        CardView cardView = getView().findViewById(R.id.table1Card);
-
-        cardView.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.unbookedTableColor));
-    }
-
 }

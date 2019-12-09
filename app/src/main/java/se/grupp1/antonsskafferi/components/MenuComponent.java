@@ -14,18 +14,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.OrderItemData;
 import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 
 
 public class MenuComponent extends LinearLayout
 {
-    private int numberOfItems = 0;
+    private OrderItemData itemData;
 
-    private String note = "";
-
-    private String name;
-
-    public MenuComponent(Context context, String text)
+    public MenuComponent(Context context, OrderItemData itemData)
     {
         super(context);
 
@@ -33,33 +30,18 @@ public class MenuComponent extends LinearLayout
 
         inflater.inflate(R.layout.component_menu_item, this, true);
 
-        init(text, numberOfItems, note);
+        init(itemData);
     }
 
-    public MenuComponent(Context context, String text, int numberOfItems, String note)
+    public void init(OrderItemData itemData)
     {
-        super(context);
-
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        inflater.inflate(R.layout.component_menu_item, this, true);
-
-        init(text, numberOfItems, note);
-    }
-
-    public void init(String text, int numberOfItems, String note)
-    {
-        this.numberOfItems = numberOfItems;
-
-        this.note = note;
+        this.itemData = itemData;
 
         updateText();
 
         TextView textView = (TextView) getChildAt(0);
 
-        textView.setText(text);
-
-        this.name = text;
+        textView.setText(itemData.getTitle());
 
         this.setPadding(0, 32, 0, 0);
 
@@ -89,7 +71,7 @@ public class MenuComponent extends LinearLayout
         minusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                decreaseCount();
+                decreaseAmount();
             }
         });
 
@@ -98,7 +80,7 @@ public class MenuComponent extends LinearLayout
         plusButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                increaseCount();
+                increaseAmount();
             }
         });
     }
@@ -112,18 +94,18 @@ public class MenuComponent extends LinearLayout
         inflater.inflate(R.layout.component_menu_item, this, true);
     }
 
-    protected void increaseCount()
+    protected void increaseAmount()
     {
-        numberOfItems++;
+        itemData.increaseAmount();
 
         updateText();
     }
 
-    protected void decreaseCount()
+    protected void decreaseAmount()
     {
-        numberOfItems--;
+        itemData.decreaseAmount();
 
-        if(numberOfItems < 0) numberOfItems = 0;
+        if(itemData.getAmount() < 0) itemData.setAmount(0);
 
         updateText();
     }
@@ -132,23 +114,28 @@ public class MenuComponent extends LinearLayout
     {
         TextView counter = (TextView) getChildAt(4);
 
-        counter.setText( Integer.toString(numberOfItems));
+        counter.setText(Integer.toString(itemData.getAmount()));
     }
 
     public void setNote(String note)
     {
-        this.note = note;
+        itemData.setNote(note);
     }
 
-    public String getName()
+    public int getId() {return itemData.getId();}
+
+    public String getTitle()
     {
-        return name;
+        return itemData.getTitle();
     }
 
-    public int getCount()
+    public int getAmount()
     {
-        return numberOfItems;
+        return itemData.getAmount();
     }
 
-    public String getNote() { return note;}
+    public String getNote()
+    {
+        return itemData.getNote();
+    }
 }

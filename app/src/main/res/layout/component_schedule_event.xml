@@ -13,44 +13,37 @@
         android:layout_height="match_parent"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:stretchColumns="1,2">
+        android:stretchColumns="1">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TextView
-                android:id="@+id/tableIdLabel"
+                android:id="@+id/scheduleTime"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="3"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:background="#4196001E"
+                android:padding="5dp"
+                android:text="14:00 - 18:00" />
 
             <LinearLayout
-                android:id="@+id/orderItemsList"
+                android:id="@+id/scheduleName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center|start|center_horizontal"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"/>
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="vertical"/>
 
-            <TextView
-                android:id="@+id/orderStatusLabel"
+            <Button
+                android:id="@+id/changeTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Beställt"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            <ImageView
-                android:id="@+id/doneButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="16dp"
-                app:srcCompat="@drawable/ic_check_24dp" />
+                android:background="@drawable/rounded_button"
+                android:text="Byt" />
         </TableRow>
 
     </TableLayout>

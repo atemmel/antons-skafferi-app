@@ -8,23 +8,35 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 
 import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.fragments.TableOverviewFragment;
 
-public class UnbookedTablePopupFragment extends DialogFragment {
-    public UnbookedTablePopupFragment() {
-        // Required empty public constructor
+public class FreeTablePopupFragment extends DialogFragment {
+
+    public interface Callback
+    {
+        enum OptionClicked
+        {
+            PLACE_CUSTOMER
+        }
+
+        void clicked(OptionClicked optionClicked);
+    }
+
+    private Callback callback;
+
+    public FreeTablePopupFragment(Callback callback) {
+        this.callback = callback;
     }
 
 
-    public static UnbookedTablePopupFragment newInstance() {
-        UnbookedTablePopupFragment fragment = new UnbookedTablePopupFragment();
+    public static FreeTablePopupFragment newInstance(Callback callback) {
+        FreeTablePopupFragment fragment = new FreeTablePopupFragment(callback);
 
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_unbooked_table_popup, container, false);
+        View v = inflater.inflate(R.layout.popup_unbooked_table, container, false);
 
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
 
@@ -38,7 +50,7 @@ public class UnbookedTablePopupFragment extends DialogFragment {
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TableOverviewFragment) getParentFragment()).setTable2Booked();
+                callback.clicked(Callback.OptionClicked.PLACE_CUSTOMER);
                 dismiss();
             }
         });

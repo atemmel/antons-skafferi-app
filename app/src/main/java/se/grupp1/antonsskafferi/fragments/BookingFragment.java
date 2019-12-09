@@ -11,17 +11,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
 
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.BookingData;
+import se.grupp1.antonsskafferi.lib.StringFormatter;
 
 public class BookingFragment extends Fragment {
 
@@ -40,18 +41,6 @@ public class BookingFragment extends Fragment {
     private String format;
     //-------
 
-
-    class BookingData {
-         String firstName;
-         String lastName;
-         String peopleAmount;
-         String phoneNr;
-         String time;
-         String date;
-         String email;
-         int dinnerTableId;
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -66,16 +55,13 @@ public class BookingFragment extends Fragment {
         hour = currentTime.get(Calendar.HOUR_OF_DAY);
         minute = currentTime.get(Calendar.MINUTE);
 
-        //tv.setText(hour + ":" + minute);
-
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        tv.setText(hour + ":" + minute);
+                        tv.setText(StringFormatter.formatTime(hour + ":" + minute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.show();
@@ -95,10 +81,11 @@ public class BookingFragment extends Fragment {
                 int month = c.get(Calendar.MONTH);
                 int year =c.get(Calendar.YEAR);
 
+                //TODO: Make sure that the string returned has constant length
                 dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                        mTv.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
+                        mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
                     }
                 }, year, month, day);
                 dpd.show();
@@ -111,77 +98,77 @@ public class BookingFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EditText BookingFirstName = root.findViewById(R.id.BookingFirstName);
-                EditText BookingLastName = root.findViewById(R.id.BookingLastName);
-                EditText BookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
-                EditText BookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
-                EditText BookingEmail =  root.findViewById(R.id.BookingEmail);
-                TextView BookingTime =  root.findViewById(R.id.BookingTime);
-                TextView BookingDate =  root.findViewById(R.id.BookingDate);
+                EditText bookingFirstName = root.findViewById(R.id.BookingFirstName);
+                EditText bookingLastName = root.findViewById(R.id.BookingLastName);
+                EditText bookingPeopleAmount =  root.findViewById(R.id.BookingPeopleAmount);
+                EditText bookingPhoneNr =  root.findViewById(R.id.BookingPhoneNr);
+                EditText bookingEmail =  root.findViewById(R.id.BookingEmail);
+                TextView bookingTime =  root.findViewById(R.id.BookingTime);
+                TextView bookingDate =  root.findViewById(R.id.BookingDate);
 
-                String firstName = BookingFirstName.getText().toString();
-                String lastName = BookingLastName.getText().toString();
-                String peopleAmount = BookingPeopleAmount.getText().toString();
-                String phoneNr = BookingPhoneNr.getText().toString();
-                String email = BookingEmail.getText().toString();
-                String time = BookingTime.getText().toString();
-                String date = BookingDate.getText().toString();
+                String firstName = bookingFirstName.getText().toString();
+                String lastName = bookingLastName.getText().toString();
+                String peopleAmount = bookingPeopleAmount.getText().toString();
+                String phoneNr = bookingPhoneNr.getText().toString();
+                String email = bookingEmail.getText().toString();
+                String time = bookingTime.getText().toString();
+                String date = bookingDate.getText().toString();
 
                 boolean emptyFields = false;
 
                 if(firstName.isEmpty())
                 {
-
                     emptyFields = true;
-                    BookingFirstName.setError("Skriv in förnamn");
-                }
+                    bookingFirstName.setError("Skriv in förnamn");
+                } else bookingFirstName.setError(null);
+
                 if(lastName.isEmpty())
                 {
-
                     emptyFields = true;
-                    BookingLastName.setError("Skriv in efternamn");
-                }
+                    bookingLastName.setError("Skriv in efternamn");
+                } else bookingLastName.setError(null);
+
                 if(peopleAmount.isEmpty())
                 {
-
                     emptyFields = true;
-                    BookingPeopleAmount.setError("Skriv in antal bokade platser");
-                }
+                    bookingPeopleAmount.setError("Skriv in antal bokade platser");
+                } else bookingPeopleAmount.setError(null);
+
                 if(phoneNr.isEmpty())
                 {
-
                     emptyFields = true;
-                    BookingPhoneNr.setError("Skriv in ett teleNr");
-                }
+                    bookingPhoneNr.setError("Skriv in ett teleNr");
+                } else bookingPhoneNr.setError(null);
+
                 if(time.isEmpty() || time.equals(getString(R.string.tid)))
                 {
                     emptyFields = true;
-                    BookingTime.setError("Skriv in bokad tid");
-                }
+                    bookingTime.setError("Skriv in bokad tid");
+                } else bookingTime.setError(null);
+
                 if(date.isEmpty() || date.equals(getString(R.string.datum)))
                 {
-
                     emptyFields = true;
-                    BookingDate.setError("Skriv in datum");
-                }
+                    bookingDate.setError("Skriv in datum");
+                } else bookingDate.setError(null);
+
                 if(email.isEmpty())
                 {
-
                     emptyFields = true;
-                    BookingEmail.setError("Skriv in Email");
-                }
+                    bookingEmail.setError("Skriv in Email");
+                } else bookingEmail.setError(null);
 
 
-                BookingData data = new BookingData();
-                data.date = date;
-                data.firstName = firstName;
-                data.lastName = lastName;
-                data.peopleAmount = peopleAmount;
-                data.phoneNr = phoneNr;
-                data.time = time;
-                data.email = email;
-                data.dinnerTableId = 1; //TODO: Add this field to form
-
+                BookingData data = new BookingData(
+                        firstName,
+                        lastName,
+                        peopleAmount,
+                        phoneNr,
+                        time,
+                        date,
+                        email,
+                        //TODO: Add this field to form
+                        1);
 
                 if(!emptyFields) {
                     System.out.println("Sent to backend");
@@ -195,37 +182,22 @@ public class BookingFragment extends Fragment {
     }
 
     private void sendToDatabase(BookingData data) {
-        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";  //TODO: Move to a global constant of some sorts
-
-        JSONObject object = new JSONObject();
-
-        try {
-            object.put("firstname", data.firstName);
-            object.put("lastname", data.lastName);
-            object.put("sizeofcompany", data.peopleAmount);
-            object.put("phone", data.phoneNr);
-            object.put("bookingdate", data.date);
-            object.put("bookingtime", data.time);
-            object.put("email", data.email);
-            object.put("dinnertable", data.dinnerTableId);
-
-            HttpRequest.Response response = new HttpRequest.Response() {
-                @Override
-                public void processFinish(String output) {
-                    System.out.println(output);
-                }
-            };
-            HttpRequest httpRequest = new HttpRequest(response);
-            httpRequest.setRequestMethod("POST");
-            System.out.println(object.toString());
-            httpRequest.setPayload(object.toString());
-            httpRequest.execute(urlString);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                System.out.println(status);
+                Toast.makeText(getActivity(), status == 200
+                        ? "Bokningen genomförd" : "Kunde inte genomföra bokningen, var vänlig försök igen. Felkod: " + status,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("POST");
+        String payload = data.toJSONString();
+        System.out.println(payload);
+        httpRequest.setPayload(payload);
+        httpRequest.execute(DatabaseURL.insertCustomer);
     }
-
 
 }

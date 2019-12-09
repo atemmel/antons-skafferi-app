@@ -59,4 +59,18 @@
     <string name="booking_time_text">Time</string>
     <string name="booking_persons_text">Antal</string>
     <string name="skriv_email">Skriv Email</string>
+
+    <!-- Ny beställningssida -->
+    <string name="edit_item">Redigera</string>
+
+    <!-- Redigera kvällsmeny -->
+    <string name="delete_item">Ta bort</string>
+
+    <!-- Redigera kvällsmeny popup -->
+    <string name="title_hint">Titel</string>
+    <string name="description_hint">Beskrivning</string>
+    <string name="price_hint">Pris</string>
+    <string name="category_hint">Välj kategori</string>
+    <string name="update_button_text">Uppdatera</string>
+
 </resources>

@@ -17,16 +17,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import se.grupp1.antonsskafferi.classes.HttpRequest;
+import se.grupp1.antonsskafferi.data.OrderItemData;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.components.MenuComponent;
 import se.grupp1.antonsskafferi.popups.OrderSummaryPopup;
 import se.grupp1.antonsskafferi.R;
 
 public class NewOrderFragment extends Fragment
 {
-
-    private ArrayList<String> food = new ArrayList<>();
-    ArrayList<String> drinks = new ArrayList<>();
+    private int tableId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -39,17 +39,18 @@ public class NewOrderFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
+        tableId = getArguments().getInt("tableId");
+
         /*food.add("Carbonara");
         food.add("Lasagne");
         food.add("Oxfilé");
         food.add("Köttbullar");*/
 
-        drinks.add("Coca Cola");
+        /*drinks.add("Coca Cola");
         drinks.add("Fanta");
-        drinks.add("Ramlösa");
+        drinks.add("Ramlösa");*/
 
-        getDishes();
-
+        getAllItems();
 
         view.findViewById(R.id.summaryButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,71 +64,74 @@ public class NewOrderFragment extends Fragment
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                OrderSummaryPopup newFragment = OrderSummaryPopup.newInstance();
+                OrderSummaryPopup popup = new OrderSummaryPopup(tableId);
 
-                newFragment.setOrders(getOrders());
+                popup.setItemData(getOrderedItems());
 
-                newFragment.show(ft, "dialog");
+
+                popup.show(ft, "dialog");
             }
         });
     }
 
-    private void getDishes()
+    private void getAllItems()
     {
-        final String urlString = "http://10.0.2.2:8080/items";
+        final LinearLayout foodList = getView().findViewById(R.id.foodList);
+        final LinearLayout drinksList = getView().findViewById(R.id.drinksList);
 
         HttpRequest request = new HttpRequest(new HttpRequest.Response()
         {
             @Override
-            public void processFinish(String output) {
+            public void processFinish(String output, int status) {
                 try
                 {
-                    System.out.println(output);
-
                     JSONArray jsonArr = new JSONArray(output);
                     for(int i = 0; i < jsonArr.length(); i++)
                     {
                         JSONObject c = jsonArr.getJSONObject(i);
 
                         String title = c.getString("title");
+                        int id = c.getInt("itemid");
 
-                        System.out.println("FOOD: " + title);
-
-                        food.add(title);
+                        if(c.getString("itemcategory").toUpperCase().equals("5"))   //5 är dryck
+                        {
+                            OrderItemData item = new OrderItemData(id, title, 0, "");
+                            drinksList.addView(new MenuComponent(getContext(), item));
+                        }
+                        else {
+                            OrderItemData item = new OrderItemData(id, title, 0, "");
+                            foodList.addView(new MenuComponent(getContext(), item));
+                        }
                     }
 
                 } catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-                finally
-                {
-                    LinearLayout foodList = getView().findViewById(R.id.foodList);
-
-                    for(int i = 0; i < food.size(); i++)
-                    {
-                        foodList.addView(new MenuComponent(getContext(), food.get(i)));
-                    }
-
-                    LinearLayout drinksList = getView().findViewById(R.id.drinksList);
-
-                    for(int i = 0; i < drinks.size(); i++)
-                    {
-                        drinksList.addView(new MenuComponent(getContext(), drinks.get(i)));
-                    }
-                }
-
             }
         });
 
         request.setRequestMethod("GET");
 
-        request.execute(urlString);
+        request.execute(DatabaseURL.getItems);
     }
 
-    private ArrayList<Order> getOrders()
+    private ArrayList<OrderItemData> getOrderedItems()
     {
-        ArrayList<Order> orders = new ArrayList<>();
+        ArrayList<OrderItemData> itemData = new ArrayList<>();
+
+        LinearLayout drinksList = getView().findViewById(R.id.drinksList);
+
+        //Börja på 1 för att skippa första textobjektet
+        for(int i = 1; i < drinksList.getChildCount(); i++)
+        {
+            MenuComponent item = (MenuComponent)drinksList.getChildAt(i);
+
+            if(item.getAmount() > 0)
+            {
+                itemData.add(new OrderItemData(item.getId(), item.getTitle(), item.getAmount(), item.getNote()));
+            }
+        }
 
         LinearLayout foodList = getView().findViewById(R.id.foodList);
 
@@ -136,40 +140,12 @@ public class NewOrderFragment extends Fragment
         {
             MenuComponent item = (MenuComponent)foodList.getChildAt(i);
 
-            if(item.getCount() > 0) {
-                orders.add(new Order(item.getName(), item.getCount(), item.getNote()));
+            if(item.getAmount() > 0)
+            {
+                itemData.add(new OrderItemData(item.getId(), item.getTitle(), item.getAmount(), item.getNote()));
             }
         }
 
-        return orders;
-    }
-
-    public class Order
-    {
-        private String name;
-        private int count;
-        private String note;
-
-        Order(String name, int count, String note)
-        {
-            this.name = name;
-            this.count = count;
-            this.note = note;
-        }
-
-        public String getName()
-        {
-            return name;
-        }
-
-        public int getCount()
-        {
-            return count;
-        }
-
-        public String getNote()
-        {
-            return note;
-        }
+        return itemData;
     }
 }

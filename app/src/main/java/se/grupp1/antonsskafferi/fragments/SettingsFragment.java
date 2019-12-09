@@ -20,6 +20,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
     {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
+        if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
+
         Preference logoutButtonPreference = findPreference("logoutButtonPreference");
         logoutButtonPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -28,9 +30,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 return true;
             }
         });
-
-        if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
-
     }
 
     @Override

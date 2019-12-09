@@ -5,7 +5,7 @@
     <color name="colorAccent">#A31621</color>
 
     <color name="bookedTableColor">#FFC107</color> <!--gul-->
-    <color name="unbookedTableColor">#07DA5C</color> <!--grön-->
+    <color name="freeTableColor">#07DA5C</color> <!--grön-->
     <color name="occupiedTableColor">#EC4E27</color> <!--röd-->
 
 </resources>
