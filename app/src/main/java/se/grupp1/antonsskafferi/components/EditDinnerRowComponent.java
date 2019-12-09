@@ -16,8 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.MenuItemData;
-import se.grupp1.antonsskafferi.data.OrderItemData;
-import se.grupp1.antonsskafferi.fragments.EditDinnerFragment;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;

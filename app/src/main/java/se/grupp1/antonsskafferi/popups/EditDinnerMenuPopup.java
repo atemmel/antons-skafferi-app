@@ -49,6 +49,8 @@ public class EditDinnerMenuPopup extends DialogFragment
         void onChanged(MenuItemData itemData);
     }
 
+    public EditDinnerMenuPopup(){}
+
     public EditDinnerMenuPopup(MenuItemData itemData, Callback callback)
     {
         this.itemData = itemData;
