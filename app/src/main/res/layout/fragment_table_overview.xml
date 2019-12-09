@@ -52,8 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:padding="16dp"
-                android:text="Ny bokning"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:text="NY BOKNING"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <Button
                 android:id="@+id/viewBookingsButton"
@@ -61,8 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:padding="16dp"
-                android:text="Visa bokningar"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:text="VISA BOKNINGAR"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

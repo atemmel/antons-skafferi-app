@@ -185,12 +185,13 @@ public class EditDinnerMenuPopup extends DialogFragment
         TextView description = getView().findViewById(R.id.editDescriptionText);
         description.setText(itemData.getDescription());
 
-        TextView price = getView().findViewById(R.id.editPriceText);
-        String priceString = price.getText().toString();
+        TextView priceText = getView().findViewById(R.id.editPriceText);
+        //String priceString = price.getText().toString();
 
-        if(priceString.equals("-1")){
-            price.setText(Integer.toString(itemData.getPrice()));
-        }
+        Integer price = itemData.getPrice();
+
+
+        if(price != -1) priceText.setText(Integer.toString(itemData.getPrice()));
     }
 
     private void updateItemData()
