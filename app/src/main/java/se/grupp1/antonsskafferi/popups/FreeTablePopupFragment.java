@@ -27,13 +27,6 @@ public class FreeTablePopupFragment extends DialogFragment {
         this.callback = callback;
     }
 
-
-    public static FreeTablePopupFragment newInstance(Callback callback) {
-        FreeTablePopupFragment fragment = new FreeTablePopupFragment(callback);
-
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.popup_unbooked_table, container, false);

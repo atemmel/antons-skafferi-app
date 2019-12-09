@@ -52,7 +52,6 @@ public class ViewOrdersFragment extends Fragment
                     public void finishedLoading()
                     {
                         swipeRefreshLayout.setRefreshing(false);
-
                     }
                 });
             }

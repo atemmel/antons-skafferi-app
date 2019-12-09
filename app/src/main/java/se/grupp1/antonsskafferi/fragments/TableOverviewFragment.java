@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -112,50 +113,7 @@ public class TableOverviewFragment extends Fragment
 
                     final int tableId = c.getInt("dinnertableid");
 
-                    //TODO: Move this somewhere else to make the code faster, there are too many loops in each other atm
-                    HttpRequest.Response response = new HttpRequest.Response()
-                    {
-                        @Override
-                        public void processFinish(String output, int status)
-                        {
-                            TableCardComponent.Status tableStatus = TableCardComponent.Status.FREE;
-
-                            int customerId = -1;
-
-                            try
-                            {
-                                JSONArray jsonArr = new JSONArray(output);
-
-                                for(int i = 0; i < jsonArr.length(); i++)
-                                {
-                                    JSONObject c = jsonArr.getJSONObject(i);
-
-                                    customerId = c.getInt("customerid");
-
-                                    String string_date = c.getString("bookingdate");
-                                    String string_time = c.getString("bookingtime");
-
-
-                                    if(isBookedNow(string_date, string_time))   tableStatus = TableCardComponent.Status.OCCUPIED;
-                                    else                                        tableStatus = TableCardComponent.Status.FREE;
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                            finally
-                            {
-                                callback.finishedLoading();
-                            }
-
-                            tableGrid.addView(new TableCardComponent(getContext(), tableId, customerId, tableStatus, Navigation.findNavController(getView())));
-                        }
-                    };
-
-                    HttpRequest request = new HttpRequest(response);
-                    request.setRequestMethod("GET");
-                    request.execute(DatabaseURL.getBookingsForTable + tableId);
+                    tableGrid.addView(new TableCardComponent(getContext(), tableId, -1, TableCardComponent.Status.FREE, Navigation.findNavController(getView())));
                 }
 
             }
@@ -163,12 +121,95 @@ public class TableOverviewFragment extends Fragment
             {
                 e.printStackTrace();
             }
+            finally
+            {
+                checkForBookedTables();
+                checkForInUseTables();
+
+                callback.finishedLoading();
+            }
             }
         });
 
         request.setRequestMethod("GET");
-
         request.execute(DatabaseURL.getTables);
+    }
+
+    private void checkForInUseTables()
+    {
+        final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
+
+        for(int i = 0; i < tableGrid.getChildCount(); i++)
+        {
+            final WeakReference<TableCardComponent> tableCardRef = new WeakReference<>((TableCardComponent)tableGrid.getChildAt(i));
+
+            HttpRequest.Response response = new HttpRequest.Response() {
+                @Override
+                public void processFinish(String output, int status)
+                {
+                    output = output.trim();
+
+                    if(output.toLowerCase().equals("true"))
+                    {
+                        System.out.println("lägger till");
+                        tableCardRef.get().setStatus(TableCardComponent.Status.OCCUPIED);
+                    }
+                }
+            };
+
+
+            HttpRequest request = new HttpRequest(response);
+            request.setRequestMethod("GET");
+
+            request.execute(DatabaseURL.getIfTableInUse + tableCardRef.get().getTableId());
+        }
+    }
+
+    private void checkForBookedTables()
+    {
+        final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
+
+        for(int i = 0; i < tableGrid.getChildCount(); i++)
+        {
+            final WeakReference<TableCardComponent> tableCardRef = new WeakReference<>((TableCardComponent)tableGrid.getChildAt(i));
+
+            HttpRequest.Response response = new HttpRequest.Response() {
+                @Override
+                public void processFinish(String output, int status) {
+
+                    try {
+                        JSONArray jsonArr = new JSONArray(output);
+
+                        for (int i = 0; i < jsonArr.length(); i++) {
+                            JSONObject c = jsonArr.getJSONObject(i);
+
+                            int customerId = c.getInt("customerid");
+
+                            String string_date = c.getString("bookingdate");
+                            String string_time = c.getString("bookingtime");
+
+                            if (!isBookedNow(string_date, string_time)) return;
+
+                            tableCardRef.get().setStatus(TableCardComponent.Status.BOOKED);
+                            tableCardRef.get().setCustomerId(customerId);
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        // callback.finishedLoading();
+                    }
+                }
+            };
+
+
+            HttpRequest request = new HttpRequest(response);
+            request.setRequestMethod("GET");
+
+            String requestURL = DatabaseURL.getBookingsForTable + tableCardRef.get().getTableId();
+
+            request.execute(requestURL);
+        }
     }
 
     private boolean isBookedNow(String date_string, String time_string)
@@ -191,4 +232,6 @@ public class TableOverviewFragment extends Fragment
         if(System.currentTimeMillis() >= milliseconds_date) return true;
         else                                                return false;
     }
+
+
 }
