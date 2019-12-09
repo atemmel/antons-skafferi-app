@@ -22,7 +22,6 @@ public class DatabaseURL {
     //Lägg till
     public static final String insertCustomer = base + "post/customers?customer=";
 
-
     //Ta bort
     public static final String deleteCustomer = base + "customers/delete/customer?id=";
 
@@ -46,6 +45,9 @@ public class DatabaseURL {
 
     //Hämta
     public static final String getOrders = base + "orders";
+
+    //Sätt levererad
+    public static final String setDelivered = base + "post/delivered?dinnertable=";
 
     // --- Bord
 

@@ -35,7 +35,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
     private Response delegate;
     private String requestMethod;
-    private String payload;
+    private String payload = "";
     private boolean isPost;
     private int status;
 

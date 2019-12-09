@@ -100,7 +100,7 @@ public class OrderSummaryPopup extends DialogFragment {
                 object.put("item", itemId);
                 object.put("amount", itemData.getAmount());
                 object.put("note", itemData.getNote());
-                object.put("ready", false);
+                object.put("ready", 0);
 
                 HttpRequest.Response response = new HttpRequest.Response() {
                     @Override

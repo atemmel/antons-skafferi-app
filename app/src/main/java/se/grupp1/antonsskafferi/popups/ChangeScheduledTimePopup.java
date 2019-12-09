@@ -10,14 +10,14 @@ import androidx.fragment.app.DialogFragment;
 import se.grupp1.antonsskafferi.R;
 
 
-public class ChangeScheduledTimePopupFragment extends DialogFragment {
+public class ChangeScheduledTimePopup extends DialogFragment {
 
-    public ChangeScheduledTimePopupFragment() {}
+    public ChangeScheduledTimePopup() {}
 
 
-    public static ChangeScheduledTimePopupFragment newInstance()
+    public static ChangeScheduledTimePopup newInstance()
     {
-        ChangeScheduledTimePopupFragment fragment = new ChangeScheduledTimePopupFragment();
+        ChangeScheduledTimePopup fragment = new ChangeScheduledTimePopup();
 
         return fragment;
     }
