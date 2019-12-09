@@ -99,5 +99,5 @@ git reset HEAD~1 --soft
 # Developers
 
 - Oscar Fredriksson [Github Page Overview](https://github.com/oscarFredriksson)
-- Amanda Ericsson [Github Page Overview](https://github.com/amandaericson)
+- Amanda Ericson [Github Page Overview](https://github.com/amandaericson)
 - Jonas Carlsson [Github Page Overview](https://github.com/manjaro97)
