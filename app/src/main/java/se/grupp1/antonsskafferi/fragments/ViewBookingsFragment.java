@@ -1,10 +1,14 @@
 package se.grupp1.antonsskafferi.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,10 +19,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.components.BookingCardComponent;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
+import se.grupp1.antonsskafferi.lib.StringFormatter;
+
 
 public class ViewBookingsFragment extends Fragment {
 
@@ -27,6 +37,13 @@ public class ViewBookingsFragment extends Fragment {
         void finishedLoading();
     }
 
+    //DatePicker
+    private TextView mTv;
+    private Button mBtn;
+    private DatePickerDialog dpd;
+    private Calendar c;
+    //-------
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -34,6 +51,46 @@ public class ViewBookingsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_view_bookings, container, false);
 
         final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+        //DatePicker
+        mTv = root.findViewById(R.id.CustomerDate);
+        mBtn = root.findViewById(R.id.DatepickerBtn);
+
+        mBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year =c.get(Calendar.YEAR);
+
+                //TODO: Make sure that the string returned has constant length
+                dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
+                        mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
+                        loadBookings(new LoadingCallback() {
+                            @Override
+                            public void finishedLoading() {
+
+                            }
+                        });
+                    }
+                }, year, month, day);
+                dpd.show();
+            }
+        });
+        // End of DatePicker
+
+        //Picking today's date
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String datum = simpleDateFormat.format(new Date());
+        System.out.println(datum);
+
+        mTv.setText(datum);
+        //
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
@@ -91,15 +148,19 @@ public class ViewBookingsFragment extends Fragment {
                 for (int i = 0; i < jsonArr.length(); i++) {
                     JSONObject obj = jsonArr.getJSONObject(i);
 
-                    int tableid = obj.getJSONObject("dinnertable").getInt("dinnertableid");
+                    String date = obj.getString("bookingdate");
                     String name = obj.getString("firstname");
                     int bookingamount = obj.getInt("sizeofcompany");
                     String bookingtime = obj.getString("bookingtime");
 
 
-                    BookingCardComponent booking = new BookingCardComponent(getContext(), tableid, name, bookingamount, bookingtime);
+                    BookingCardComponent booking = new BookingCardComponent(getContext(), date, name, bookingamount, bookingtime);
 
-                    ((LinearLayout)getView().findViewById(R.id.bookingList)).addView(booking);
+                    if(date.equals(mTv.getText().toString())){
+
+                        ((LinearLayout)getView().findViewById(R.id.bookingList)).addView(booking);
+
+                    }
                 }
             }
                 catch (Exception e)

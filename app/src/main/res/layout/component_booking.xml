@@ -20,13 +20,13 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tableIdLabel"
+                android:id="@+id/dateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="BordsId"
+                android:text="Datum"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView

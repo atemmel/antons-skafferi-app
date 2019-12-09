@@ -16,7 +16,7 @@ import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 public class BookingCardComponent extends CardView
 {
 
-    public BookingCardComponent(Context context, int tableId, String name, int amount, String time) //get tableId, Booking reference, amount, time
+    public BookingCardComponent(Context context, String date, String name, int amount, String time) //get tableId, Booking reference, amount, time
     {
         super(context);
 
@@ -25,7 +25,7 @@ public class BookingCardComponent extends CardView
 
         inflater.inflate(R.layout.component_booking, this, true);
 
-        ((TextView) findViewById(R.id.tableIdLabel)).setText(Integer.toString(tableId));
+        ((TextView) findViewById(R.id.dateLabel)).setText(date);
         ((TextView) findViewById(R.id.nameLabel)).setText(name);
         ((TextView) findViewById(R.id.BookingamountLabel)).setText(Integer.toString(amount));
         ((TextView) findViewById(R.id.BookingtimeLabel)).setText(time);
