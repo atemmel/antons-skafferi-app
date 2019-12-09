@@ -174,10 +174,17 @@ public class BookingFragment extends Fragment {
                     System.out.println("Sent to backend");
                     sendToDatabase(data);
                 }
+
+                bookingFirstName.setText("");
+                bookingLastName.setText("");
+                bookingPeopleAmount.setText("");
+                bookingPhoneNr.setText("");
+                bookingEmail.setText("");
+                bookingTime.setText("");
+                bookingDate.setText("");
             }
 
             });
-
         return root;
     }
 
