@@ -91,9 +91,13 @@ git reset --hard
 ```
 git reset HEAD~1 --soft
 ```
+## Error codes
+```
+405: Felformaterad JSON
+```
 
 # Developers
 
-- Oscar Fredriksson [Github Page Overview](https://github.com/Takolander)
-- Amanda Ericsson [Github Page Overview](https://github.com/iSellgren)
+- Oscar Fredriksson [Github Page Overview](https://github.com/oscarFredriksson)
+- Amanda Ericsson [Github Page Overview](https://github.com/amandaericson)
 - Jonas Carlsson [Github Page Overview](https://github.com/manjaro97)
