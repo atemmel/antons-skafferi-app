@@ -100,7 +100,7 @@ public class EditDinnerRowComponent extends CardView
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         delete();
                         break;
