@@ -40,13 +40,12 @@ public class TableCardComponent extends CardView
         OCCUPIED
     }
 
-    private int customerId;
-
     private Status status;
 
     final NavController navController;
 
     final int tableId;
+    private int customerId;
 
     public TableCardComponent(Context context, int tableId, int customerId, Status status, NavController navController)
     {
@@ -99,14 +98,18 @@ public class TableCardComponent extends CardView
 
         switch(status)
         {
-            case FREE: {
+            case FREE:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.freeTableColor));
                 break;
             }
             case BOOKED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.bookedTableColor));
                 break;
-            case OCCUPIED: {
+            }
+            case OCCUPIED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.occupiedTableColor));
                 break;
             }
@@ -130,14 +133,10 @@ public class TableCardComponent extends CardView
                 FreeTablePopupFragment popup = new FreeTablePopupFragment(new FreeTablePopupFragment.Callback() {
                     @Override
                     public void clicked(OptionClicked optionClicked) {
-                        switch(optionClicked)
+                        if(optionClicked == OptionClicked.PLACE_CUSTOMER)
                         {
-                            case PLACE_CUSTOMER:
-                            {
-                                setStatus(Status.OCCUPIED);
-                                setTableInUse();
-                                break;
-                            }
+                            setStatus(Status.OCCUPIED);
+                            setTableInUse();
                         }
                     }
                 });
@@ -155,9 +154,15 @@ public class TableCardComponent extends CardView
                         {
                             case PLACE_CUSTOMER:
                             {
-                                System.out.println("!!!!");
                                 setStatus(Status.OCCUPIED);
                                 setTableInUse();
+                                break;
+                            }
+
+                            case REMOVE_BOOKING:
+                            {
+                                setStatus(Status.FREE);
+                                deleteBooking();
                                 break;
                             }
                         }
@@ -181,17 +186,16 @@ public class TableCardComponent extends CardView
                                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case DialogInterface.BUTTON_POSITIVE:
-                                                wipeTable();
-                                                break;
+                                        if(which == DialogInterface.BUTTON_POSITIVE)
+                                        {
+                                            wipeTable();
                                         }
                                     }
                                 };
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                                String message = "Du är påväg att rensa bord " + tableId + ". \n" +
+                                String message = "Du är påväg att rensa bord " + tableId + ".\n" +
                                         "Är du säker på att du vill fortsätta?";
 
                                 builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
@@ -260,6 +264,14 @@ public class TableCardComponent extends CardView
 
     private void wipeTable()
     {
+        if(customerId != -1)
+        {
+            System.out.println("Tar bort bokning");
+            deleteBooking();
+        }
+
+        deleteAllOrders();
+
         setTableNotInUse();
     }
 
@@ -284,6 +296,29 @@ public class TableCardComponent extends CardView
         HttpRequest request = new HttpRequest(response);
         request.setRequestMethod("DELETE");
         request.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    private void deleteAllOrders()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getContext(), "Kunde inte ta bort beställningar, var vänlig försök igen. Felkod: ",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                setStatus(Status.FREE);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("DELETE");
+        request.execute(DatabaseURL.deleteOrders + tableId);
     }
 
     public int getTableId()
