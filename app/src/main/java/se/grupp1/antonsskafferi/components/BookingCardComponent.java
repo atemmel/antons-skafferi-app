@@ -11,12 +11,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 
 public class BookingCardComponent extends CardView
 {
 
-    public BookingCardComponent(Context context, String date, String name, int amount, String time) //get tableId, Booking reference, amount, time
+    public BookingCardComponent(final Context context, final BookingData bookingData)
     {
         super(context);
 
@@ -25,10 +26,10 @@ public class BookingCardComponent extends CardView
 
         inflater.inflate(R.layout.component_booking, this, true);
 
-        ((TextView) findViewById(R.id.dateLabel)).setText(date);
-        ((TextView) findViewById(R.id.nameLabel)).setText(name);
-        ((TextView) findViewById(R.id.BookingamountLabel)).setText(Integer.toString(amount));
-        ((TextView) findViewById(R.id.BookingtimeLabel)).setText(time);
+        ((TextView) findViewById(R.id.dateLabel)).setText(bookingData.getDate());
+        ((TextView) findViewById(R.id.nameLabel)).setText(bookingData.getFirstName());
+        ((TextView) findViewById(R.id.BookingamountLabel)).setText(bookingData.getBookingAmount());
+        ((TextView) findViewById(R.id.BookingtimeLabel)).setText(bookingData.getTime());
 
         View Btn = findViewById(R.id.options);
 
@@ -38,10 +39,50 @@ public class BookingCardComponent extends CardView
                 FragmentActivity parent = (FragmentActivity)getContext();
                 FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
+
+
+
+/*
+                String firstName = bookingFirstName.getText().toString();
+                String lastName = bookingLastName.getText().toString();
+                String peopleAmount = bookingPeopleAmount.getText().toString();
+                String phoneNr = bookingPhoneNr.getText().toString();
+                String email = bookingEmail.getText().toString();
+                String time = bookingTime.getText().toString();
+                String date = bookingDate.getText().toString();
+*/
+
+
                 String tag = "dialog";
 
-                BookingOptionsPopup popup = new BookingOptionsPopup();
+                BookingOptionsPopup popup = new BookingOptionsPopup(bookingData, new BookingOptionsPopup.Callback() {
+                    @Override
+                    public void onChanged(BookingData itemData) {
+
+
+                    }
+                });
                 popup.show(ft, tag);
+
+
+                //EditText bookingFirstName = findViewById(R.id.BookingFirstName);
+                /*EditText bookingLastName = findViewById(R.id.BookingLastName);
+                EditText bookingPeopleAmount =  findViewById(R.id.BookingPeopleAmount);
+                EditText bookingPhoneNr =  findViewById(R.id.BookingPhoneNr);
+                EditText bookingEmail =  findViewById(R.id.BookingEmail);
+                TextView bookingTime =  findViewById(R.id.BookingTime);
+                TextView bookingDate =  findViewById(R.id.BookingDate);*/
+               // System.out.println(bookingData.getFirstName());
+
+                //bookingFirstName.setText(bookingData.getFirstName());
+                /*bookingLastName.setText(bookingData.getLastName());
+                bookingPeopleAmount.setText(bookingData.getBookingAmount());
+                bookingPhoneNr.setText(bookingData.getPhoneNr());
+                bookingEmail.setText(bookingData.getEmail());
+                bookingTime.setText(bookingData.getTime());
+                bookingDate.setText(bookingData.getDate());*/
+               // popup.show(ft, tag);
+
             }
         });
 

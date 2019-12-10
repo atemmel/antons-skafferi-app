@@ -25,6 +25,7 @@ import java.util.Date;
 
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.components.BookingCardComponent;
+import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.lib.StringFormatter;
@@ -87,7 +88,6 @@ public class ViewBookingsFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
         String datum = simpleDateFormat.format(new Date());
-        System.out.println(datum);
 
         mTv.setText(datum);
         //
@@ -145,16 +145,23 @@ public class ViewBookingsFragment extends Fragment {
                 try {
                 JSONArray jsonArr = new JSONArray(output);
 
-                for (int i = 0; i < jsonArr.length(); i++) {
+                //TODO ändra i till i = 0 när allan är borttagen från customers
+                for (int i = 1; i < jsonArr.length(); i++) {
                     JSONObject obj = jsonArr.getJSONObject(i);
 
+
+                    int tableId = obj.getJSONObject("dinnertable").getInt("dinnertableid");
+                    String bookingAmount = obj.getString("sizeofcompany");
+                    int customerId = obj.getInt("customerid");
+                    String time = obj.getString("bookingtime");
                     String date = obj.getString("bookingdate");
-                    String name = obj.getString("firstname");
-                    int bookingamount = obj.getInt("sizeofcompany");
-                    String bookingtime = obj.getString("bookingtime");
+                    String firstname = obj.getString("firstname");
+                    String lastname = obj.getString("lastname");
+                    String email = obj.getString("email");
+                    String phoneNr = obj.getString("phone");
 
-
-                    BookingCardComponent booking = new BookingCardComponent(getContext(), date, name, bookingamount, bookingtime);
+                    BookingData bookingData = new BookingData(firstname, lastname, bookingAmount, phoneNr, time, date, email, tableId, customerId);
+                    BookingCardComponent booking = new BookingCardComponent(getContext(), bookingData);
 
                     if(date.equals(mTv.getText().toString())){
 

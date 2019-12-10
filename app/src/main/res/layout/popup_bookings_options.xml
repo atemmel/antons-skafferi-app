@@ -7,54 +7,55 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <ImageButton
-        android:id="@+id/closeButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_close_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/closeButton"
-        tools:layout_editor_absoluteX="208dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/InfoBookingButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Info" />
-        <Button
-            android:id="@+id/EditBookingButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Edit" />
-        <Button
-            android:id="@+id/DeleteBookingButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Delete" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/closeButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_close_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 
+    <fragment
+        android:id="@+id/fragmentPlaceholder"
+        android:name="se.grupp1.antonsskafferi.fragments.BookingFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="fragmentInDialog"
+        android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/DeleteBookingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:text="@string/delete"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentPlaceholder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
