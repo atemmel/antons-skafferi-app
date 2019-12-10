@@ -129,14 +129,10 @@ public class TableCardComponent extends CardView
                 FreeTablePopupFragment popup = new FreeTablePopupFragment(new FreeTablePopupFragment.Callback() {
                     @Override
                     public void clicked(OptionClicked optionClicked) {
-                        switch(optionClicked)
+                        if(optionClicked == OptionClicked.PLACE_CUSTOMER)
                         {
-                            case PLACE_CUSTOMER:
-                            {
-                                setStatus(Status.OCCUPIED);
-                                setTableInUse();
-                                break;
-                            }
+                            setStatus(Status.OCCUPIED);
+                            setTableInUse();
                         }
                     }
                 });
@@ -186,10 +182,9 @@ public class TableCardComponent extends CardView
                                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case DialogInterface.BUTTON_POSITIVE:
-                                                wipeTable();
-                                                break;
+                                        if(which == DialogInterface.BUTTON_POSITIVE)
+                                        {
+                                            wipeTable();
                                         }
                                     }
                                 };
@@ -319,7 +314,7 @@ public class TableCardComponent extends CardView
 
         HttpRequest request = new HttpRequest(response);
         request.setRequestMethod("DELETE");
-        //request.execute(DatabaseURL.deleteCustomer + tableId);
+        request.execute(DatabaseURL.deleteOrders + tableId);
     }
 
     public int getTableId()
