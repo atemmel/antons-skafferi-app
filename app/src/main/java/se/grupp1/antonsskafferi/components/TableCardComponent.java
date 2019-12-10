@@ -98,14 +98,18 @@ public class TableCardComponent extends CardView
 
         switch(status)
         {
-            case FREE: {
+            case FREE:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.freeTableColor));
                 break;
             }
             case BOOKED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.bookedTableColor));
                 break;
-            case OCCUPIED: {
+            }
+            case OCCUPIED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.occupiedTableColor));
                 break;
             }
