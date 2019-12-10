@@ -91,7 +91,10 @@ public class DatabaseURL {
     public static final String summaryByTable = base + "orders/table?dinnertable=";
 
     // --- User Edit
-    public static final String addUser = base + "hej";
+    public static final String addUserFirstName = base + "post/newuser?firstname=";
+    public static final String addUserLastName = "&lastname=";
+    public static final String addUserPassword = "&password=";
+    public static final String addUserAdmin = "&admin=";
 
 
     private DatabaseURL() {
