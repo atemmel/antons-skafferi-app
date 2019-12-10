@@ -76,7 +76,7 @@ public class EditScheduleFragment extends Fragment {
         });
 
         httpRequest.setRequestMethod("GET");
-        httpRequest.execute(DatabaseURL.getUsers);
+        httpRequest.execute(DatabaseURL.getEmployees);
     }
 
     public void addListenerOnSpinnerEmployeeSelection() {

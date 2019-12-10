@@ -80,8 +80,7 @@ public class DatabaseURL {
 
 
     // --- Workingschedule
-    public static final String getWorkingEvent = base + "workingschedule";
-
+    public static final String getWorkingSchedule = base + "schedules";
 
     private DatabaseURL() {
     }
