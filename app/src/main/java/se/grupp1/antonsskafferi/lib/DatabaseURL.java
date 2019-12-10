@@ -67,6 +67,9 @@ public class DatabaseURL {
     public static final String validateLogin = base + "users/login?username=";
     public static final String validateLoginPassword = "&password=";
 
+    //Hämta
+    public static final String getUsers = base + "users";
+
 
     // --- Summering
     public static final String summaryByTable = base + "orders/table?dinnertable=";

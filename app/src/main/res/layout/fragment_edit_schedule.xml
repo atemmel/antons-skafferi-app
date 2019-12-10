@@ -3,9 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/editScheduleTextView"
+
+    <Spinner
+        android:id="@+id/employeeDropdown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit schedule" />
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"/>
+
 </LinearLayout>
+
