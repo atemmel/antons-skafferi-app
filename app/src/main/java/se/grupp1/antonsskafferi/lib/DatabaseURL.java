@@ -16,6 +16,9 @@ public class DatabaseURL {
     //Alla
     public static final String getCustomers = base + "customers";
 
+    //För ett id
+    public static final String getCustomerById = base + "customers/customer?id=";
+
     //För ett bord
     public static final String getBookingsForTable = getCustomers + "/dinnertable?dinnerTable=";
 
