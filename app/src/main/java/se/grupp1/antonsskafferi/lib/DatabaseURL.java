@@ -80,6 +80,9 @@ public class DatabaseURL {
     // --- Summering
     public static final String summaryByTable = base + "orders/table?dinnertable=";
 
+    // --- User Edit
+    public static final String addUser = base + "hej";
+
 
     private DatabaseURL() {
     }
