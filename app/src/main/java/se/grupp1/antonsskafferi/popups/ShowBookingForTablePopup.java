@@ -11,7 +11,7 @@ import se.grupp1.antonsskafferi.R;
 
 public class ShowBookingForTablePopup extends DialogFragment
 {
-    ShowBookingForTablePopup()
+    public ShowBookingForTablePopup()
     {
 
     }
