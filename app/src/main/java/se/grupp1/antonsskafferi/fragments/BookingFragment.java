@@ -20,8 +20,10 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -292,11 +294,14 @@ public class BookingFragment extends Fragment {
 
     }
 */
-    private void getAvailableTables(String date, final tablesCallback callback)
+    private void getAvailableTables(final String date, final tablesCallback callback)
     {
-
-
         final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat todaysDate = new SimpleDateFormat(pattern);
+        final String today = todaysDate.format(new Date());
+
+
         HttpRequest request = new HttpRequest(new HttpRequest.Response() {
             @Override
             public void processFinish(String output, int status) {
@@ -306,7 +311,10 @@ public class BookingFragment extends Fragment {
                     for (int i = 0; i < jsonArr.length(); i++)
                     {
                         JSONObject table =jsonArr.getJSONObject(i);
-                        tableList.add(table.getInt("dinnertableid"));
+                        if(!(table.getBoolean("active") && today.equals(date)))
+                        {
+                            tableList.add(table.getInt("dinnertableid"));
+                        }
                     }
                 }
                 catch (Exception e)
