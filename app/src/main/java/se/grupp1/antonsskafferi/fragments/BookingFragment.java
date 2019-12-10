@@ -3,6 +3,7 @@ package se.grupp1.antonsskafferi.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,6 +189,13 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     bookingEmail.setError("Skriv in Email");
                 } else bookingEmail.setError(null);
+                if(isChecked.isEmpty())
+                {
+                    emptyFields = true;
+                    Toast checkToast = Toast.makeText(getContext(), "Måste välja minst ett bord!", Toast.LENGTH_LONG);
+                        checkToast.setGravity(Gravity.CENTER, 0, 0);
+                        checkToast.show();
+                }
 
                 for(int i = 0; i < isChecked.size(); i++)
                 {
@@ -207,14 +215,22 @@ public class BookingFragment extends Fragment {
                     }
                 }
 
+                if(!emptyFields){
+                    bookingFirstName.setText("");
+                    bookingLastName.setText("");
+                    bookingPeopleAmount.setText("");
+                    bookingPhoneNr.setText("");
+                    bookingEmail.setText("");
+                    bookingTime.setText("");
+                    bookingDate.setText("");
+                    getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                        @Override
+                        public void gotTables() {
+                            availableTables(root);
+                        }
+                    });
+                }
 
-                bookingFirstName.setText("");
-                bookingLastName.setText("");
-                bookingPeopleAmount.setText("");
-                bookingPhoneNr.setText("");
-                bookingEmail.setText("");
-                bookingTime.setText("");
-                bookingDate.setText("");
             }
 
             });
@@ -242,7 +258,7 @@ public class BookingFragment extends Fragment {
 
     /*
     private void sendToDatabase(BookingData data) {
-        final String urlString = "http://10.0.2.2:8080/post/customers?customer="; 
+        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";
         for(int i = 0; i < isChecked.size(); i++)
         {
             JSONObject object = new JSONObject();
