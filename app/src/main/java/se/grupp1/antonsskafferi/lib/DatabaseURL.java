@@ -61,7 +61,7 @@ public class DatabaseURL {
     public static final String getCategories = base + "itemcategorys";
 
 
-    // --- Inloggning
+    // --- Inloggning (användare)
 
     //Testa:
     public static final String validateLogin = base + "users/login?username=";
@@ -73,6 +73,14 @@ public class DatabaseURL {
 
     // --- Summering
     public static final String summaryByTable = base + "orders/table?dinnertable=";
+
+
+    // --- Employees
+    public static final String getEmployees = base + "employees";
+
+
+    // --- Workingschedule
+    public static final String getWorkingEvent = base + "workingschedule";
 
 
     private DatabaseURL() {
