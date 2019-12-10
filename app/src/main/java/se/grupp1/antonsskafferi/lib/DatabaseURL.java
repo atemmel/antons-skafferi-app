@@ -43,11 +43,19 @@ public class DatabaseURL {
     //Lägg till
     public static final String insertOrder = base + "post/orders?order=";
 
-    //Hämta
+    //Hämta alla
     public static final String getOrders = base + "orders";
+
+    //Hämta klara
+    public static final String getReadyOrders = getOrders + "/ready";
+
+    //Hämta ej klara
+    public static final String getUnreadyOrders = getOrders + "/unready";
 
     //Sätt levererad
     public static final String setDelivered = base + "post/delivered?dinnertable=";
+
+
 
     // --- Bord
 
