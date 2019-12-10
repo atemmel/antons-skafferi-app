@@ -30,6 +30,7 @@ import se.grupp1.antonsskafferi.popups.EditDinnerMenuPopup;
 import se.grupp1.antonsskafferi.popups.FreeTablePopupFragment;
 import se.grupp1.antonsskafferi.popups.MultilineTextPopup;
 import se.grupp1.antonsskafferi.popups.OccupiedTablePopupFragment;
+import se.grupp1.antonsskafferi.popups.ShowBookingForTablePopup;
 
 public class TableCardComponent extends CardView
 {
@@ -40,13 +41,12 @@ public class TableCardComponent extends CardView
         OCCUPIED
     }
 
-    private int customerId;
-
     private Status status;
 
     final NavController navController;
 
     final int tableId;
+    private int customerId;
 
     public TableCardComponent(Context context, int tableId, int customerId, Status status, NavController navController)
     {
@@ -87,7 +87,6 @@ public class TableCardComponent extends CardView
         setStatus(status);
     }
 
-
     public void setCustomerId(int id)
     {
         this.customerId = id;
@@ -99,20 +98,23 @@ public class TableCardComponent extends CardView
 
         switch(status)
         {
-            case FREE: {
+            case FREE:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.freeTableColor));
                 break;
             }
             case BOOKED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.bookedTableColor));
                 break;
-            case OCCUPIED: {
+            }
+            case OCCUPIED:
+            {
                 setCardBackgroundColor(getResources().getColor(R.color.occupiedTableColor));
                 break;
             }
         }
     }
-
 
     private void showPopup()
     {
@@ -130,14 +132,10 @@ public class TableCardComponent extends CardView
                 FreeTablePopupFragment popup = new FreeTablePopupFragment(new FreeTablePopupFragment.Callback() {
                     @Override
                     public void clicked(OptionClicked optionClicked) {
-                        switch(optionClicked)
+                        if(optionClicked == OptionClicked.PLACE_CUSTOMER)
                         {
-                            case PLACE_CUSTOMER:
-                            {
-                                setStatus(Status.OCCUPIED);
-                                setTableInUse();
-                                break;
-                            }
+                            setStatus(Status.OCCUPIED);
+                            setTableInUse();
                         }
                     }
                 });
@@ -151,16 +149,31 @@ public class TableCardComponent extends CardView
                     @Override
                     public void clicked(OptionClicked optionClicked)
                     {
-                        switch(optionClicked)
+                    switch(optionClicked)
+                    {
+                        case PLACE_CUSTOMER:
                         {
-                            case PLACE_CUSTOMER:
-                            {
-                                System.out.println("!!!!");
-                                setStatus(Status.OCCUPIED);
-                                setTableInUse();
-                                break;
-                            }
+                            setStatus(Status.OCCUPIED);
+                            setTableInUse();
+                            break;
                         }
+
+                        case SHOW_BOOKING:
+                        {
+                            FragmentActivity parent = (FragmentActivity)getContext();
+                            FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
+
+                            ShowBookingForTablePopup popup = new ShowBookingForTablePopup();
+                            popup.show(ft, "dialog");
+                        }
+
+                        case REMOVE_BOOKING:
+                        {
+                            setStatus(Status.FREE);
+                            deleteBooking();
+                            break;
+                        }
+                    }
                     }
                 });
 
@@ -171,38 +184,37 @@ public class TableCardComponent extends CardView
                 OccupiedTablePopupFragment popup = new OccupiedTablePopupFragment(new OccupiedTablePopupFragment.Callback() {
                     @Override
                     public void clicked(OptionClicked optionClicked) {
-                        switch(optionClicked)
+                    switch(optionClicked)
+                    {
+                        case TAKE_ORDER:
+                            navController.navigate(R.id.navigation_new_order, args);
+                            break;
+                        case WIPE_TABLE:
                         {
-                            case TAKE_ORDER:
-                                navController.navigate(R.id.navigation_new_order, args);
-                                break;
-                            case WIPE_TABLE:
-                            {
-                                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case DialogInterface.BUTTON_POSITIVE:
-                                                wipeTable();
-                                                break;
-                                        }
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if(which == DialogInterface.BUTTON_POSITIVE)
+                                    {
+                                        wipeTable();
                                     }
-                                };
+                                }
+                            };
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                                String message = "Du är påväg att rensa bord " + tableId + ". \n" +
-                                        "Är du säker på att du vill fortsätta?";
+                            String message = "Du är påväg att rensa bord " + tableId + ".\n" +
+                                    "Är du säker på att du vill fortsätta?";
 
-                                builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
-                                        .setNegativeButton("Avbryt", dialogClickListener).show();
+                            builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                                    .setNegativeButton("Avbryt", dialogClickListener).show();
 
-                                break;
-                            }
-                            case SHOW_BILL:
-                                navController.navigate(R.id.navigation_show_check, args);
-                                break;
+                            break;
                         }
+                        case SHOW_BILL:
+                            navController.navigate(R.id.navigation_show_check, args);
+                            break;
+                    }
                     }
                 });
                 popup.show(ft, tag);
@@ -218,14 +230,14 @@ public class TableCardComponent extends CardView
             @Override
             public void processFinish(String output, int status)
             {
-                if(status != 200)
-                {
-                    Toast.makeText(getContext(), "Kunde inte rensa bordet, var vänlig försök igen. Felkod: ",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
+            if(status != 200)
+            {
+                Toast.makeText(getContext(), "Kunde inte rensa bordet, var vänlig försök igen. Felkod: ",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
 
-                setStatus(Status.OCCUPIED);
+            setStatus(Status.OCCUPIED);
             }
         };
 
@@ -241,14 +253,14 @@ public class TableCardComponent extends CardView
             @Override
             public void processFinish(String output, int status)
             {
-                if(status != 200)
-                {
-                    Toast.makeText(getContext(), "Kunde inte sätta bordets status, var vänlig försök igen. Felkod: ",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
+            if(status != 200)
+            {
+                Toast.makeText(getContext(), "Kunde inte sätta bordets status, var vänlig försök igen. Felkod: ",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
 
-                setStatus(Status.FREE);
+            setStatus(Status.FREE);
             }
         };
 
@@ -260,6 +272,14 @@ public class TableCardComponent extends CardView
 
     private void wipeTable()
     {
+        if(customerId != -1)
+        {
+            System.out.println("Tar bort bokning");
+            deleteBooking();
+        }
+
+        deleteAllOrders();
+
         setTableNotInUse();
     }
 
@@ -270,20 +290,43 @@ public class TableCardComponent extends CardView
             @Override
             public void processFinish(String output, int status)
             {
-                if(status != 200)
-                {
-                    Toast.makeText(getContext(), "Kunde inte ta bort bokning, var vänlig försök igen. Felkod: ",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
+            if(status != 200)
+            {
+                Toast.makeText(getContext(), "Kunde inte ta bort bokning, var vänlig försök igen. Felkod: ",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
 
-                setStatus(Status.FREE);
+            setStatus(Status.FREE);
             }
         };
 
         HttpRequest request = new HttpRequest(response);
         request.setRequestMethod("DELETE");
         request.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    private void deleteAllOrders()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+            if(status != 200)
+            {
+                Toast.makeText(getContext(), "Kunde inte ta bort beställningar, var vänlig försök igen. Felkod: ",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+
+            setStatus(Status.FREE);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("DELETE");
+        request.execute(DatabaseURL.deleteOrders + tableId);
     }
 
     public int getTableId()
