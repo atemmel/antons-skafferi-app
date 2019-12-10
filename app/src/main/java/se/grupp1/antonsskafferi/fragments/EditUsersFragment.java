@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import se.grupp1.antonsskafferi.R;
@@ -17,5 +18,12 @@ public class EditUsersFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_edit_users, container, false);
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 }
