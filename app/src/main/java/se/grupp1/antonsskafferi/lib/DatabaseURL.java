@@ -5,7 +5,7 @@ public class DatabaseURL {
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
-    private static final boolean usingLocal = false;
+    private static final boolean usingLocal = true;
 
     private static final String base = usingLocal ? local : remote;
 
@@ -53,6 +53,15 @@ public class DatabaseURL {
 
     //Hämta
     public static final String getTables = base + "dinnertables";
+
+    //Hämta om ett bord används
+    public static final String getIfTableInUse = base + "/dinnertables/active?dinnertable=";
+
+    //Sätt att det ej används
+    public static final String setTableInUse = base + "/post/active/true?dinnertable=";
+
+    //Sätt att det används
+    public static final String setTableNotInUse = base + "/post/active/false?dinnertable=";
 
 
     // --- Kategorier

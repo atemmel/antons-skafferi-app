@@ -93,21 +93,23 @@ public class TableCardComponent extends CardView
         this.customerId = id;
     }
 
-    private void setStatus(Status status)
+    public void setStatus(Status status)
     {
         this.status = status;
 
         switch(status)
         {
-            case FREE:
+            case FREE: {
                 setCardBackgroundColor(getResources().getColor(R.color.freeTableColor));
                 break;
+            }
             case BOOKED:
                 setCardBackgroundColor(getResources().getColor(R.color.bookedTableColor));
                 break;
-            case OCCUPIED:
+            case OCCUPIED: {
                 setCardBackgroundColor(getResources().getColor(R.color.occupiedTableColor));
                 break;
+            }
         }
     }
 
@@ -125,22 +127,43 @@ public class TableCardComponent extends CardView
         switch(status)
         {
             case FREE: {
-                FreeTablePopupFragment popup = FreeTablePopupFragment.newInstance(new FreeTablePopupFragment.Callback() {
+                FreeTablePopupFragment popup = new FreeTablePopupFragment(new FreeTablePopupFragment.Callback() {
                     @Override
                     public void clicked(OptionClicked optionClicked) {
                         switch(optionClicked)
                         {
                             case PLACE_CUSTOMER:
+                            {
                                 setStatus(Status.OCCUPIED);
+                                setTableInUse();
                                 break;
+                            }
                         }
                     }
                 });
                 popup.show(ft, tag);
                 break;
             }
-            case BOOKED: {
-                BookedTablePopupFragment popup = BookedTablePopupFragment.newInstance();
+            case BOOKED:
+                {
+                BookedTablePopupFragment popup = new BookedTablePopupFragment(new BookedTablePopupFragment.Callback()
+                {
+                    @Override
+                    public void clicked(OptionClicked optionClicked)
+                    {
+                        switch(optionClicked)
+                        {
+                            case PLACE_CUSTOMER:
+                            {
+                                System.out.println("!!!!");
+                                setStatus(Status.OCCUPIED);
+                                setTableInUse();
+                                break;
+                            }
+                        }
+                    }
+                });
+
                 popup.show(ft, tag);
                 break;
             }
@@ -188,7 +211,7 @@ public class TableCardComponent extends CardView
         }
     }
 
-    private void wipeTable()
+    private void setTableInUse()
     {
         HttpRequest.Response response = new HttpRequest.Response()
         {
@@ -202,6 +225,58 @@ public class TableCardComponent extends CardView
                     ).show();
                 }
 
+                setStatus(Status.OCCUPIED);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("POST");
+        request.execute(DatabaseURL.setTableInUse + tableId);
+    }
+
+    private void setTableNotInUse()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getContext(), "Kunde inte sätta bordets status, var vänlig försök igen. Felkod: ",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                setStatus(Status.FREE);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("POST");
+        request.execute(DatabaseURL.setTableNotInUse + tableId);
+    }
+
+
+    private void wipeTable()
+    {
+        setTableNotInUse();
+    }
+
+    private void deleteBooking()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getContext(), "Kunde inte ta bort bokning, var vänlig försök igen. Felkod: ",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
                 setStatus(Status.FREE);
             }
         };
@@ -209,6 +284,11 @@ public class TableCardComponent extends CardView
         HttpRequest request = new HttpRequest(response);
         request.setRequestMethod("DELETE");
         request.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    public int getTableId()
+    {
+        return this.tableId;
     }
 
 }

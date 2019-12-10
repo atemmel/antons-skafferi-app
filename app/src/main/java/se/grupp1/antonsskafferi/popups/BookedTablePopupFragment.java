@@ -11,15 +11,26 @@ import se.grupp1.antonsskafferi.R;
 
 public class BookedTablePopupFragment extends DialogFragment
 {
-    public BookedTablePopupFragment() {}
-
-
-    public static BookedTablePopupFragment newInstance()
+    public interface Callback
     {
-        BookedTablePopupFragment fragment = new BookedTablePopupFragment();
+        enum OptionClicked
+        {
+            PLACE_CUSTOMER,
+            SHOW_BOOKING,
+            REMOVE_BOOKING
+        }
 
-        return fragment;
+        void clicked(OptionClicked optionClicked);
     }
+
+    Callback callback;
+
+    public BookedTablePopupFragment(Callback callback)
+    {
+        this.callback = callback;
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -38,15 +49,23 @@ public class BookedTablePopupFragment extends DialogFragment
         v.findViewById(R.id.placeCustomerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((TableOverviewFragment) getParentFragment()).setTable4Booked();
+                callback.clicked(Callback.OptionClicked.PLACE_CUSTOMER);
                 dismiss();
             }
         });
 
-        v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.showBookingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((TableOverviewFragment) getParentFragment()).setTable4Unbooked();
+                callback.clicked(Callback.OptionClicked.SHOW_BOOKING);
+                dismiss();
+            }
+        });
+
+        v.findViewById(R.id.removeBookingButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.clicked(Callback.OptionClicked.REMOVE_BOOKING);
                 dismiss();
             }
         });
