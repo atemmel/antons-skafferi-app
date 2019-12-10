@@ -5,7 +5,7 @@ public class DatabaseURL {
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
-    private static final boolean usingLocal = true;
+    private static final boolean usingLocal = false;
 
     private static final String base = usingLocal ? local : remote;
 
@@ -43,14 +43,21 @@ public class DatabaseURL {
     //Lägg till
     public static final String insertOrder = base + "post/orders?order=";
 
-    //Hämta
+    //Hämta alla
     public static final String getOrders = base + "orders";
+
+    //Hämta klara
+    public static final String getReadyOrders = getOrders + "/ready";
+
+    //Hämta ej klara
+    public static final String getUnreadyOrders = getOrders + "/unready";
 
     //Sätt levererad
     public static final String setDelivered = base + "post/delivered?dinnertable=";
 
     //Ta bort för ett bord
     public static final String deleteOrders = base + "orders/delete?dinnertable=";
+
 
     // --- Bord
 
@@ -82,6 +89,9 @@ public class DatabaseURL {
 
     // --- Summering
     public static final String summaryByTable = base + "orders/table?dinnertable=";
+
+    // --- User Edit
+    public static final String addUser = base + "hej";
 
 
     private DatabaseURL() {

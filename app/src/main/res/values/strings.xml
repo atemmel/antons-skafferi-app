@@ -55,6 +55,7 @@
     <string name="table_id_header_text">Bord</string>
     <string name="order_summary_header_text">Ordersummering</string>
     <string name="order_status_header_text">Status</string>
+    <string name="done_button">Order levererad</string>
 
     <!-- View Bookings Page -->
     <string name="table_id_text">Bord</string>

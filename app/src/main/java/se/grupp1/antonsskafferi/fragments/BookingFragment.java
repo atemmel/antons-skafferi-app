@@ -3,6 +3,7 @@ package se.grupp1.antonsskafferi.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import se.grupp1.antonsskafferi.components.RecyclerViewAdapter;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
@@ -40,6 +48,20 @@ public class BookingFragment extends Fragment {
     private int hour, minute;
     private String format;
     //-------
+
+    //Booking
+    public interface RecyclerCallback
+    {
+        public void getData(ArrayList<Integer> data);
+    }
+    private ArrayList<Integer> tableList = new ArrayList<>();
+    private ArrayList<Integer> isChecked = new ArrayList<>();
+
+    public interface tablesCallback{
+        public void gotTables();
+    }
+    //-------
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -86,9 +108,19 @@ public class BookingFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
+
+                        getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                            @Override
+                            public void gotTables() {
+                                availableTables(root);
+                            }
+                        });
+
                     }
                 }, year, month, day);
                 dpd.show();
+
+
             }
         });
         // End of DatePicker
@@ -157,31 +189,48 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     bookingEmail.setError("Skriv in Email");
                 } else bookingEmail.setError(null);
-
-
-                BookingData data = new BookingData(
-                        firstName,
-                        lastName,
-                        peopleAmount,
-                        phoneNr,
-                        time,
-                        date,
-                        email,
-                        //TODO: Add this field to form
-                        1);
-
-                if(!emptyFields) {
-                    System.out.println("Sent to backend");
-                    sendToDatabase(data);
+                if(isChecked.isEmpty())
+                {
+                    emptyFields = true;
+                    Toast checkToast = Toast.makeText(getContext(), "Måste välja minst ett bord!", Toast.LENGTH_LONG);
+                        checkToast.setGravity(Gravity.CENTER, 0, 0);
+                        checkToast.show();
                 }
 
-                bookingFirstName.setText("");
-                bookingLastName.setText("");
-                bookingPeopleAmount.setText("");
-                bookingPhoneNr.setText("");
-                bookingEmail.setText("");
-                bookingTime.setText("");
-                bookingDate.setText("");
+                for(int i = 0; i < isChecked.size(); i++)
+                {
+                    BookingData data = new BookingData(
+                            firstName,
+                            lastName,
+                            peopleAmount,
+                            phoneNr,
+                            time,
+                            date,
+                            email,
+                            isChecked.get(i));
+
+                    if(!emptyFields) {
+                        System.out.println("Sent to backend");
+                        sendToDatabase(data);
+                    }
+                }
+
+                if(!emptyFields){
+                    bookingFirstName.setText("");
+                    bookingLastName.setText("");
+                    bookingPeopleAmount.setText("");
+                    bookingPhoneNr.setText("");
+                    bookingEmail.setText("");
+                    bookingTime.setText("");
+                    bookingDate.setText("");
+                    getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                        @Override
+                        public void gotTables() {
+                            availableTables(root);
+                        }
+                    });
+                }
+
             }
 
             });
@@ -206,5 +255,84 @@ public class BookingFragment extends Fragment {
         httpRequest.setPayload(payload);
         httpRequest.execute(DatabaseURL.insertCustomer);
     }
+
+    /*
+    private void sendToDatabase(BookingData data) {
+        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";
+        for(int i = 0; i < isChecked.size(); i++)
+        {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("firstname", data.firstName);
+                object.put("lastname", data.lastName);
+                object.put("sizeofcompany", data.peopleAmount);
+                object.put("phone", data.phoneNr);
+                object.put("bookingdate", data.date);
+                object.put("bookingtime", data.time);
+                object.put("email", data.email);
+                object.put("dinnertable", isChecked.get(i));
+
+                HttpRequest.Response response = new HttpRequest.Response() {
+                    @Override
+                    public void processFinish(String output) {
+                        System.out.println(output);
+                    }
+                };
+                HttpRequest httpRequest = new HttpRequest(response);
+                httpRequest.setRequestMethod("POST");
+                System.out.println(object.toString());
+                httpRequest.setPayload(object.toString());
+                httpRequest.execute(urlString);
+            } catch(JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
+*/
+    private void getAvailableTables(String date, final tablesCallback callback)
+    {
+
+
+        final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
+        HttpRequest request = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                tableList.clear();
+                try{
+                    JSONArray jsonArr = new JSONArray(output);
+                    for (int i = 0; i < jsonArr.length(); i++)
+                    {
+                        JSONObject table =jsonArr.getJSONObject(i);
+                        tableList.add(table.getInt("dinnertableid"));
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                callback.gotTables();
+            }
+        });
+        request.setRequestMethod("GET");
+        request.execute(urlString);
+    }
+
+    private void availableTables(View root)
+    {
+        isChecked.clear();
+        RecyclerView myRecycler = (RecyclerView) root.findViewById(R.id.BookingRecycler);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getContext(), tableList, new RecyclerCallback() {
+            @Override
+            public void getData(ArrayList<Integer> data) {
+                isChecked = data;
+            }
+        });
+        myRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        myRecycler.setAdapter(myAdapter);
+    }
+
 
 }

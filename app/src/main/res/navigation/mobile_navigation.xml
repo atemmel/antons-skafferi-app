@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_editScheduleFragment"
             app:destination="@id/navigation_edit_schedule" />
+        <action
+            android:id="@+id/action_navigation_settings_to_addUsersFragment"
+            app:destination="@id/navigation_edit_users" />
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
@@ -93,4 +96,8 @@
         android:name="se.grupp1.antonsskafferi.fragments.ShowCheckFragment"
         android:label="Visa Nota"
         tools:layout="@layout/fragment_show_check" />
+    <fragment
+        android:id="@+id/navigation_edit_users"
+        android:name="se.grupp1.antonsskafferi.fragments.EditUsersFragment"
+        android:label="Redigera användare" />
 </navigation>
