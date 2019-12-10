@@ -40,13 +40,12 @@ public class TableCardComponent extends CardView
         OCCUPIED
     }
 
-    private int customerId;
-
     private Status status;
 
     final NavController navController;
 
     final int tableId;
+    private int customerId;
 
     public TableCardComponent(Context context, int tableId, int customerId, Status status, NavController navController)
     {
@@ -155,9 +154,15 @@ public class TableCardComponent extends CardView
                         {
                             case PLACE_CUSTOMER:
                             {
-                                System.out.println("!!!!");
                                 setStatus(Status.OCCUPIED);
                                 setTableInUse();
+                                break;
+                            }
+
+                            case REMOVE_BOOKING:
+                            {
+                                setStatus(Status.FREE);
+                                deleteBooking();
                                 break;
                             }
                         }
@@ -191,7 +196,7 @@ public class TableCardComponent extends CardView
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                                String message = "Du är påväg att rensa bord " + tableId + ". \n" +
+                                String message = "Du är påväg att rensa bord " + tableId + ".\n" +
                                         "Är du säker på att du vill fortsätta?";
 
                                 builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
@@ -260,6 +265,14 @@ public class TableCardComponent extends CardView
 
     private void wipeTable()
     {
+        if(customerId != -1)
+        {
+            System.out.println("Tar bort bokning");
+            deleteBooking();
+        }
+
+        deleteAllOrders();
+
         setTableNotInUse();
     }
 
@@ -284,6 +297,29 @@ public class TableCardComponent extends CardView
         HttpRequest request = new HttpRequest(response);
         request.setRequestMethod("DELETE");
         request.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    private void deleteAllOrders()
+    {
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getContext(), "Kunde inte ta bort beställningar, var vänlig försök igen. Felkod: ",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                setStatus(Status.FREE);
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("DELETE");
+        //request.execute(DatabaseURL.deleteCustomer + tableId);
     }
 
     public int getTableId()
