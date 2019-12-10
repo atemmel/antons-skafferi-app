@@ -105,6 +105,11 @@
             android:importantForAutofill="no"
             android:inputType="textEmailAddress" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/BookingRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+
         <Button
             android:id="@+id/SendBtn"
             android:layout_width="wrap_content"
