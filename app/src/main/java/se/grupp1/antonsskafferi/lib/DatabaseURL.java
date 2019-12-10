@@ -55,6 +55,8 @@ public class DatabaseURL {
     //Sätt levererad
     public static final String setDelivered = base + "post/delivered?dinnertable=";
 
+    //Ta bort för ett bord
+    public static final String deleteOrders = base + "orders/delete?dinnertable=";
 
 
     // --- Bord
