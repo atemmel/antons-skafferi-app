@@ -296,7 +296,7 @@ public class BookingFragment extends Fragment {
 */
     private void getAvailableTables(final String date, final tablesCallback callback)
     {
-        final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
+        //final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat todaysDate = new SimpleDateFormat(pattern);
         final String today = todaysDate.format(new Date());
@@ -325,7 +325,7 @@ public class BookingFragment extends Fragment {
             }
         });
         request.setRequestMethod("GET");
-        request.execute(urlString);
+        request.execute(DatabaseURL.getTableAvailableForDate + date);
     }
 
     private void availableTables(View root)

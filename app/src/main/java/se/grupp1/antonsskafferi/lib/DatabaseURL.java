@@ -72,6 +72,9 @@ public class DatabaseURL {
     //Hämta om ett bord används
     public static final String getIfTableInUse = base + "/dinnertables/active?dinnertable=";
 
+    //Hämta på datum
+    public static final String getTableAvailableForDate = base + "dinnertables/booking?date=";
+
     //Sätt att det ej används
     public static final String setTableInUse = base + "/post/active/true?dinnertable=";
 
