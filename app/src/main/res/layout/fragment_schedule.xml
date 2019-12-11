@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/calendar">
 
         <LinearLayout
-            android:id="@+id/workList"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -36,7 +36,19 @@
                 android:text="Date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0" />
+
+
+            <LinearLayout
+                android:id="@+id/workList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+            </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 
 </LinearLayout>

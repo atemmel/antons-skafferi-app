@@ -5,7 +5,7 @@ public class DatabaseURL {
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
-    private static final boolean usingLocal = false;
+    private static final boolean usingLocal = true;
 
     private static final String base = usingLocal ? local : remote;
 
@@ -88,11 +88,14 @@ public class DatabaseURL {
     public static final String getCategories = base + "itemcategorys";
 
 
-    // --- Inloggning
+    // --- Inloggning (användare)
 
     //Testa:
     public static final String validateLogin = base + "users/login?username=";
     public static final String validateLoginPassword = "&password=";
+
+    //Hämta
+    public static final String getUsers = base + "users";
 
 
     // --- Summering
@@ -107,6 +110,21 @@ public class DatabaseURL {
 
     // --- Testing of posting image
     public static final String testingImage = base + "upload";
+
+    // --- Employees
+    public static final String getEmployees = base + "employees";
+
+
+    // --- Workingschedule
+    public static final String getWorkingSchedule = base + "schedules";
+
+    // --- Hämta tid för jobbpass med givet namn och datum
+    public static final String getWorkScheduleByNameAndDate = base + "schedules/schedule?name=";
+    public static final String getGetWorkingScheduleByDate = "&date=";
+
+    // --- Hämta alla händelser i schemat på ett givet datum
+    public static final String getScheduleByDate = base + "schedules/schedule/date?date=";
+
 
     private DatabaseURL() {
     }

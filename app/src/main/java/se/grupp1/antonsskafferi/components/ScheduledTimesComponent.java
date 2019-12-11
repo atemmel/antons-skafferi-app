@@ -18,13 +18,16 @@ import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopup;
 public class ScheduledTimesComponent extends CardView
 {
     private boolean showChangeTimeButton = false;
+    private String name = "";
+    private String startTime = "";
+    private String endTime = "";
 
     public ScheduledTimesComponent(Context context)
     {
         super(context);
     }
 
-    public ScheduledTimesComponent(Context context, String workingTime)
+    public ScheduledTimesComponent(Context context, String startTime, String endTime)
     {
         super(context);
 
@@ -32,7 +35,10 @@ public class ScheduledTimesComponent extends CardView
 
         inflater.inflate(R.layout.component_schedule_event, this, true);
 
-        ((TextView) findViewById(R.id.scheduleTime)).setText(workingTime);
+        setStartTime(startTime);
+        setEndTime(endTime);
+
+        ((TextView) findViewById(R.id.scheduleTime)).setText(startTime + "-" + endTime);
 
         ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -52,7 +58,8 @@ public class ScheduledTimesComponent extends CardView
                 FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
                 String tag = "dialog";
-                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup();
+
+                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName()); //getStartTime(), getEndTime()
 
                 popup.show(ft, tag);
             }
@@ -77,7 +84,7 @@ public class ScheduledTimesComponent extends CardView
         }
     }
 
-    public void addItem(String name)
+    public void setName(String name)
     {
         LinearLayout itemsList = findViewById(R.id.scheduleName);
 
@@ -87,5 +94,30 @@ public class ScheduledTimesComponent extends CardView
         textView.setPadding(8, 0,0,0);
 
         itemsList.addView(textView);
+
+        this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setStartTime(String startTime){
+
+        this.startTime = startTime;
+    }
+
+    public String getStartTime(){
+        return startTime;
+    }
+
+    public void setEndTime(String endTime){
+
+        this.endTime = endTime;
+    }
+
+    public String getEndTime(){
+        return endTime;
     }
 }
