@@ -3,6 +3,7 @@ package se.grupp1.antonsskafferi.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,9 +61,13 @@ public class BookingFragment extends Fragment {
     private ArrayList<Integer> tableList = new ArrayList<>();
     private ArrayList<Integer> isChecked = new ArrayList<>();
 
-    public interface tablesCallback{
+    public interface tablesCallback
+    {
         public void gotTables();
     }
+
+    private String prevDate;
+
     //-------
 
 
@@ -98,9 +103,11 @@ public class BookingFragment extends Fragment {
         mTv = root.findViewById(R.id.BookingDate);
         mBtn = root.findViewById(R.id.BtnDatePicker);
 
+
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEJ " + prevDate);
                 c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_MONTH);
                 int month = c.get(Calendar.MONTH);
@@ -119,9 +126,10 @@ public class BookingFragment extends Fragment {
                             TextView hiddenTableId = root.findViewById(R.id.hiddenTableId);
                             String tableId = hiddenTableId.getText().toString();
 
+
                             @Override
                             public void gotTables() {
-                                if(!customerId.isEmpty())
+                                if(!customerId.isEmpty() && prevDate.equals(mTv.getText().toString()))
                                     tableList.add(Integer.valueOf(tableId));
                                 availableTables(root);
                             }
@@ -228,7 +236,7 @@ public class BookingFragment extends Fragment {
                     if(!checkedPrevTable)
                     {
                         //TODO delete customer with id customerId from database
-                        System.out.println(customerId + " SHOULD BE DELETED");
+                        delete(customerId);
                     }
                 }
 
@@ -291,42 +299,7 @@ public class BookingFragment extends Fragment {
         httpRequest.execute(DatabaseURL.insertCustomer);
     }
 
-    /*
-    private void sendToDatabase(BookingData data) {
-        final String urlString = "http://10.0.2.2:8080/post/customers?customer=";
-        for(int i = 0; i < isChecked.size(); i++)
-        {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("firstname", data.firstName);
-                object.put("lastname", data.lastName);
-                object.put("sizeofcompany", data.peopleAmount);
-                object.put("phone", data.phoneNr);
-                object.put("bookingdate", data.date);
-                object.put("bookingtime", data.time);
-                object.put("email", data.email);
-                object.put("dinnertable", isChecked.get(i));
 
-                HttpRequest.Response response = new HttpRequest.Response() {
-                    @Override
-                    public void processFinish(String output) {
-                        System.out.println(output);
-                    }
-                };
-                HttpRequest httpRequest = new HttpRequest(response);
-                httpRequest.setRequestMethod("POST");
-                System.out.println(object.toString());
-                httpRequest.setPayload(object.toString());
-                httpRequest.execute(urlString);
-            } catch(JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-
-    }
-*/
     private void getAvailableTables(final String date, final tablesCallback callback)
     {
         //final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
@@ -378,15 +351,52 @@ public class BookingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView bookingDate =  view.findViewById(R.id.BookingDate);
-        getAvailableTables(bookingDate.getText().toString(), new tablesCallback() {
-            @Override
-            public void gotTables() {
-                availableTables(view);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                checkDate();
+                getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                    TextView hiddenCustomerId = view.findViewById(R.id.hiddenCustomerId);
+                    String customerId = hiddenCustomerId.getText().toString();
+                    TextView hiddenTableId = view.findViewById(R.id.hiddenTableId);
+                    String tableId = hiddenTableId.getText().toString();
+
+
+                    @Override
+                    public void gotTables() {
+                        if(!customerId.isEmpty() && prevDate.equals(mTv.getText().toString()))
+                            tableList.add(Integer.valueOf(tableId));
+                        availableTables(view);
+                    }
+                });
             }
-        });
+        }, 0);
 
+    }
 
+    private void delete(String customerId)
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200) {
+                    Toast.makeText(getContext(), "Kunde inte ta bort objekt, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("DELETE");
+
+        httpRequest.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    public void checkDate()
+    {
+        prevDate = mTv.getText().toString();
     }
 
 

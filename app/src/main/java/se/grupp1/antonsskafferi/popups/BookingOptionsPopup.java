@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.data.BookingData;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 
 
 public final class BookingOptionsPopup extends DialogFragment {
@@ -46,23 +49,15 @@ public final class BookingOptionsPopup extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.popup_bookings_options, container, true);
-
-        return v;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
-        super.onViewCreated(view, savedInstanceState);
-        EditText bookingFirstName = view.findViewById(R.id.BookingFirstName);
-        EditText bookingLastName = view.findViewById(R.id.BookingLastName);
-        EditText bookingPeopleAmount =  view.findViewById(R.id.BookingPeopleAmount);
-        EditText bookingPhoneNr =  view.findViewById(R.id.BookingPhoneNr);
-        EditText bookingEmail =  view.findViewById(R.id.BookingEmail);
-        TextView bookingTime =  view.findViewById(R.id.BookingTime);
-        TextView bookingDate =  view.findViewById(R.id.BookingDate);
-        TextView hiddenCustomerId = view.findViewById(R.id.hiddenCustomerId);
-        TextView hiddenTableId = view.findViewById(R.id.hiddenTableId);
+        EditText bookingFirstName = v.findViewById(R.id.BookingFirstName);
+        EditText bookingLastName = v.findViewById(R.id.BookingLastName);
+        EditText bookingPeopleAmount = v.findViewById(R.id.BookingPeopleAmount);
+        EditText bookingPhoneNr =  v.findViewById(R.id.BookingPhoneNr);
+        EditText bookingEmail =  v.findViewById(R.id.BookingEmail);
+        TextView bookingTime =  v.findViewById(R.id.BookingTime);
+        TextView bookingDate =  v.findViewById(R.id.BookingDate);
+        TextView hiddenCustomerId = v.findViewById(R.id.hiddenCustomerId);
+        TextView hiddenTableId = v.findViewById(R.id.hiddenTableId);
 
         bookingFirstName.setText(itemData.getFirstName());
         bookingLastName.setText(itemData.getLastName());
@@ -74,7 +69,20 @@ public final class BookingOptionsPopup extends DialogFragment {
         hiddenCustomerId.setText(""+itemData.getCustomerId());
         hiddenTableId.setText(""+itemData.getTableId());
 
+        return v;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.deleteBookingButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
 
         //final FragmentManager fm = getFragmentManager();
        // final FragmentTransaction ft = fm.beginTransaction();
@@ -98,6 +106,27 @@ public final class BookingOptionsPopup extends DialogFragment {
     }
 
 
+
+    private void delete()
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200) {
+                    Toast.makeText(getContext(), "Kunde inte ta bort objekt, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+                dismiss();
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("DELETE");
+
+        httpRequest.execute(DatabaseURL.deleteCustomer + itemData.getCustomerId());
+    }
 
 }
 

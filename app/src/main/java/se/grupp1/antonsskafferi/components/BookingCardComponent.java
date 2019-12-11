@@ -39,21 +39,6 @@ public class BookingCardComponent extends CardView
                 FragmentActivity parent = (FragmentActivity)getContext();
                 FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
-
-
-
-
-/*
-                String firstName = bookingFirstName.getText().toString();
-                String lastName = bookingLastName.getText().toString();
-                String peopleAmount = bookingPeopleAmount.getText().toString();
-                String phoneNr = bookingPhoneNr.getText().toString();
-                String email = bookingEmail.getText().toString();
-                String time = bookingTime.getText().toString();
-                String date = bookingDate.getText().toString();
-*/
-
-
                 String tag = "dialog";
 
                 BookingOptionsPopup popup = new BookingOptionsPopup(bookingData, new BookingOptionsPopup.Callback() {
@@ -65,24 +50,6 @@ public class BookingCardComponent extends CardView
                 });
                 popup.show(ft, tag);
 
-
-                //EditText bookingFirstName = findViewById(R.id.BookingFirstName);
-                /*EditText bookingLastName = findViewById(R.id.BookingLastName);
-                EditText bookingPeopleAmount =  findViewById(R.id.BookingPeopleAmount);
-                EditText bookingPhoneNr =  findViewById(R.id.BookingPhoneNr);
-                EditText bookingEmail =  findViewById(R.id.BookingEmail);
-                TextView bookingTime =  findViewById(R.id.BookingTime);
-                TextView bookingDate =  findViewById(R.id.BookingDate);*/
-               // System.out.println(bookingData.getFirstName());
-
-                //bookingFirstName.setText(bookingData.getFirstName());
-                /*bookingLastName.setText(bookingData.getLastName());
-                bookingPeopleAmount.setText(bookingData.getBookingAmount());
-                bookingPhoneNr.setText(bookingData.getPhoneNr());
-                bookingEmail.setText(bookingData.getEmail());
-                bookingTime.setText(bookingData.getTime());
-                bookingDate.setText(bookingData.getDate());*/
-               // popup.show(ft, tag);
 
             }
         });

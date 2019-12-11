@@ -8,10 +8,10 @@
     android:padding="8dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/fragment"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentPlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,27 +27,27 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@android:color/transparent"
+            android:contentDescription="TODO"
             android:src="@drawable/ic_close_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 
+
     <fragment
         android:id="@+id/fragmentPlaceholder"
         android:name="se.grupp1.antonsskafferi.fragments.BookingFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:tag="fragmentInDialog"
-        android:layout_marginTop="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <Button
-        android:id="@+id/DeleteBookingButton"
+        android:id="@+id/deleteBookingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_dark"

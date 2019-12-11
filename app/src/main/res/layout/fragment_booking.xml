@@ -16,15 +16,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="216dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
 
                 <TextView
                     android:id="@+id/BookingTime"
@@ -32,11 +33,6 @@
                     android:layout_height="44dp"
                     android:text="@string/tid"
                     android:textSize="20sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/BtnTimePicker"
@@ -46,13 +42,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="213dp"
+                android:layout_width="221dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/BookingDate"
-                    android:layout_width="101dp"
+                    android:layout_width="110dp"
                     android:layout_height="51dp"
                     android:text="@string/datum"
                     android:textSize="20sp" />
@@ -104,7 +100,7 @@
 
             <EditText
                 android:id="@+id/BookingEmail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/skriv_email"
@@ -113,7 +109,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/BookingRecycler"
-                android:layout_width="match_parent"
+                android:layout_width="214dp"
                 android:layout_height="80dp" />
 
             <Button
@@ -127,6 +123,7 @@
                 android:id="@+id/hiddenCustomerId"
                 android:layout_width="0dp"
                 android:layout_height="0dp" />
+
             <TextView
                 android:id="@+id/hiddenTableId"
                 android:layout_width="0dp"
