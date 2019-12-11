@@ -95,6 +95,9 @@ public class TableOverviewFragment extends Fragment
 
     private void loadTables(final LoadingCallback callback)
     {
+        if(getView() == null) {
+            return;
+        }
         final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
 
         tableGrid.removeAllViews();
@@ -137,6 +140,9 @@ public class TableOverviewFragment extends Fragment
 
     private void checkForInUseTables()
     {
+        if(getView() == null) {
+            return;
+        }
         final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
 
         for(int i = 0; i < tableGrid.getChildCount(); i++)
@@ -167,6 +173,7 @@ public class TableOverviewFragment extends Fragment
 
     private void checkForBookedTables()
     {
+        if (getView() == null) return;
         final GridLayout tableGrid = getView().findViewById(R.id.tableGrid);
 
         for(int i = 0; i < tableGrid.getChildCount(); i++)
@@ -229,8 +236,7 @@ public class TableOverviewFragment extends Fragment
 
         if(!DateUtils.isToday(milliseconds_date)) return false;
 
-        if(System.currentTimeMillis() >= milliseconds_date) return true;
-        else                                                return false;
+        return System.currentTimeMillis() >= milliseconds_date;
     }
 
 

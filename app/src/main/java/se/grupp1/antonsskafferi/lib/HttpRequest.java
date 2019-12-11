@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -105,7 +106,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
                 try {
                     OutputStream os = connection.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
                     writer.write(payload);
                     writer.flush();
                     writer.close();
@@ -168,6 +169,9 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     @Override
     protected void onPostExecute(String result)
     {
+        if(delegate == null) {
+            return;
+        }
         //System.out.println("got response");
         try {
             delegate.processFinish(result, status);

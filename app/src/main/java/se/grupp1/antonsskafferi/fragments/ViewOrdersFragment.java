@@ -74,6 +74,9 @@ public class ViewOrdersFragment extends Fragment
 
     private void loadOrders(final LoadingCallback callback)
     {
+        if(getView() == null) {
+            return;
+        }
         ((LinearLayout)getView().findViewById(R.id.orderList)).removeAllViews();
 
         getReadyOrders(new LoadingCallback() {
@@ -93,6 +96,9 @@ public class ViewOrdersFragment extends Fragment
 
     private void getReadyOrders(final LoadingCallback callback)
     {
+        if(getView() == null) {
+            return;
+        }
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
         HttpRequest.Response response = new HttpRequest.Response()
@@ -160,6 +166,9 @@ public class ViewOrdersFragment extends Fragment
 
     private void getUnreadyOrders(final LoadingCallback callback)
     {
+        if(getView() == null) {
+            return;
+        }
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
         HttpRequest.Response response = new HttpRequest.Response()
