@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,9 +45,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleEventInputText" />
 
-    <EditText
+    <Button
         android:id="@+id/dateEventInputText"
-        android:inputType="date"
         android:layout_width="301dp"
         android:layout_height="55dp"
         android:ems="12"
@@ -52,7 +55,8 @@
         android:hint="Datum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEventInputText"/>
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEventInputText"
+        android:paddingBottom="15dp"/>
 
     <LinearLayout
         android:id="@+id/imageLayout"
@@ -67,21 +71,12 @@
         android:ems="12"
         >
 
-        <TextView
-            android:id="@+id/photoEventTextView"
-            android:layout_width="111dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:inputType="date"
-            android:ems="12"
-            android:text="Välj en bild:  "
-            android:textSize="18sp" />
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:ems="12"
+            android:gravity="left"
             tools:srcCompat="@tools:sample/avatars[0]" />
     </LinearLayout>
 
@@ -89,16 +84,36 @@
         android:id="@+id/addEventButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="12"
+        android:layout_marginTop="72dp"
         android:background="@color/colorPrimary"
+        android:ems="12"
         android:gravity="center"
         android:padding="20dp"
-        android:text="Lägg till"
+        android:text="Lägg till Bild"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
+
+    <Button
+        android:id="@+id/addEventButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="172dp"
+        android:background="@color/colorPrimary"
+        android:ems="12"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="Skapa Event"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+</ScrollView>

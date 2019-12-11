@@ -102,6 +102,9 @@ public class DatabaseURL {
     public static final String addUserAdmin = "&admin=";
 
 
+    // --- Testing of posting image
+    public static final String testingImage = base + "upload";
+
     private DatabaseURL() {
     }
 }
