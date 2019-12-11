@@ -1,6 +1,8 @@
 package se.grupp1.antonsskafferi.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -26,7 +28,15 @@ public class SettingsFragment extends PreferenceFragmentCompat
         logoutButtonPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(getActivity().getApplication(), LoginActivity.class));
+
+                SharedPreferences prefs = getContext().getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("username", "");
+                editor.putString("password", "");
+                editor.apply();
+
+                startActivity(new Intent(getActivity().getApplication(), LoginActivity.class));
                 return true;
             }
         });

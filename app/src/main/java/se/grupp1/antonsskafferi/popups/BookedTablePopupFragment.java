@@ -30,8 +30,6 @@ public class BookedTablePopupFragment extends DialogFragment
         this.callback = callback;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
