@@ -72,17 +72,17 @@ public class ScheduleFragment extends Fragment {
 
         ScheduledTimesComponent worker1 = new ScheduledTimesComponent(getContext(), "14:00 - 20:00");
         worker1.showChangeButton(true);
-        worker1.addItem("Tim");
+        worker1.setName("Tim");
         workList.addView(worker1);
 
         ScheduledTimesComponent worker2 = new ScheduledTimesComponent(getContext(), "20:00 - 00:00");
         worker2.showChangeButton(true);
-        worker2.addItem("Ylva");
+        worker2.setName("Ylva");
         workList.addView(worker2);
 
         ScheduledTimesComponent worker3 = new ScheduledTimesComponent(getContext(), "20:00 - 00:00");
         worker3.showChangeButton(false);
-        worker3.addItem("Anton");
+        worker3.setName("Anton");
         workList.addView(worker3);
 
     }

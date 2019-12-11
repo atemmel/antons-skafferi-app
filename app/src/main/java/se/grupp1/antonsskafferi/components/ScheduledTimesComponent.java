@@ -18,6 +18,7 @@ import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopup;
 public class ScheduledTimesComponent extends CardView
 {
     private boolean showChangeTimeButton = false;
+    private String name = "";
 
     public ScheduledTimesComponent(Context context)
     {
@@ -52,7 +53,8 @@ public class ScheduledTimesComponent extends CardView
                 FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
                 String tag = "dialog";
-                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup();
+
+                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName());
 
                 popup.show(ft, tag);
             }
@@ -77,7 +79,7 @@ public class ScheduledTimesComponent extends CardView
         }
     }
 
-    public void addItem(String name)
+    public void setName(String name)
     {
         LinearLayout itemsList = findViewById(R.id.scheduleName);
 
@@ -87,5 +89,12 @@ public class ScheduledTimesComponent extends CardView
         textView.setPadding(8, 0,0,0);
 
         itemsList.addView(textView);
+
+        this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 }

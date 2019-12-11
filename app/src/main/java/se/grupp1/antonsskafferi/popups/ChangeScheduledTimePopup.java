@@ -33,14 +33,25 @@ import se.grupp1.antonsskafferi.lib.StringFormatter;
 
 public class ChangeScheduledTimePopup extends DialogFragment {
 
-    public ChangeScheduledTimePopup() {}
+    private String user = "";
+
+    public ChangeScheduledTimePopup(String user) {
+        setUser(user);
+    }
+
+    public void setUser(String user){
+        this.user = user;
+    }
+
+    /*
+    public ChangeScheduledTimePopup(){}
 
     public static ChangeScheduledTimePopup newInstance()
     {
         ChangeScheduledTimePopup fragment = new ChangeScheduledTimePopup();
 
         return fragment;
-    }
+    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
