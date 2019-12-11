@@ -11,12 +11,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 
 public class BookingCardComponent extends CardView
 {
 
-    public BookingCardComponent(Context context, String date, String name, int amount, String time) //get tableId, Booking reference, amount, time
+    public BookingCardComponent(final Context context, final BookingData bookingData)
     {
         super(context);
 
@@ -25,10 +26,10 @@ public class BookingCardComponent extends CardView
 
         inflater.inflate(R.layout.component_booking, this, true);
 
-        ((TextView) findViewById(R.id.dateLabel)).setText(date);
-        ((TextView) findViewById(R.id.nameLabel)).setText(name);
-        ((TextView) findViewById(R.id.BookingamountLabel)).setText(Integer.toString(amount));
-        ((TextView) findViewById(R.id.BookingtimeLabel)).setText(time);
+        ((TextView) findViewById(R.id.dateLabel)).setText(bookingData.getDate());
+        ((TextView) findViewById(R.id.nameLabel)).setText(bookingData.getFirstName());
+        ((TextView) findViewById(R.id.BookingamountLabel)).setText(bookingData.getBookingAmount());
+        ((TextView) findViewById(R.id.BookingtimeLabel)).setText(bookingData.getTime());
 
         View Btn = findViewById(R.id.options);
 
@@ -40,8 +41,16 @@ public class BookingCardComponent extends CardView
 
                 String tag = "dialog";
 
-                BookingOptionsPopup popup = new BookingOptionsPopup();
+                BookingOptionsPopup popup = new BookingOptionsPopup(bookingData, new BookingOptionsPopup.Callback() {
+                    @Override
+                    public void onChanged(BookingData itemData) {
+
+
+                    }
+                });
                 popup.show(ft, tag);
+
+
             }
         });
 
