@@ -60,7 +60,7 @@ public class EditScheduleFragment extends Fragment {
                     {
                         JSONObject c = jsonArr.getJSONObject(i);
 
-                        String name = c.getString("username");
+                        String name = c.getJSONObject("user").getString("username");
 
                         users.add(name);
                     }

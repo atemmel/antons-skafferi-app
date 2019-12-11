@@ -31,6 +31,7 @@ import se.grupp1.antonsskafferi.lib.HttpRequest;
 public class ScheduleFragment extends Fragment {
 
     DialogFragment popup;
+    private String date = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class ScheduleFragment extends Fragment {
 
         //create a date string.
         String date_n = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date());
+        date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         //get hold of textview
         final TextView dateView = root.findViewById(R.id.todaysDate);
         //set it as current date.
@@ -49,18 +51,30 @@ public class ScheduleFragment extends Fragment {
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int day) {
                 month = month + 1;
+                String old_date = year + "-" + month + "-" + day;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
+
+                try {
+                    Date d = sdf.parse(old_date);
+                    sdf.applyPattern("yyyy-MM-dd");
+                    date = sdf.format(d);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 SimpleDateFormat monthParse = new SimpleDateFormat("MM");
                 SimpleDateFormat monthDisplay = new SimpleDateFormat("MMMM");
 
                 String Date = null;
                 try {
-                    Date = monthDisplay.format(monthParse.parse(Integer.toString(month))) + " " + dayOfMonth + ", " + year;
+                    Date = monthDisplay.format(monthParse.parse(Integer.toString(month))) + " " + day + ", " + year;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
+                loadScheduledEvents();
                 dateView.setText(Date);
             }
         });
@@ -73,30 +87,12 @@ public class ScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadScheduledEvents();
-
-        LinearLayout workList = view.findViewById(R.id.workList);
-        //ArrayList<String> startingTimes = new ArrayList();
-
-        /*ScheduledTimesComponent worker1 = new ScheduledTimesComponent(getContext(), "14:00", "20:00");
-        worker1.showChangeButton(true);
-        worker1.setName("Tim");
-        workList.addView(worker1);
-        //startingTimes.add(worker1.getStartTime());
-
-        ScheduledTimesComponent worker2 = new ScheduledTimesComponent(getContext(), "20:00", "00:00");
-        worker2.showChangeButton(true);
-        worker2.setName("Ylva");
-        workList.addView(worker2);
-
-        ScheduledTimesComponent worker3 = new ScheduledTimesComponent(getContext(), "20:00",  "00:00");
-        worker3.showChangeButton(false);
-        worker3.setName("Anton");
-        workList.addView(worker3);*/
-
     }
 
     public void loadScheduledEvents() {
         final LinearLayout workList = getView().findViewById(R.id.workList);
+
+        workList.removeAllViews();
 
         HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
             @Override
@@ -128,6 +124,7 @@ public class ScheduleFragment extends Fragment {
         });
 
         httpRequest.setRequestMethod("GET");
-        httpRequest.execute(DatabaseURL.getWorkingSchedule);
+
+        httpRequest.execute(DatabaseURL.getScheduleByDate + date);
     }
 }

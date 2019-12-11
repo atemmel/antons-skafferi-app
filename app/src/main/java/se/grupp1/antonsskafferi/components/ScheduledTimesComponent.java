@@ -59,7 +59,7 @@ public class ScheduledTimesComponent extends CardView
 
                 String tag = "dialog";
 
-                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName());
+                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName()); //getStartTime(), getEndTime()
 
                 popup.show(ft, tag);
             }
