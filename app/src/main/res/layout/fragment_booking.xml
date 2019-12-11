@@ -123,6 +123,15 @@
 
                 android:text="@string/boka" />
 
+            <TextView
+                android:id="@+id/hiddenCustomerId"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/hiddenTableId"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+
         </LinearLayout>
     </ScrollView>
 

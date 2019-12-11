@@ -5,7 +5,7 @@ public class DatabaseURL {
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
-    private static final boolean usingLocal = true;
+    private static final boolean usingLocal = false;
 
     private static final String base = usingLocal ? local : remote;
 

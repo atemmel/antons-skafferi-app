@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.text.SimpleDateFormat;
@@ -111,9 +112,17 @@ public class BookingFragment extends Fragment {
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
 
+
                         getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                            TextView hiddenCustomerId = root.findViewById(R.id.hiddenCustomerId);
+                            String customerId = hiddenCustomerId.getText().toString();
+                            TextView hiddenTableId = root.findViewById(R.id.hiddenTableId);
+                            String tableId = hiddenTableId.getText().toString();
+
                             @Override
                             public void gotTables() {
+                                if(!customerId.isEmpty())
+                                    tableList.add(Integer.valueOf(tableId));
                                 availableTables(root);
                             }
                         });
@@ -139,6 +148,8 @@ public class BookingFragment extends Fragment {
                 EditText bookingEmail =  root.findViewById(R.id.BookingEmail);
                 TextView bookingTime =  root.findViewById(R.id.BookingTime);
                 TextView bookingDate =  root.findViewById(R.id.BookingDate);
+                TextView hiddenCustomerId = root.findViewById(R.id.hiddenCustomerId);
+                TextView hiddenTableId = root.findViewById(R.id.hiddenTableId);
 
                 String firstName = bookingFirstName.getText().toString();
                 String lastName = bookingLastName.getText().toString();
@@ -147,6 +158,8 @@ public class BookingFragment extends Fragment {
                 String email = bookingEmail.getText().toString();
                 String time = bookingTime.getText().toString();
                 String date = bookingDate.getText().toString();
+                String customerId = hiddenCustomerId.getText().toString();
+                String tableId = hiddenTableId.getText().toString();
 
                 boolean emptyFields = false;
 
@@ -197,6 +210,26 @@ public class BookingFragment extends Fragment {
                     Toast checkToast = Toast.makeText(getContext(), "Måste välja minst ett bord!", Toast.LENGTH_LONG);
                         checkToast.setGravity(Gravity.CENTER, 0, 0);
                         checkToast.show();
+                }
+
+
+                if(!customerId.isEmpty())
+                {
+                    boolean checkedPrevTable = false;
+                    for(int i = 0; i < isChecked.size(); i++)
+                    {
+                        if(Integer.valueOf(tableId) == isChecked.get(i))
+                        {
+                            isChecked.remove(i);
+                            checkedPrevTable = true;
+                            i--;
+                        }
+                    }
+                    if(!checkedPrevTable)
+                    {
+                        //TODO delete customer with id customerId from database
+                        System.out.println(customerId + " SHOULD BE DELETED");
+                    }
                 }
 
                 for(int i = 0; i < isChecked.size(); i++)
@@ -340,6 +373,20 @@ public class BookingFragment extends Fragment {
         });
         myRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
         myRecycler.setAdapter(myAdapter);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView bookingDate =  view.findViewById(R.id.BookingDate);
+        getAvailableTables(bookingDate.getText().toString(), new tablesCallback() {
+            @Override
+            public void gotTables() {
+                availableTables(view);
+            }
+        });
+
+
     }
 
 

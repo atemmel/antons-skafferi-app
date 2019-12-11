@@ -42,6 +42,7 @@ public class BookingCardComponent extends CardView
 
 
 
+
 /*
                 String firstName = bookingFirstName.getText().toString();
                 String lastName = bookingLastName.getText().toString();

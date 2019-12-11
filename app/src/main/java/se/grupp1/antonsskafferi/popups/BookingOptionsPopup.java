@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,11 +54,30 @@ public final class BookingOptionsPopup extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        EditText bookingFirstName = view.findViewById(R.id.BookingFirstName);
+        EditText bookingLastName = view.findViewById(R.id.BookingLastName);
+        EditText bookingPeopleAmount =  view.findViewById(R.id.BookingPeopleAmount);
+        EditText bookingPhoneNr =  view.findViewById(R.id.BookingPhoneNr);
+        EditText bookingEmail =  view.findViewById(R.id.BookingEmail);
+        TextView bookingTime =  view.findViewById(R.id.BookingTime);
+        TextView bookingDate =  view.findViewById(R.id.BookingDate);
+        TextView hiddenCustomerId = view.findViewById(R.id.hiddenCustomerId);
+        TextView hiddenTableId = view.findViewById(R.id.hiddenTableId);
+
+        bookingFirstName.setText(itemData.getFirstName());
+        bookingLastName.setText(itemData.getLastName());
+        bookingPeopleAmount.setText(itemData.getBookingAmount());
+        bookingPhoneNr.setText(itemData.getPhoneNr());
+        bookingEmail.setText(itemData.getEmail());
+        bookingTime.setText(itemData.getTime());
+        bookingDate.setText(itemData.getDate());
+        hiddenCustomerId.setText(""+itemData.getCustomerId());
+        hiddenTableId.setText(""+itemData.getTableId());
 
 
 
-        final FragmentManager fm = getFragmentManager();
-        final FragmentTransaction ft = fm.beginTransaction();
+        //final FragmentManager fm = getFragmentManager();
+       // final FragmentTransaction ft = fm.beginTransaction();
 
         view.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
             @Override
