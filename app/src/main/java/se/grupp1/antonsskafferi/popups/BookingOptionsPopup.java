@@ -1,5 +1,6 @@
 package se.grupp1.antonsskafferi.popups;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -80,7 +82,22 @@ public final class BookingOptionsPopup extends DialogFragment {
         view.findViewById(R.id.deleteBookingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delete();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which == DialogInterface.BUTTON_POSITIVE)
+                        {
+                            delete();
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                String message = "Du är påväg att rensa bord ta bort bokningen" + ".\n" +
+                        "Är du säker på att du vill fortsätta?";
+
+                builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                        .setNegativeButton("Avbryt", dialogClickListener).show();
             }
         });
 
