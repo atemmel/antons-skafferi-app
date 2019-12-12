@@ -22,13 +22,15 @@ public class ScheduledTimesComponent extends CardView
     private String username = "";
     private String startTime = "";
     private String endTime = "";
+    private String date = "";
+    private String workId = "";
 
     public ScheduledTimesComponent(Context context)
     {
         super(context);
     }
 
-    public ScheduledTimesComponent(Context context, String startTime, String endTime)
+    public ScheduledTimesComponent(Context context, String startTime, String endTime, String workId)
     {
         super(context);
 
@@ -38,6 +40,8 @@ public class ScheduledTimesComponent extends CardView
 
         setStartTime(startTime);
         setEndTime(endTime);
+        setWorkId(workId);
+        setDate(date);
 
         ((TextView) findViewById(R.id.scheduleTime)).setText(startTime + "-" + endTime);
 
@@ -62,7 +66,7 @@ public class ScheduledTimesComponent extends CardView
 
                 String tag = "dialog";
 
-                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName()); //getStartTime(), getEndTime()
+                ChangeScheduledTimePopup popup = new ChangeScheduledTimePopup(getName(), getStartTime(), getEndTime(), getWorkId());
 
                 popup.show(ft, tag);
             }
@@ -117,6 +121,14 @@ public class ScheduledTimesComponent extends CardView
         return username;
     }
 
+    public void setWorkId(String workId){
+        this.workId = workId;
+    }
+
+    public String getWorkId(){
+        return workId;
+    }
+
     public void setStartTime(String startTime){
 
         this.startTime = startTime;
@@ -133,5 +145,13 @@ public class ScheduledTimesComponent extends CardView
 
     public String getEndTime(){
         return endTime;
+    }
+
+    public void setDate(String date){
+        this.date = date;
+    }
+
+    public String getDate(){
+        return date;
     }
 }

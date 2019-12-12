@@ -111,11 +111,11 @@ public class ScheduleFragment extends Fragment {
                         JSONObject c = jsonArr.getJSONObject(i);
 
                         Integer workId = c.getInt("workingscheduleid");
-                        String name = c.getString("date");
+                        String dateFromDB = c.getString("date");
                         String startTime = c.getString("start");
                         String endTime = c.getString("end");
 
-                         final ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime);
+                        final ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime, workId.toString());
 
                         //TODO:If current user is the same person as the person of the scheduled event, don't show change button
                         scheduledEvent.showChangeButton(true);
@@ -160,7 +160,6 @@ public class ScheduleFragment extends Fragment {
             }
         });
         httpRequest.setRequestMethod("GET");
-        System.out.println(DatabaseURL.getNameByWorkscheduleId + workScheduleId);
         httpRequest.execute(DatabaseURL.getNameByWorkscheduleId + workScheduleId);
     }
 
