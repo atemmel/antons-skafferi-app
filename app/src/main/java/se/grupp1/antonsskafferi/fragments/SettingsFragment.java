@@ -24,6 +24,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
         if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
 
+
         Preference logoutButtonPreference = findPreference("logoutButtonPreference");
         logoutButtonPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -47,9 +48,20 @@ public class SettingsFragment extends PreferenceFragmentCompat
     {
         super.onViewCreated(view, savedInstanceState);
 
-        if(LoginActivity.IS_ADMIN) {
+       final NavController navController = Navigation.findNavController(getView());
 
-            final NavController navController = Navigation.findNavController(getView());
+        Preference addEventPicturesPreference = findPreference("addEventPicturesPreference");
+        addEventPicturesPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                navController.navigate(R.id.navigation_add_event_pictures);
+
+                return true;
+            }
+        });
+
+        if(LoginActivity.IS_ADMIN) {
 
             Preference lunchPreference = findPreference("editLunchPreference");
             lunchPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

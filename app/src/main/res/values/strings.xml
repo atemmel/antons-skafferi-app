@@ -4,14 +4,10 @@
     <string name="username_ghost_text">Användarnamn</string>
     <string name="password_ghost_text">Lösenord</string>
 
-    <!-- Preference Titles -->
-    <string name="example_header">Exempel</string>
-
-    <!-- Example Preferences -->
-    <string name="first_setting_title">Detta är en inställning</string>
-    <string name="other_setting_title">Denna inställning beror av ovan</string>
-    <string name="example_setting_summary_on">Inställningen är aktiverad</string>
-    <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
+    <!-- Inställningar -->
+    <string name="settings_users_title">Övrigt</string>
+    <string name="settings_add_event_picture">Lägg till eventbilder</string>
+    <string name="settings_log_out">Logga ut</string>
 
     <!-- Admin Page -->
     <string name="title_activity_admin">Admin</string>
