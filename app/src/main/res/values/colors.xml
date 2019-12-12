@@ -16,5 +16,8 @@
     <color name="transparent">#00000000</color>
     <color name="textColor">#6e6e6e</color>
 
+    <!--Schema färger -->
+    <color name="schedule_user_color">#4196001E</color>
+    <color name="schedule_others_color">#41008096</color>
 
 </resources>

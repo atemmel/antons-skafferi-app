@@ -98,12 +98,12 @@ public class ScheduledTimesComponent extends CardView
         SharedPreferences prefs = getContext().getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
         String current_user = prefs.getString("username", "");
 
-        if(current_user == username)
+        if(current_user.equals(username))
         {
             showChangeButton(false);
 
             TextView timeText = findViewById(R.id.scheduleTime);
-            timeText.setBackgroundColor(getResources().getColor(R.color.white));
+            timeText.setBackgroundColor(getResources().getColor(R.color.schedule_user_color));
         }
 
         LinearLayout itemsList = findViewById(R.id.scheduleName);

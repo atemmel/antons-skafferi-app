@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,11 @@ public class ScheduleFragment extends Fragment {
 
     interface Callback {
         void getUserName(String username);
+    }
+
+    interface LoadingCallback
+    {
+        void finishedLoading();
     }
 
     DialogFragment popup;
@@ -80,8 +86,31 @@ public class ScheduleFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                loadScheduledEvents();
+                loadScheduledEvents(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+
+                    }
+                });
+
                 dateView.setText(Date);
+            }
+        });
+
+
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                loadScheduledEvents(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
@@ -91,10 +120,15 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadScheduledEvents();
+
+        loadScheduledEvents(new LoadingCallback() {
+            @Override
+            public void finishedLoading() {
+            }
+        });
     }
 
-    public void loadScheduledEvents() {
+    public void loadScheduledEvents(final LoadingCallback callback) {
         final LinearLayout workList = getView().findViewById(R.id.workList);
 
         workList.removeAllViews();
@@ -136,6 +170,10 @@ public class ScheduleFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                finally
+                {
+                    callback.finishedLoading();
+                }
             }
         });
 
@@ -143,11 +181,8 @@ public class ScheduleFragment extends Fragment {
         httpRequest.execute(DatabaseURL.getScheduleByDate + date);
     }
 
-    private void getNameOfWorker(final Callback callback){
-        final LinearLayout workList = getView().findViewById(R.id.workList);
-
-        workList.removeAllViews();
-
+    private void getNameOfWorker(final Callback callback)
+    {
         HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
             @Override
             public void processFinish(String output, int status) {
