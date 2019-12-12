@@ -1,13 +1,20 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Övrigt">
+    <PreferenceCategory android:title="@string/settings_users_title">
+
+        <Preference
+            android:key="addEventPicturesPreference"
+            android:title="@string/settings_add_event_picture"
+            android:summary="Klicka här för att lägga till bilder för event" />
+
         <Preference
             android:defaultValue="true"
             android:key="logoutButtonPreference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Logga ut" />
+            android:title="@string/settings_log_out"
+            android:summary="Klicka här för att logga ut" />
     </PreferenceCategory>
 
 </PreferenceScreen>

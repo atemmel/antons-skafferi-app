@@ -3,6 +3,8 @@ package se.grupp1.antonsskafferi.fragments;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import se.grupp1.antonsskafferi.components.RecyclerViewAdapter;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.R;
@@ -40,6 +52,24 @@ public class BookingFragment extends Fragment {
     private int hour, minute;
     private String format;
     //-------
+
+    //Booking
+    public interface RecyclerCallback
+    {
+        public void getData(ArrayList<Integer> data);
+    }
+    private ArrayList<Integer> tableList = new ArrayList<>();
+    private ArrayList<Integer> isChecked = new ArrayList<>();
+
+    public interface tablesCallback
+    {
+        public void gotTables();
+    }
+
+    private String prevDate;
+
+    //-------
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -73,9 +103,11 @@ public class BookingFragment extends Fragment {
         mTv = root.findViewById(R.id.BookingDate);
         mBtn = root.findViewById(R.id.BtnDatePicker);
 
+
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEJ " + prevDate);
                 c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_MONTH);
                 int month = c.get(Calendar.MONTH);
@@ -86,9 +118,28 @@ public class BookingFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
                         mTv.setText(StringFormatter.formatDate(mYear + "-" + (mMonth + 1) + "-" + mDay));
+
+
+                        getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                            TextView hiddenCustomerId = root.findViewById(R.id.hiddenCustomerId);
+                            String customerId = hiddenCustomerId.getText().toString();
+                            TextView hiddenTableId = root.findViewById(R.id.hiddenTableId);
+                            String tableId = hiddenTableId.getText().toString();
+
+
+                            @Override
+                            public void gotTables() {
+                                if(!customerId.isEmpty() && prevDate.equals(mTv.getText().toString()))
+                                    tableList.add(Integer.valueOf(tableId));
+                                availableTables(root);
+                            }
+                        });
+
                     }
                 }, year, month, day);
                 dpd.show();
+
+
             }
         });
         // End of DatePicker
@@ -105,6 +156,8 @@ public class BookingFragment extends Fragment {
                 EditText bookingEmail =  root.findViewById(R.id.BookingEmail);
                 TextView bookingTime =  root.findViewById(R.id.BookingTime);
                 TextView bookingDate =  root.findViewById(R.id.BookingDate);
+                TextView hiddenCustomerId = root.findViewById(R.id.hiddenCustomerId);
+                TextView hiddenTableId = root.findViewById(R.id.hiddenTableId);
 
                 String firstName = bookingFirstName.getText().toString();
                 String lastName = bookingLastName.getText().toString();
@@ -113,6 +166,8 @@ public class BookingFragment extends Fragment {
                 String email = bookingEmail.getText().toString();
                 String time = bookingTime.getText().toString();
                 String date = bookingDate.getText().toString();
+                String customerId = hiddenCustomerId.getText().toString();
+                String tableId = hiddenTableId.getText().toString();
 
                 boolean emptyFields = false;
 
@@ -157,27 +212,71 @@ public class BookingFragment extends Fragment {
                     emptyFields = true;
                     bookingEmail.setError("Skriv in Email");
                 } else bookingEmail.setError(null);
-
-
-                BookingData data = new BookingData(
-                        firstName,
-                        lastName,
-                        peopleAmount,
-                        phoneNr,
-                        time,
-                        date,
-                        email,
-                        //TODO: Add this field to form
-                        1);
-
-                if(!emptyFields) {
-                    System.out.println("Sent to backend");
-                    sendToDatabase(data);
+                if(isChecked.isEmpty())
+                {
+                    emptyFields = true;
+                    Toast checkToast = Toast.makeText(getContext(), "Måste välja minst ett bord!", Toast.LENGTH_LONG);
+                        checkToast.setGravity(Gravity.CENTER, 0, 0);
+                        checkToast.show();
                 }
+
+
+                if(!customerId.isEmpty())
+                {
+                    boolean checkedPrevTable = false;
+                    for(int i = 0; i < isChecked.size(); i++)
+                    {
+                        if(Integer.valueOf(tableId) == isChecked.get(i))
+                        {
+                            isChecked.remove(i);
+                            checkedPrevTable = true;
+                            i--;
+                        }
+                    }
+                    if(!checkedPrevTable)
+                    {
+                        //TODO delete customer with id customerId from database
+                        delete(customerId);
+                    }
+                }
+
+                for(int i = 0; i < isChecked.size(); i++)
+                {
+                    BookingData data = new BookingData(
+                            firstName,
+                            lastName,
+                            peopleAmount,
+                            phoneNr,
+                            time,
+                            date,
+                            email,
+                            isChecked.get(i));
+
+                    if(!emptyFields) {
+                        System.out.println("Sent to backend");
+                        sendToDatabase(data);
+                    }
+                }
+
+                if(!emptyFields){
+                    bookingFirstName.setText("");
+                    bookingLastName.setText("");
+                    bookingPeopleAmount.setText("");
+                    bookingPhoneNr.setText("");
+                    bookingEmail.setText("");
+                    bookingTime.setText("");
+                    bookingDate.setText("");
+                    getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                        @Override
+                        public void gotTables() {
+                            availableTables(root);
+                        }
+                    });
+                }
+
             }
 
             });
-
         return root;
     }
 
@@ -199,5 +298,106 @@ public class BookingFragment extends Fragment {
         httpRequest.setPayload(payload);
         httpRequest.execute(DatabaseURL.insertCustomer);
     }
+
+
+    private void getAvailableTables(final String date, final tablesCallback callback)
+    {
+        //final String urlString = "http://82.196.113.65:8080/dinnertables/booking?date=" + date;
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat todaysDate = new SimpleDateFormat(pattern);
+        final String today = todaysDate.format(new Date());
+
+
+        HttpRequest request = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                tableList.clear();
+                try{
+                    JSONArray jsonArr = new JSONArray(output);
+                    for (int i = 0; i < jsonArr.length(); i++)
+                    {
+                        JSONObject table =jsonArr.getJSONObject(i);
+                        if(!(table.getBoolean("active") && today.equals(date)))
+                        {
+                            tableList.add(table.getInt("dinnertableid"));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                callback.gotTables();
+            }
+        });
+        request.setRequestMethod("GET");
+        request.execute(DatabaseURL.getTableAvailableForDate + date);
+    }
+
+    private void availableTables(View root)
+    {
+        isChecked.clear();
+        RecyclerView myRecycler = (RecyclerView) root.findViewById(R.id.BookingRecycler);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getContext(), tableList, new RecyclerCallback() {
+            @Override
+            public void getData(ArrayList<Integer> data) {
+                isChecked = data;
+            }
+        });
+        myRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        myRecycler.setAdapter(myAdapter);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                checkDate();
+                getAvailableTables(mTv.getText().toString(), new tablesCallback() {
+                    TextView hiddenCustomerId = view.findViewById(R.id.hiddenCustomerId);
+                    String customerId = hiddenCustomerId.getText().toString();
+                    TextView hiddenTableId = view.findViewById(R.id.hiddenTableId);
+                    String tableId = hiddenTableId.getText().toString();
+
+
+                    @Override
+                    public void gotTables() {
+                        if(!customerId.isEmpty() && prevDate.equals(mTv.getText().toString()))
+                            tableList.add(Integer.valueOf(tableId));
+                        availableTables(view);
+                    }
+                });
+            }
+        }, 0);
+
+    }
+
+    private void delete(String customerId)
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200) {
+                    Toast.makeText(getContext(), "Kunde inte ta bort objekt, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        };
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("DELETE");
+
+        httpRequest.execute(DatabaseURL.deleteCustomer + customerId);
+    }
+
+    public void checkDate()
+    {
+        prevDate = mTv.getText().toString();
+    }
+
 
 }

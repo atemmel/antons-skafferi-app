@@ -2,6 +2,8 @@ package se.grupp1.antonsskafferi.lib;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -18,6 +21,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class HttpRequest extends AsyncTask<String, Integer, String>
 {
+    public static Object Response;
+
     /**
      * Ett interface för att skicka svaret från HttpRequesten till mainthread.
      * En instans som implementerar interfacets funktion skickas in i klassens konstruktor.
@@ -30,7 +35,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
          * @param output En sträng med det svar som mottogs från APIn.
          * @param status Statuskoden för requesten
          */
-        void processFinish(String output, int status);
+        void processFinish(String output, int status) throws JSONException;
     }
 
     private Response delegate;
@@ -103,7 +108,7 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
 
                 try {
                     OutputStream os = connection.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
                     writer.write(payload);
                     writer.flush();
                     writer.close();
@@ -166,7 +171,14 @@ public class HttpRequest extends AsyncTask<String, Integer, String>
     @Override
     protected void onPostExecute(String result)
     {
+        if(delegate == null) {
+            return;
+        }
         //System.out.println("got response");
-        delegate.processFinish(result, status);
+        try {
+            delegate.processFinish(result, status);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

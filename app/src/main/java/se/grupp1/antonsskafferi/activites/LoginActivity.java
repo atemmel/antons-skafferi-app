@@ -1,6 +1,8 @@
 package se.grupp1.antonsskafferi.activites;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,14 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
+        String username = prefs.getString("username", "");
+        String password = prefs.getString("password", "");
+
+        if(!username.isEmpty() && !password.isEmpty())
+            evaluateCredentials(username, password);
+
         setContentView(R.layout.activity_login);
 
         setTitle("Logga in");
@@ -105,6 +115,17 @@ public class LoginActivity extends AppCompatActivity
                     JSONObject obj = new JSONObject(output);
 
                     IS_ADMIN = obj.getBoolean("administrator");
+
+                    String username = obj.getString("username");
+                    String password = obj.getString("password");
+
+                    SharedPreferences prefs = getSharedPreferences(
+                            "loginProfile", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
 
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }

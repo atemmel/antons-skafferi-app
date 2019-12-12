@@ -1,6 +1,11 @@
 package se.grupp1.antonsskafferi.lib;
 
 public class StringFormatter {
+
+    static public final String date_format = "yyyy-MM-dd";
+
+    static public final String time_format = "HH:mm";
+
     public static String formatTime(String in) {
         if(in.length() == 5) return in;
 

@@ -52,7 +52,7 @@ public class OccupiedTablePopupFragment extends DialogFragment
             }
         });
 
-        v.findViewById(R.id.clearTableButton).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.removeBookingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 callback.clicked(Callback.OptionClicked.WIPE_TABLE);
