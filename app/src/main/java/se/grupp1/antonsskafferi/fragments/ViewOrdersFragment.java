@@ -96,9 +96,10 @@ public class ViewOrdersFragment extends Fragment
 
     private void getReadyOrders(final LoadingCallback callback)
     {
-        if(getView() == null) {
+        /*if(getView() == null) {
             return;
-        }
+        }*/
+
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
         HttpRequest.Response response = new HttpRequest.Response()
@@ -106,8 +107,6 @@ public class ViewOrdersFragment extends Fragment
             @Override
             public void processFinish(String output, int status)
             {
-                System.out.println(status);
-
                 if(status != 200)
                 {
                     Toast.makeText(getActivity(), "Kunde inte hämta beställningar. Felkod: " + status,
@@ -122,7 +121,8 @@ public class ViewOrdersFragment extends Fragment
 
                     int prev_id = -1;
 
-                    for (int i = 0; i < jsonArr.length(); i++) {
+                    for (int i = 0; i < jsonArr.length(); i++)
+                    {
                         JSONObject obj = jsonArr.getJSONObject(i);
 
                         int id = obj.getJSONObject("dinnertable").getInt("dinnertableid");
@@ -169,6 +169,7 @@ public class ViewOrdersFragment extends Fragment
         if(getView() == null) {
             return;
         }
+
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
         HttpRequest.Response response = new HttpRequest.Response()
@@ -176,8 +177,6 @@ public class ViewOrdersFragment extends Fragment
             @Override
             public void processFinish(String output, int status)
             {
-                System.out.println(status);
-
                 if(status != 200)
                 {
                     Toast.makeText(getActivity(), "Kunde inte hämta beställningar. Felkod: " + status,

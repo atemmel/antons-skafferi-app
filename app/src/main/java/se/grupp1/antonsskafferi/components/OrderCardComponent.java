@@ -47,11 +47,11 @@ public class OrderCardComponent extends CardView
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
                 {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (which == DialogInterface.BUTTON_POSITIVE)
+                        {
                                 setDone();
-                                break;
                         }
                     }
                 };
@@ -114,8 +114,6 @@ public class OrderCardComponent extends CardView
         textView.setText(count + " " + name);
         textView.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Body1);
         textView.setPadding(8, 0,0,0);
-
-        System.out.println(textView.getText().toString());
 
         itemsList.addView(textView);
     }
