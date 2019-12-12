@@ -96,9 +96,9 @@ public class ViewOrdersFragment extends Fragment
 
     private void getReadyOrders(final LoadingCallback callback)
     {
-        /*if(getView() == null) {
+        if(getView() == null) {
             return;
-        }*/
+        }
 
         final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
