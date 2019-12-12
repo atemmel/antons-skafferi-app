@@ -136,8 +136,14 @@ public class DatabaseURL {
 
 
     // ---
+    // --- Hämta användarnamn efter ett givet schema-id
     public static final String getNameByWorkscheduleId = base + "empschedules/username?workscheduleid=";
 
+    // --- Skicka request om att byta tid med en annan användare
+    public static final String switchEmployeeSchedualId = base + "empschedules/post/switchemployeesecheduals?userone=";
+    public static final String secondUser = "&usertwo=";
+    public static final String scheduleone = "&scheduleone=";
+    public static final String scheduletwo = "&scheduletwo=";
 
     private DatabaseURL() {
     }

@@ -1,17 +1,18 @@
 package se.grupp1.antonsskafferi.popups;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,8 +23,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
@@ -34,31 +33,47 @@ import se.grupp1.antonsskafferi.lib.StringFormatter;
 public class ChangeScheduledTimePopup extends DialogFragment {
 
     private String user = "";
+    private String startTime = "";
+    private String endTime = "";
+    private String chosenDate = "";
+    private String current_user ="";
+    private String workId = "";
+    private String current_workId = "";
 
-    public ChangeScheduledTimePopup(String user) {
+    public ChangeScheduledTimePopup(String user, String startTime, String endTime, String workId) {
         setUser(user);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setWorkId(workId);
     }
 
     public void setUser(String user){
         this.user = user;
     }
+    public void setStartTime(String startTime){
+        this.startTime = startTime;
+    }
+    public void setEndTime(String endTime){
+        this.endTime = endTime;
+    }
 
-    /*
-    public ChangeScheduledTimePopup(){}
-
-    public static ChangeScheduledTimePopup newInstance()
-    {
-        ChangeScheduledTimePopup fragment = new ChangeScheduledTimePopup();
-
-        return fragment;
-    }*/
+    public void setWorkId(String workId) { this.workId = workId;}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.popup_change_sheduled_time, container, false);
 
+        SharedPreferences prefs = getContext().getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
+        current_user = prefs.getString("username", "");
+
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
+
+        TextView userName = root.findViewById(R.id.nameText);
+        userName.setText(user);
+
+        TextView time = root.findViewById(R.id.timeText);
+        time.setText(startTime + "-" + endTime);
 
         root.findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +82,14 @@ public class ChangeScheduledTimePopup extends DialogFragment {
             }
         });
 
-        final TextView chosenDate = root.findViewById(R.id.chosenDateView);
+        final TextView chosenDateView = root.findViewById(R.id.chosenDateView);
+
+        root.findViewById(R.id.sendRequestButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRequest();
+            }
+        });
 
         root.findViewById(R.id.datePicker).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +103,9 @@ public class ChangeScheduledTimePopup extends DialogFragment {
                 DatePickerDialog datepickerdialogview = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        chosenDate.setText(StringFormatter.formatDate(year + "-" + (month + 1) + "-" + day));
+                        chosenDate = StringFormatter.formatDate(year + "-" + (month + 1) + "-" + day);
+                        chosenDateView.setText(StringFormatter.formatDate(year + "-" + (month + 1) + "-" + day));
+                        loadTimesToDropdown();
                     }
                 }, year, month, day);
                 datepickerdialogview.show();
@@ -95,7 +119,22 @@ public class ChangeScheduledTimePopup extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        loadTimesToDropdown();
+    }
+
+    private void sendRequest(){
+        HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                System.out.println(output);
+                Toast.makeText(getActivity(), output,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
+
+        httpRequest.setRequestMethod("POST");
+        httpRequest.execute(DatabaseURL.switchEmployeeSchedualId + current_user + DatabaseURL.secondUser + user + DatabaseURL.scheduleone + current_workId + DatabaseURL.scheduletwo + workId);
 
     }
 
@@ -117,9 +156,11 @@ public class ChangeScheduledTimePopup extends DialogFragment {
                     {
                         JSONObject c = jsonArr.getJSONObject(i);
 
+                        Integer workscheduleid = c.getInt("workingscheduleid");
                         String start = c.getString("start");
                         String end = c.getString("end");
 
+                        current_workId = workscheduleid.toString();
                         users.add(start+ "-" + end);
                     }
 
@@ -134,7 +175,7 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         });
 
         httpRequest.setRequestMethod("GET");
-        httpRequest.execute(DatabaseURL.getWorkingSchedule);
+        httpRequest.execute(DatabaseURL.getWorkScheduleByNameAndDate + current_user + DatabaseURL.getGetWorkingScheduleByDate + chosenDate);
     }
 
 }
