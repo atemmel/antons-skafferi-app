@@ -2,6 +2,7 @@ package se.grupp1.antonsskafferi.popups;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import org.json.JSONArray;
@@ -87,7 +89,12 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         root.findViewById(R.id.sendRequestButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRequest();
+
+                if(emptyTimeDropdown()){
+                    noTimesInDropdownToast();
+                } else{
+                    sendRequestDialog();
+                }
             }
         });
 
@@ -115,6 +122,27 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         return root;
     }
 
+    private void sendRequestDialog()
+    {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == DialogInterface.BUTTON_POSITIVE){
+                    sendRequest();
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        String message =    "Du är påväg att skicka en förfrågan till \"" + user + "\" om att byta tid. \n" +
+                "Är du säker?";
+
+        builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                .setNegativeButton("Avbryt", dialogClickListener).show();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -126,8 +154,7 @@ public class ChangeScheduledTimePopup extends DialogFragment {
             @Override
             public void processFinish(String output, int status)
             {
-                System.out.println(output);
-                Toast.makeText(getActivity(), output,
+                Toast.makeText(getActivity(), output.trim(),
                         Toast.LENGTH_SHORT
                 ).show();
             }
@@ -178,4 +205,20 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         httpRequest.execute(DatabaseURL.getWorkScheduleByNameAndDate + current_user + DatabaseURL.getGetWorkingScheduleByDate + chosenDate);
     }
 
+    private Boolean emptyTimeDropdown() {
+        Spinner dropdown = getView().findViewById(R.id.timeSpinner);
+
+        if(dropdown != null && dropdown.getSelectedItem() != "" ) {
+            System.out.println("No item");
+            return true;
+        }
+        return false;
+    }
+
+    private void noTimesInDropdownToast()
+    {
+        Toast.makeText(getActivity(), "Du har inga inbokade \npass " + chosenDate + ".",
+                Toast.LENGTH_SHORT
+        ).show();
+    }
 }

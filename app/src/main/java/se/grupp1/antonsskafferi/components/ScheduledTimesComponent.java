@@ -52,7 +52,6 @@ public class ScheduledTimesComponent extends CardView
         requestLayout();
 
 
-
         showChangeButton(showChangeTimeButton);
 
 
