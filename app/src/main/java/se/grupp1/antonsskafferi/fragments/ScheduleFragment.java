@@ -111,10 +111,13 @@ public class ScheduleFragment extends Fragment {
                         String endTime = c.getString("end");
 
                         ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime);
+
                         //TODO:If current user is the same person as the person of the scheduled event, don't show change button
                         scheduledEvent.showChangeButton(true);
+
                         //TODO:Get name instead of id and show at event.
                         scheduledEvent.setName(workId.toString());
+
                         workList.addView(scheduledEvent);
                     }
                 } catch (Exception e) {

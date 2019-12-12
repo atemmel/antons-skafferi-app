@@ -1,6 +1,7 @@
 package se.grupp1.antonsskafferi.components;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import se.grupp1.antonsskafferi.popups.ChangeScheduledTimePopup;
 public class ScheduledTimesComponent extends CardView
 {
     private boolean showChangeTimeButton = false;
-    private String name = "";
+    private String username = "";
     private String startTime = "";
     private String endTime = "";
 
@@ -45,6 +46,8 @@ public class ScheduledTimesComponent extends CardView
         params.setMargins(0, 16, 0, 0);
         setLayoutParams(params);
         requestLayout();
+
+
 
         showChangeButton(showChangeTimeButton);
 
@@ -84,23 +87,34 @@ public class ScheduledTimesComponent extends CardView
         }
     }
 
-    public void setName(String name)
+    public void setName(String username)
     {
+        this.username = username;
+
+        SharedPreferences prefs = getContext().getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
+        String current_user = prefs.getString("username", "");
+
+        if(current_user == username)
+        {
+            showChangeButton(false);
+
+            TextView timeText = findViewById(R.id.scheduleTime);
+            timeText.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+
         LinearLayout itemsList = findViewById(R.id.scheduleName);
 
         TextView textView = new TextView(getContext());
-        textView.setText(name);
+        textView.setText(username);
         textView.setTextAppearance(getContext(), android.R.style.TextAppearance_Medium);
         textView.setPadding(8, 0,0,0);
 
         itemsList.addView(textView);
-
-        this.name = name;
     }
 
     public String getName()
     {
-        return name;
+        return username;
     }
 
     public void setStartTime(String startTime){
