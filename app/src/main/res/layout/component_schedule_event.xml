@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:background="#4196001E"
+                android:background="@color/schedule_others_color"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="14:00 - 18:00" />
