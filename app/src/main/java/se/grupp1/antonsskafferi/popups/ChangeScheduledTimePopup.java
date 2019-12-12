@@ -89,7 +89,12 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         root.findViewById(R.id.sendRequestButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRequestDialog();
+
+                if(emptyTimeDropdown()){
+                    noTimesInDropdownToast();
+                } else{
+                    sendRequestDialog();
+                }
             }
         });
 
@@ -116,7 +121,6 @@ public class ChangeScheduledTimePopup extends DialogFragment {
 
         return root;
     }
-
 
     private void sendRequestDialog()
     {
@@ -201,4 +205,20 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         httpRequest.execute(DatabaseURL.getWorkScheduleByNameAndDate + current_user + DatabaseURL.getGetWorkingScheduleByDate + chosenDate);
     }
 
+    private Boolean emptyTimeDropdown() {
+        Spinner dropdown = getView().findViewById(R.id.timeSpinner);
+
+        if(dropdown != null && dropdown.getSelectedItem() != "" ) {
+            System.out.println("No item");
+            return true;
+        }
+        return false;
+    }
+
+    private void noTimesInDropdownToast()
+    {
+        Toast.makeText(getActivity(), "Du har inga inbokade \npass " + chosenDate + ".",
+                Toast.LENGTH_SHORT
+        ).show();
+    }
 }
