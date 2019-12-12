@@ -26,12 +26,18 @@ import se.grupp1.antonsskafferi.components.ScheduledTimesComponent;
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
+import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 
 
 public class ScheduleFragment extends Fragment {
 
+    interface Callback {
+        void getUserName(String username);
+    }
+
     DialogFragment popup;
     private String date = "";
+    private String workScheduleId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +86,6 @@ public class ScheduleFragment extends Fragment {
         });
 
         return root;
-
     }
 
     @Override
@@ -110,13 +115,21 @@ public class ScheduleFragment extends Fragment {
                         String startTime = c.getString("start");
                         String endTime = c.getString("end");
 
-                        ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime);
+                         final ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime);
 
                         //TODO:If current user is the same person as the person of the scheduled event, don't show change button
                         scheduledEvent.showChangeButton(true);
 
                         //TODO:Get name instead of id and show at event.
-                        scheduledEvent.setName(workId.toString());
+                        //scheduledEvent.setName(workId.toString());
+                        workScheduleId = workId.toString();
+
+                        getNameOfWorker(new Callback() {
+                            @Override
+                            public void getUserName(String username) {
+                                scheduledEvent.setName(username);
+                            }
+                        });
 
                         workList.addView(scheduledEvent);
                     }
@@ -127,7 +140,28 @@ public class ScheduleFragment extends Fragment {
         });
 
         httpRequest.setRequestMethod("GET");
-
         httpRequest.execute(DatabaseURL.getScheduleByDate + date);
     }
+
+    private void getNameOfWorker(final Callback callback){
+        final LinearLayout workList = getView().findViewById(R.id.workList);
+
+        workList.removeAllViews();
+
+        HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                try {
+                    output = output.trim();
+                    callback.getUserName(output);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpRequest.setRequestMethod("GET");
+        System.out.println(DatabaseURL.getNameByWorkscheduleId + workScheduleId);
+        httpRequest.execute(DatabaseURL.getNameByWorkscheduleId + workScheduleId);
+    }
+
 }
