@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/navigation_edit_schedule"
         android:name="se.grupp1.antonsskafferi.fragments.EditScheduleFragment"
-        android:label="Redigera Schema"
+        android:label="Schemalägg anställda"
         tools:layout="@layout/fragment_edit_schedule" />
     <fragment
         android:id="@+id/navigation_booking"

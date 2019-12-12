@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,12 +27,23 @@ import se.grupp1.antonsskafferi.components.ScheduledTimesComponent;
 import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
+import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 
 
 public class ScheduleFragment extends Fragment {
 
+    interface Callback {
+        void getUserName(String username);
+    }
+
+    interface LoadingCallback
+    {
+        void finishedLoading();
+    }
+
     DialogFragment popup;
     private String date = "";
+    private String workScheduleId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,22 +86,49 @@ public class ScheduleFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                loadScheduledEvents();
+                loadScheduledEvents(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+
+                    }
+                });
+
                 dateView.setText(Date);
             }
         });
 
-        return root;
 
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                loadScheduledEvents(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
+
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadScheduledEvents();
+
+        loadScheduledEvents(new LoadingCallback() {
+            @Override
+            public void finishedLoading() {
+            }
+        });
     }
 
-    public void loadScheduledEvents() {
+    public void loadScheduledEvents(final LoadingCallback callback) {
         final LinearLayout workList = getView().findViewById(R.id.workList);
 
         workList.removeAllViews();
@@ -106,25 +145,57 @@ public class ScheduleFragment extends Fragment {
                         JSONObject c = jsonArr.getJSONObject(i);
 
                         Integer workId = c.getInt("workingscheduleid");
-                        String name = c.getString("date");
+                        String dateFromDB = c.getString("date");
                         String startTime = c.getString("start");
                         String endTime = c.getString("end");
 
-                        ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime);
+                        final ScheduledTimesComponent scheduledEvent = new ScheduledTimesComponent(getContext(), startTime, endTime, workId.toString());
+
                         //TODO:If current user is the same person as the person of the scheduled event, don't show change button
                         scheduledEvent.showChangeButton(true);
+
                         //TODO:Get name instead of id and show at event.
-                        scheduledEvent.setName(workId.toString());
+                        //scheduledEvent.setName(workId.toString());
+                        workScheduleId = workId.toString();
+
+                        getNameOfWorker(new Callback() {
+                            @Override
+                            public void getUserName(String username) {
+                                scheduledEvent.setName(username);
+                            }
+                        });
+
                         workList.addView(scheduledEvent);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                finally
+                {
+                    callback.finishedLoading();
+                }
             }
         });
 
         httpRequest.setRequestMethod("GET");
-
         httpRequest.execute(DatabaseURL.getScheduleByDate + date);
     }
+
+    private void getNameOfWorker(final Callback callback)
+    {
+        HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                try {
+                    output = output.trim();
+                    callback.getUserName(output);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpRequest.setRequestMethod("GET");
+        httpRequest.execute(DatabaseURL.getNameByWorkscheduleId + workScheduleId);
+    }
+
 }
