@@ -163,8 +163,9 @@ public class TableCardComponent extends CardView
                             FragmentActivity parent = (FragmentActivity)getContext();
                             FragmentTransaction ft = parent.getSupportFragmentManager().beginTransaction();
 
-                            ShowBookingForTablePopup popup = new ShowBookingForTablePopup();
+                            ShowBookingForTablePopup popup = new ShowBookingForTablePopup(customerId);
                             popup.show(ft, "dialog");
+                            break;
                         }
 
                         case REMOVE_BOOKING:

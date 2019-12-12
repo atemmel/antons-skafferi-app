@@ -64,6 +64,15 @@
     <string name="booking_persons_text">Antal</string>
     <string name="skriv_email">Skriv Email</string>
 
+    <!-- View Booking for table Popup -->
+    <string name="popup_booking_for_table_title">Bokningsinformation</string>
+    <string name="popup_booking_for_table_firstname">Förnamn: </string>
+    <string name="popup_booking_for_table_lastname">Efternamn: </string>
+    <string name="popup_booking_for_table_time">Bokat från: </string>
+    <string name="popup_booking_for_table_email">Email: </string>
+    <string name="popup_booking_for_table_phone">Telefonnummer: </string>
+    <string name="popup_booking_for_table_amount">Antal: </string>
+
     <!-- Ny beställningssida -->
     <string name="edit_item">Redigera</string>
 
