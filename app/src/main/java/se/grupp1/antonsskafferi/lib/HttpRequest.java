@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class HttpRequest extends AsyncTask<String, Integer, String>
 {
+    public static Object Response;
+
     /**
      * Ett interface för att skicka svaret från HttpRequesten till mainthread.
      * En instans som implementerar interfacets funktion skickas in i klassens konstruktor.

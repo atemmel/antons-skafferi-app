@@ -12,12 +12,14 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -30,7 +32,11 @@ import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
 import se.grupp1.antonsskafferi.lib.StringFormatter;
 
-public class EditScheduleFragment extends Fragment {
+public class EditScheduleFragment extends Fragment
+{
+    private Map<String, Integer> employee_map = new HashMap<>();
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -111,6 +117,14 @@ public class EditScheduleFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                postEmployeeSchedule();
+            }
+        });
+
     }
 
     private void loadUsersToDropdown()
@@ -132,11 +146,14 @@ public class EditScheduleFragment extends Fragment {
                         JSONObject c = jsonArr.getJSONObject(i);
 
                         String name = c.getJSONObject("user").getString("username");
+                        int id = c.getInt("employeeid");
+
+                        employee_map.put(name, id);
 
                         users.add(name);
                     }
 
-                    ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
+                    ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, users);
                     dropdown.setAdapter(adapter);
 
                 } catch (Exception e)
@@ -167,41 +184,38 @@ public class EditScheduleFragment extends Fragment {
         });
     }
 
-    private void loadEmployees(String user)
+
+    private void postEmployeeSchedule()
     {
-        final String usr = user;
-
-        HttpRequest httpRequest = new HttpRequest(new HttpRequest.Response() {
+        HttpRequest.Response response = new HttpRequest.Response() {
             @Override
-            public void processFinish(String output, int status)
-            {
-                try
+            public void processFinish(String output, int status) {
+                if(status != 200)
                 {
-                    JSONArray jsonArr = new JSONArray(output);
-
-                    Map<String, String> usersToEmployees = new HashMap<>();
-
-                    for(int i = 0; i < jsonArr.length(); i++)
-                    {
-                        JSONObject c = jsonArr.getJSONObject(i);
-
-                        String employeeid = c.getString("employeeid");
-                        String username = c.getString("username");
-
-                        usersToEmployees.put(username, employeeid);
-                    }
-                    //TODO: Only one employee can have a certain name?
-                    String employeeidToUser = usersToEmployees.get(usr);
-
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Kunde inte skicka till databsen, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
-        });
+        };
 
-        httpRequest.setRequestMethod("GET");
-        httpRequest.execute(DatabaseURL.getEmployees);
+        Spinner employeeSpinner = getView().findViewById(R.id.employeeDropdown);
+        TextView dateText = getView().findViewById(R.id.dateLabel);
+        TextView startTimeText = getView().findViewById(R.id.startTimeLabel);
+        TextView endTimeText = getView().findViewById(R.id.endTimeLabel);
+
+        int employeeid = employee_map.get(employeeSpinner.getSelectedItem().toString());
+
+        String date = dateText.getText().toString();
+        String startTime = startTimeText.getText().toString();
+        String endTime = endTimeText.getText().toString();
+
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("POST");
+        request.execute(DatabaseURL.postEmployeeScheduleBase + employeeid +
+                        DatabaseURL.postEmplyeeScheduleDate + date +
+                        DatabaseURL.postEmployeeScheduleStart + startTime +
+                        DatabaseURL.postEmployeeScheduleEnd + endTime);
     }
 }

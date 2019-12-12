@@ -125,6 +125,16 @@ public class DatabaseURL {
     // --- Hämta alla händelser i schemat på ett givet datum
     public static final String getScheduleByDate = base + "schedules/schedule/date?date=";
 
+    //Posta schema för en anställd
+    public static final String postEmployeeScheduleBase = base + "empschedules/post/employeesechedual?employeeid=";
+
+    public static final String postEmplyeeScheduleDate = "&date=";
+
+    public static final String postEmployeeScheduleStart = "&start=";
+
+    public static final String postEmployeeScheduleEnd = "&end=";
+
+
 
     private DatabaseURL() {
     }

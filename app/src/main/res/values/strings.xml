@@ -79,6 +79,7 @@
     <string name="delete">Delete</string>
 
     <!-- Redigera schema -->
+    <string name="edit_schedule_employee_hint">Välj anställd</string>
     <string name="edit_schedule_date_label">Datum</string>
     <string name="edit_schedule_start_time_label">Starttid</string>
     <string name="edit_schedule_end_time_label">sluttid</string>
