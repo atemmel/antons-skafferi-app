@@ -23,8 +23,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +45,25 @@ public class EditScheduleFragment extends Fragment
     {
         View root = inflater.inflate(R.layout.fragment_edit_schedule, container, false);
 
+
+        SimpleDateFormat sdf = new SimpleDateFormat(StringFormatter.date_format);
+        String today = sdf.format(new Date());
+
+        ((TextView)root.findViewById(R.id.dateLabel)).setText(today);
+
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        String current_time = new SimpleDateFormat(StringFormatter.time_format).format(now);
+
+        ((TextView)root.findViewById(R.id.startTimeLabel)).setText(current_time);
+
+        calendar.add(Calendar.HOUR_OF_DAY, +1);
+
+        String one_hour_forward = new SimpleDateFormat(StringFormatter.time_format).format(calendar.getTime());
+
+        ((TextView)root.findViewById(R.id.endTimeLabel)).setText(one_hour_forward);
+
         return root;
     }
 
@@ -56,17 +78,45 @@ public class EditScheduleFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
+                TextView dateLabel = getView().findViewById(R.id.dateLabel);
+
+                String date = dateLabel.getText().toString();
+
+                String[] splitDate = date.split("-");
+
+                int year = Integer.parseInt(splitDate[0]);
+                int month = Integer.parseInt(splitDate[1]) - 1;
+                int day = Integer.parseInt(splitDate[2]);
 
                 DatePickerDialog datepickerdialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                    public void onDateSet(DatePicker view, int year, int month, int day)
+                    {
+                        String dateString = StringFormatter.formatDate(year + "-" + (month + 1) + "-" + day);
+
+                        SimpleDateFormat sdf = new SimpleDateFormat(StringFormatter.date_format);
+
+                        try
+                        {
+                            Date date = sdf.parse(dateString);
+
+                            if(date.before(new Date()))
+                            {
+                                Toast.makeText(getActivity(), "Datumet har passerat, välj ett datum i framtiden.",
+                                        Toast.LENGTH_LONG
+                                ).show();
+
+                                return;
+                            }
+                        }
+                        catch (ParseException e)
+                        {
+                            e.printStackTrace();
+                        }
+
                         TextView dateText = getView().findViewById(R.id.dateLabel);
 
-                        dateText.setText(StringFormatter.formatDate(year + "-" + (month + 1) + "-" + day));
+                        dateText.setText(dateString);
                     }
                 }, year, month, day);
 
@@ -78,19 +128,43 @@ public class EditScheduleFragment extends Fragment
             @Override
             public void onClick(View v) {
 
-                Calendar currentTime = Calendar.getInstance();
+                TextView startTimeLabel = getView().findViewById(R.id.startTimeLabel);
 
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
+                String startTime = startTimeLabel.getText().toString();
+
+                String[] splitStartTime = startTime.split(":");
+
+                int hour = Integer.parseInt(splitStartTime[0]);
+                int minute = Integer.parseInt(splitStartTime[1]);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
+
+                        String time = StringFormatter.formatTime(hour + ":" + minute);
+
+                        TextView endTime = getView().findViewById(R.id.endTimeLabel);
+
+                        if(timeIsBefore(endTime.getText().toString(), time))
+                        {
+                            Calendar calendar = Calendar.getInstance();
+
+                            calendar.set(Calendar.HOUR_OF_DAY, hour);
+                            calendar.set(Calendar.MINUTE, minute);
+
+                            calendar.add(Calendar.HOUR_OF_DAY, + 1);
+
+                            String one_hour_forward = new SimpleDateFormat(StringFormatter.time_format).format(calendar.getTime());
+
+                            endTime.setText(one_hour_forward);
+                        }
+
                         TextView timeText = getView().findViewById(R.id.startTimeLabel);
 
-                        timeText.setText(StringFormatter.formatTime(hour + ":" + minute));
+                        timeText.setText(time);
                     }
                 }, hour, minute, true);
+
                 timePickerDialog.show();
             }
         });
@@ -99,19 +173,39 @@ public class EditScheduleFragment extends Fragment
             @Override
             public void onClick(View v) {
 
-                Calendar currentTime = Calendar.getInstance();
+                TextView endTimeLabel = getView().findViewById(R.id.endTimeLabel);
 
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
+                String endTime = endTimeLabel.getText().toString();
+
+                String[] splitEndTime = endTime.split(":");
+
+                int hour = Integer.parseInt(splitEndTime[0]);
+                int minute = Integer.parseInt(splitEndTime[1]);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
+
+                        String time = StringFormatter.formatTime(hour + ":" + minute);
+
+                        TextView startTime = getView().findViewById(R.id.startTimeLabel);
+
+                        if(timeIsBefore(time, startTime.getText().toString()))
+                        {
+                            Toast.makeText(getActivity(), "Du kan inte välja ett slutdatum tidigare än startdatumet.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            return;
+                        }
+
                         TextView timeText = getView().findViewById(R.id.endTimeLabel);
 
-                        timeText.setText(StringFormatter.formatTime(hour + ":" + minute));
+                        timeText.setText(time);
+
                     }
                 }, hour, minute, true);
+
                 timePickerDialog.show();
             }
         });
@@ -123,7 +217,23 @@ public class EditScheduleFragment extends Fragment
                 postEmployeeSchedule();
             }
         });
+    }
 
+    private boolean timeIsBefore(String time_before, String time_after)
+    {
+        SimpleDateFormat parser = new SimpleDateFormat(StringFormatter.time_format);
+
+        try {
+            Date date_before = parser.parse(time_before);
+            Date date_after = parser.parse(time_after);
+
+            return date_after.after(date_before);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return false;
+        }
     }
 
     private void loadUsersToDropdown()

@@ -85,4 +85,8 @@
     <string name="edit_schedule_end_time_label">sluttid</string>
     <string name="edit_schedule_choose_date_time_label">välj</string>
 
+    <!-- Swap schedule times -->
+    <string name="swap_times_pick_time_hint">Välj tid</string>
+    <string name="swap_times_pick_time_title">Välj den tid du vill byta ut:</string>
+
 </resources>
