@@ -135,6 +135,9 @@ public class DatabaseURL {
     public static final String postEmployeeScheduleEnd = "&end=";
 
 
+    // ---
+    public static final String getNameByWorkscheduleId = base + "empschedules/username?workscheduleid=";
+
 
     private DatabaseURL() {
     }
