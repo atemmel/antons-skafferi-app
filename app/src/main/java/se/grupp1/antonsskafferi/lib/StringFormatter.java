@@ -26,7 +26,7 @@ public class StringFormatter {
         if(in.length() == 10) return in;
 
         String[] arr = in.split("-");
-        String out = new String("");
+        String out = "";
 
         for(int i = 1; i < arr.length; i++) {
             if(arr[i].length() == 1) {
@@ -42,5 +42,17 @@ public class StringFormatter {
         }
 
         return out;
+    }
+
+    public static boolean isValidEmail(String in) {
+        int atIndex = in.indexOf('@');
+        int dotIndex = in.indexOf('.');
+
+        return atIndex  != -1                           //Kolla att @ existerar
+                && dotIndex != -1                       //Kolla att . existerar
+                && atIndex == in.lastIndexOf('@')   //Kolla att bara ett @ existerar
+                && atIndex + 1 < dotIndex               //Kolla att @ ligger före .
+                && dotIndex + 1 != in.length()          //Kolla att . inte är sista elementet
+                && atIndex != 0;                        //Kolla att @ inte är första elementet
     }
 }
