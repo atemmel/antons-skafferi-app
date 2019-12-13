@@ -15,25 +15,25 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import se.grupp1.antonsskafferi.R;
 import se.grupp1.antonsskafferi.components.RecyclerViewAdapter;
+import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.HttpRequest;
-import se.grupp1.antonsskafferi.R;
-import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.lib.StringFormatter;
 
 public class BookingFragment extends Fragment {
@@ -141,7 +141,7 @@ public class BookingFragment extends Fragment {
 
             }
         });
-        // End of DatePicker
+        // End of DatePicker.
 
         Button SendBtn =  root.findViewById(R.id.SendBtn);
         SendBtn.setOnClickListener(new View.OnClickListener() {

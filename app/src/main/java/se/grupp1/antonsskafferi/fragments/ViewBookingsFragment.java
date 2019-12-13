@@ -145,8 +145,7 @@ public class ViewBookingsFragment extends Fragment {
                 try {
                 JSONArray jsonArr = new JSONArray(output);
 
-                //TODO ändra i till i = 0 när allan är borttagen från customers
-                for (int i = 1; i < jsonArr.length(); i++) {
+                for (int i = 0; i < jsonArr.length(); i++) {
                     JSONObject obj = jsonArr.getJSONObject(i);
 
 
