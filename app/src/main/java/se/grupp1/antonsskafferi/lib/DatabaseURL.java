@@ -125,6 +125,34 @@ public class DatabaseURL {
     // --- Hämta alla händelser i schemat på ett givet datum
     public static final String getScheduleByDate = base + "schedules/schedule/date?date=";
 
+    //Posta schema för en anställd
+    public static final String postEmployeeScheduleBase = base + "empschedules/post/employeesechedual?employeeid=";
+
+    public static final String postEmplyeeScheduleDate = "&date=";
+
+    public static final String postEmployeeScheduleStart = "&start=";
+
+    public static final String postEmployeeScheduleEnd = "&end=";
+
+
+    // ---
+    // --- Hämta användarnamn efter ett givet schema-id
+    public static final String getNameByWorkscheduleId = base + "empschedules/username?workscheduleid=";
+
+    // --- Skicka request om att byta tid med en annan användare
+    public static final String switchEmployeeSchedualId = base + "empschedules/post/switchemployeesecheduals?userone=";
+    public static final String secondUser = "&usertwo=";
+    public static final String scheduleone = "&scheduleone=";
+    public static final String scheduletwo = "&scheduletwo=";
+
+
+    // --- Hämta alla luncher
+    public static final String getAllLunches = base + "lunches";
+
+    // -- Skicka lunch till db
+    public static final String postLunch = base + "post/todayslunch?todayslunch=";
+
+    public static final String deleteAllLunches = base + "lunches/delete/all";
 
     private DatabaseURL() {
     }
