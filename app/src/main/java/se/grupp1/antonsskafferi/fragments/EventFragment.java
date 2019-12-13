@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
 import se.grupp1.antonsskafferi.lib.VolleyRequestService;
 
 import static android.app.Activity.RESULT_OK;
@@ -179,8 +180,8 @@ public class EventFragment extends Fragment
 
             System.out.println(obj);
 
-            String URL = "http://10.250.117.161:8080/upload";
-            //String URL = DatabaseURL.testingImage;
+            //String URL = "http://10.250.117.161:8080/upload";
+            String URL = DatabaseURL.testingImage;
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
