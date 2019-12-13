@@ -205,11 +205,10 @@ public class ChangeScheduledTimePopup extends DialogFragment {
         httpRequest.execute(DatabaseURL.getWorkScheduleByNameAndDate + current_user + DatabaseURL.getGetWorkingScheduleByDate + chosenDate);
     }
 
-    private Boolean emptyTimeDropdown() {
+    private boolean emptyTimeDropdown() {
         Spinner dropdown = getView().findViewById(R.id.timeSpinner);
 
-        if(dropdown != null && dropdown.getSelectedItem() != "" ) {
-            System.out.println("No item");
+        if(dropdown == null || dropdown.getSelectedItem() == null ) {
             return true;
         }
         return false;
@@ -217,7 +216,7 @@ public class ChangeScheduledTimePopup extends DialogFragment {
 
     private void noTimesInDropdownToast()
     {
-        Toast.makeText(getActivity(), "Du har inga inbokade \npass " + chosenDate + ".",
+        Toast.makeText(getActivity(), "Du har inga inbokade \npass " + chosenDate + ".s",
                 Toast.LENGTH_SHORT
         ).show();
     }
