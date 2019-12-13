@@ -56,14 +56,14 @@ public class BookingFragment extends Fragment {
     //Booking
     public interface RecyclerCallback
     {
-        public void getData(ArrayList<Integer> data);
+        void getData(ArrayList<Integer> data);
     }
     private ArrayList<Integer> tableList = new ArrayList<>();
     private ArrayList<Integer> isChecked = new ArrayList<>();
 
     public interface tablesCallback
     {
-        public void gotTables();
+        void gotTables();
     }
 
     private String prevDate;
@@ -113,7 +113,6 @@ public class BookingFragment extends Fragment {
                 int month = c.get(Calendar.MONTH);
                 int year =c.get(Calendar.YEAR);
 
-                //TODO: Make sure that the string returned has constant length
                 dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
@@ -211,6 +210,9 @@ public class BookingFragment extends Fragment {
                 {
                     emptyFields = true;
                     bookingEmail.setError("Skriv in Email");
+                } else if(!StringFormatter.isValidEmail(email)) {
+                    emptyFields = true;
+                    bookingEmail.setError("Ej giltig Email");
                 } else bookingEmail.setError(null);
                 if(isChecked.isEmpty())
                 {
