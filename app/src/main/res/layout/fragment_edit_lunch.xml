@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/lunchTitleView"
             android:layout_width="wrap_content"
@@ -23,23 +24,38 @@
             android:text="Redigera dagens lunch"
             android:textSize="30sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/titleLunchInputText"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="12"
-            android:gravity="center"
-            android:text="Titel"
-            android:textSize="18sp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/typeLunchInputText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleLunchInputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:textSize="18sp"
+                android:autofillHints="Titel"
+                android:hint="Titel" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="12"
-            android:gravity="center"
-            android:text="Typ"
-            android:textSize="18sp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/typeLunchInputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:autofillHints="Typ"
+                android:hint="Typ"
+                android:textSize="18sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/chooseDay"
