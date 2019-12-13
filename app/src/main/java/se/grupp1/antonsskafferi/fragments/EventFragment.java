@@ -216,11 +216,13 @@ public class EventFragment extends Fragment
 
             //VolleyRequestService.getInstance(getContext()).getRequestQueue().add(request);
 
+        }else{
+
+            Toast toast = Toast.makeText(getActivity(), "ERROR: Det finns ingen bild." , Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
         }
 
-        Toast toast = Toast.makeText(getActivity(), "ERROR: Det finns ingen bild." , Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
 
 
 
