@@ -146,8 +146,7 @@ public class ViewBookingsFragment extends Fragment {
                 JSONArray jsonArr = new JSONArray(output);
 
 
-                //TODO: Remove Allan and change i = 0
-                for (int i = 1; i < jsonArr.length(); i++) {
+                for (int i = 0; i < jsonArr.length(); i++) {
                     JSONObject obj = jsonArr.getJSONObject(i);
 
 
