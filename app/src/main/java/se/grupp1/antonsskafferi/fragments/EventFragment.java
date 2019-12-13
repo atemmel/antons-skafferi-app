@@ -80,7 +80,7 @@ public class EventFragment extends Fragment
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                date = "" + day + "-" + month + "-" + year;
+                                date =  year + "-" + (month + 1 ) + "-" + day;
                             }
                         }, year, month, dayOfMonth);
                 datePickerDialog.show();
@@ -158,56 +158,70 @@ public class EventFragment extends Fragment
 
     public void sendImage(String title, String date){
 
-        //System.out.println("TITLE: " + title + "DESCRIPTION: " + description + "DATE: " + date);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imageBitMap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
-        byte[] imageBytes = baos.toByteArray();
-
-        //String image = get64BaseImage(imageBitMap);
-        Map<String, Object> params = new HashMap<>();
-        String name = "bild";
-        params.put("title", title);
-        params.put("date", date);
-        params.put("imageName", name);
-        params.put("image", imageBytes);
+        if(imageView.getDrawable() != null){
 
 
-        JSONObject obj = new JSONObject(params);
+            //System.out.println("TITLE: " + title + "DESCRIPTION: " + description + "DATE: " + date);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitMap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+            byte[] imageBytes = baos.toByteArray();
 
-        System.out.println(obj);
+            //String image = get64BaseImage(imageBitMap);
+            Map<String, Object> params = new HashMap<>();
+            String name = "bild";
+            params.put("title", title);
+            params.put("date", date);
+            params.put("imageName", name);
+            params.put("image", imageBytes);
 
-        String URL = "http://10.250.117.161:8080/upload";
-        //String URL = DatabaseURL.testingImage;
 
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                URL,
-                new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+            JSONObject obj = new JSONObject(params);
 
-                    }
+            System.out.println(obj);
 
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.getStackTrace();
-                Toast toast = Toast.makeText(getActivity(), "ERROR: " + error, Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-                toast.show();
-            }
-        });
+            String URL = "http://10.250.117.161:8080/upload";
+            //String URL = DatabaseURL.testingImage;
 
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue queue = VolleyRequestService.getInstance(getContext()).getRequestQueue();
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    URL,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Toast toast = Toast.makeText(getActivity(), "Event skapad." , Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                            toast.show();
 
-        queue.add(request);
+                        }
 
-        //VolleyRequestService.getInstance(getContext()).getRequestQueue().add(request);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.getStackTrace();
+                    Toast toast = Toast.makeText(getActivity(), "ERROR: " + error, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+                }
+            });
+
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    10000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue queue = VolleyRequestService.getInstance(getContext()).getRequestQueue();
+
+            queue.add(request);
+
+            //VolleyRequestService.getInstance(getContext()).getRequestQueue().add(request);
+
+        }
+
+        Toast toast = Toast.makeText(getActivity(), "ERROR: Det finns ingen bild." , Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+
+
 
     }
 
