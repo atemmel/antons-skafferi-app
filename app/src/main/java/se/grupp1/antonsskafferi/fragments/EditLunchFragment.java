@@ -81,7 +81,7 @@ public class EditLunchFragment extends Fragment
             }
         });
 
-        root.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.deleteLunchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteAllLunches();
@@ -115,6 +115,7 @@ public class EditLunchFragment extends Fragment
 
             HttpRequest request = new HttpRequest(response);
             request.setRequestMethod("POST");
+            request.setPayload(object.toString());
             request.execute(DatabaseURL.postLunch);
         }
         catch(JSONException e)

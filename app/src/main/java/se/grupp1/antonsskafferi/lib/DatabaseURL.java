@@ -1,7 +1,7 @@
 package se.grupp1.antonsskafferi.lib;
 
 public class DatabaseURL {
-    private static final String local = "10.250.319.153:8080";//"http://10.0.2.2:8080/";
+    private static final String local = "http://10.0.2.2:8080/";
     private static final String remote = "http://82.196.113.65:8080/";
 
     //Om appen skall kopplas till en lokal databas
