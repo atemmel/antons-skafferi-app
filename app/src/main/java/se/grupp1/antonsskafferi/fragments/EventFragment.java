@@ -86,7 +86,7 @@ public class EventFragment extends Fragment
                                 }else if( month < 10){
                                     date =  year + "-" + "0" + (month + 1 ) + "-" + "0" + day;
                                 }else{
-                                    date =  year + "-" + "0" + (month + 1 ) + "-" + day;
+                                    date =  year + "-"  + (month + 1 ) + "-" + day;
                                 }
 
                             }
