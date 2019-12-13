@@ -1,8 +1,10 @@
 package se.grupp1.antonsskafferi.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -48,14 +50,12 @@ public class EditLunchFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+
                 EditText titleEditText = root.findViewById(R.id.titleLunchInputText);
                 String title = titleEditText.getText().toString();
 
                 EditText typeEditText = root.findViewById(R.id.typeLunchInputText);
                 String type = typeEditText.getText().toString();
-
-                //EditText dateEditText = root.findViewById(R.id.dateLunchInputText);
-                //String date = dateEditText.getText().toString();
 
                 boolean emptyInputField = false;
 
@@ -69,11 +69,6 @@ public class EditLunchFragment extends Fragment
                     typeEditText.setError("Lägg till en typ");
 
                 }
-                /*if(date.isEmpty()){
-                    emptyInputField = true;
-                    dateEditText.setError("Lägg till ett datum");
-
-                }*/
 
                 if(emptyInputField) return;
 
@@ -84,7 +79,25 @@ public class EditLunchFragment extends Fragment
         root.findViewById(R.id.deleteLunchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteAllLunches();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        if (which == DialogInterface.BUTTON_POSITIVE)
+                        {
+                            deleteAllLunches();
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                String message =    "Du kommer nu att radera alla luncher från menyn. Är du säker?";
+
+                builder.setMessage(message).setPositiveButton("Ja", dialogClickListener)
+                        .setNegativeButton("Avbryt", dialogClickListener).show();
+
             }
         });
 
@@ -99,6 +112,10 @@ public class EditLunchFragment extends Fragment
                 if(status != 200)
                 {
                     Toast.makeText(getActivity(), "Kunde inte skicka till databsen, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else{
+                    Toast.makeText(getActivity(), "Du har lagt till en ny rätt till menyn.",
                             Toast.LENGTH_SHORT
                     ).show();
                 }
@@ -132,6 +149,10 @@ public class EditLunchFragment extends Fragment
                 if(status != 200)
                 {
                     Toast.makeText(getActivity(), "Kunde inte ta bort från databsen, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else{
+                    Toast.makeText(getActivity(), "Du har nu tagit bort alla rätter från lunchmenyn. Se till att lägga till nya.",
                             Toast.LENGTH_SHORT
                     ).show();
                 }
