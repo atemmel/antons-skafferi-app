@@ -81,7 +81,14 @@ public class EventFragment extends Fragment
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                date =  year + "-" + (month + 1 ) + "-" + day;
+                                if(day < 10){
+                                    date =  year + "-" + (month + 1 ) + "-" + "0" + day;
+                                }else if( month < 10){
+                                    date =  year + "-" + "0" + (month + 1 ) + "-" + "0" + day;
+                                }else{
+                                    date =  year + "-" + "0" + (month + 1 ) + "-" + day;
+                                }
+
                             }
                         }, year, month, dayOfMonth);
                 datePickerDialog.show();
