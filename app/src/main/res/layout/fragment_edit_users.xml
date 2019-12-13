@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="wrap_content"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.BookingFragment">
@@ -50,10 +50,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:text="REGISTER"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="REGISTRERA"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
-                    android:fontFamily="sans-serif-condensed-medium"/>
+                    android:textSize="22sp" />
             </LinearLayout>
             <ImageView
                 android:id="@+id/imageUserIcon"
@@ -85,13 +85,13 @@
                     android:id="@+id/registerFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/editTextBG"
                     android:layout_alignBottom="@+id/imageUserRegister"
+                    android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserRegister"
-                    android:hint="First Name"
+                    android:background="@color/editTextBG"
+                    android:hint="Förnamn"
                     android:paddingLeft="20dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
             </RelativeLayout>
             <RelativeLayout
@@ -114,13 +114,13 @@
                     android:id="@+id/registerLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/editTextBG"
                     android:layout_alignBottom="@+id/imageUserRegister2"
+                    android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserRegister2"
-                    android:hint="Last Name"
+                    android:background="@color/editTextBG"
+                    android:hint="Efternamn"
                     android:paddingLeft="20dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
             </RelativeLayout>
             <RelativeLayout
@@ -143,14 +143,14 @@
                     android:id="@+id/registerPassword1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/editTextBG"
                     android:layout_alignBottom="@+id/imageUserPassword"
+                    android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserPassword"
-                    android:hint="Password"
-                    android:paddingLeft="20dp"
+                    android:background="@color/editTextBG"
+                    android:hint="Lösenord"
                     android:inputType="textPassword"
-                    android:textSize="15sp"/>
+                    android:paddingLeft="20dp"
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -174,14 +174,14 @@
                     android:id="@+id/registerPassword2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/editTextBG"
                     android:layout_alignBottom="@+id/imageUserPassword1"
+                    android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserPassword1"
-                    android:hint="Re-type Password"
+                    android:background="@color/editTextBG"
+                    android:hint="Skriv Lösenord igen"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
@@ -198,17 +198,17 @@
 
             <Button
                 android:id="@+id/buttonRegister"
-                android:layout_below="@+id/registerCheckbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_below="@+id/registerCheckbox"
                 android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="30dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="REGISTER"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/white"/>
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="REGISTRERA"
+                android:textColor="@color/white" />
 
 
 

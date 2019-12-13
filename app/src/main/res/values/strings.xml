@@ -29,8 +29,8 @@
     <string name="pick_date">Pick Date</string>
     <string name="datum_yyyy_mm_dd">Datum YYYY-MM-DD</string>
     <string name="tid_hh_mm">Tid HH:MM</string>
-    <string name="v_lj_datum">Välj Datum</string>
-    <string name="v_lj_tid">Välj Tid</string>
+    <string name="v_lj_datum">Välj</string>
+    <string name="v_lj_tid">Välj</string>
     <string name="datum">Datum</string>
     <string name="tid">Tid</string>
 
