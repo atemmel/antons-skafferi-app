@@ -223,7 +223,7 @@ public class BookingFragment extends Fragment {
                 }
 
 
-                if(!customerId.isEmpty())
+                if(!customerId.isEmpty() && !emptyFields)
                 {
                     boolean checkedPrevTable = false;
                     for(int i = 0; i < isChecked.size(); i++)
