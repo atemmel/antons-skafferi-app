@@ -4,14 +4,10 @@
     <string name="username_ghost_text">Användarnamn</string>
     <string name="password_ghost_text">Lösenord</string>
 
-    <!-- Preference Titles -->
-    <string name="example_header">Exempel</string>
-
-    <!-- Example Preferences -->
-    <string name="first_setting_title">Detta är en inställning</string>
-    <string name="other_setting_title">Denna inställning beror av ovan</string>
-    <string name="example_setting_summary_on">Inställningen är aktiverad</string>
-    <string name="example_setting_summary_off">Inställningen är avaktiverad</string>
+    <!-- Inställningar -->
+    <string name="settings_users_title">Övrigt</string>
+    <string name="settings_add_event_picture">Lägg till eventbilder</string>
+    <string name="settings_log_out">Logga ut</string>
 
     <!-- Admin Page -->
     <string name="title_activity_admin">Admin</string>
@@ -40,7 +36,7 @@
 
     <!-- Popup: booked table -->
     <string name="popup_take_order_button">Ta beställning</string>
-    <string name="popup_wipe_table_button">Rensa bord</string>
+    <string name="popup_remove_booking_button">Ta bort bokning</string>
     <string name="popup_show_check_button">Visa nota</string>
     <string name="popup_show_booking_button">Visa bokning</string>
     <string name="popup_edit_booking_button">Redigera bokning</string>
@@ -48,10 +44,14 @@
     <!-- Popup: unbooked table -->
     <string name="popup_place_customer_button">Placera kund</string>
 
+    <!-- Popup: occupied table -->
+    <string name="popup_wipe_table_button">Rensa bord</string>
+
     <!-- View Orders Page -->
     <string name="table_id_header_text">Bord</string>
     <string name="order_summary_header_text">Ordersummering</string>
     <string name="order_status_header_text">Status</string>
+    <string name="done_button">Order levererad</string>
 
     <!-- View Bookings Page -->
     <string name="table_id_text">Bord</string>
@@ -59,6 +59,15 @@
     <string name="booking_time_text">Time</string>
     <string name="booking_persons_text">Antal</string>
     <string name="skriv_email">Skriv Email</string>
+
+    <!-- View Booking for table Popup -->
+    <string name="popup_booking_for_table_title">Bokningsinformation</string>
+    <string name="popup_booking_for_table_firstname">Förnamn: </string>
+    <string name="popup_booking_for_table_lastname">Efternamn: </string>
+    <string name="popup_booking_for_table_time">Bokat från: </string>
+    <string name="popup_booking_for_table_email">Email: </string>
+    <string name="popup_booking_for_table_phone">Telefonnummer: </string>
+    <string name="popup_booking_for_table_amount">Antal: </string>
 
     <!-- Ny beställningssida -->
     <string name="edit_item">Redigera</string>
@@ -72,5 +81,17 @@
     <string name="price_hint">Pris</string>
     <string name="category_hint">Välj kategori</string>
     <string name="update_button_text">Uppdatera</string>
+    <string name="delete">Delete</string>
+
+    <!-- Redigera schema -->
+    <string name="edit_schedule_employee_hint">Välj anställd</string>
+    <string name="edit_schedule_date_label">Datum</string>
+    <string name="edit_schedule_start_time_label">Starttid</string>
+    <string name="edit_schedule_end_time_label">sluttid</string>
+    <string name="edit_schedule_choose_date_time_label">välj</string>
+
+    <!-- Swap schedule times -->
+    <string name="swap_times_pick_time_hint">Välj tid</string>
+    <string name="swap_times_pick_time_title">Välj den tid du vill byta ut:</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package se.grupp1.antonsskafferi.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,11 +24,20 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
         if(LoginActivity.IS_ADMIN)  addPreferencesFromResource(R.xml.admin_preferences);
 
+
         Preference logoutButtonPreference = findPreference("logoutButtonPreference");
         logoutButtonPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(getActivity().getApplication(), LoginActivity.class));
+
+                SharedPreferences prefs = getContext().getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("username", "");
+                editor.putString("password", "");
+                editor.apply();
+
+                startActivity(new Intent(getActivity().getApplication(), LoginActivity.class));
                 return true;
             }
         });
@@ -37,9 +48,20 @@ public class SettingsFragment extends PreferenceFragmentCompat
     {
         super.onViewCreated(view, savedInstanceState);
 
-        if(LoginActivity.IS_ADMIN) {
+       final NavController navController = Navigation.findNavController(getView());
 
-            final NavController navController = Navigation.findNavController(getView());
+        Preference addEventPicturesPreference = findPreference("addEventPicturesPreference");
+        addEventPicturesPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                navController.navigate(R.id.navigation_add_event_pictures);
+
+                return true;
+            }
+        });
+
+        if(LoginActivity.IS_ADMIN) {
 
             Preference lunchPreference = findPreference("editLunchPreference");
             lunchPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -78,6 +100,16 @@ public class SettingsFragment extends PreferenceFragmentCompat
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     navController.navigate(R.id.navigation_edit_schedule);
+
+                    return true;
+                }
+            });
+
+            Preference usersPreference = findPreference("editUsersPreference");
+            usersPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    navController.navigate(R.id.navigation_edit_users);
 
                     return true;
                 }

@@ -100,12 +100,8 @@ public class EditDinnerMenuPopup extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                switch (which)
-                {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        EditDinnerMenuPopup.super.dismiss();
-                        break;
-                }
+                if(which == DialogInterface.BUTTON_POSITIVE)
+                    EditDinnerMenuPopup.super.dismiss();
             }
         };
 

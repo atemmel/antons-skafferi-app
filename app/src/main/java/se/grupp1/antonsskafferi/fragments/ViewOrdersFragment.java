@@ -46,15 +46,13 @@ public class ViewOrdersFragment extends Fragment
             @Override
             public void onRefresh()
             {
-
                 loadOrders(new LoadingCallback() {
-                    @Override
-                    public void finishedLoading()
-                    {
-                        swipeRefreshLayout.setRefreshing(false);
-
-                    }
-                });
+                @Override
+                public void finishedLoading()
+                {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
             }
         });
 
@@ -66,27 +64,6 @@ public class ViewOrdersFragment extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 
-        /*final LinearLayout orderList = getView().findViewById(R.id.orderList);
-
-        OrderCardComponent order1 = new OrderCardComponent(getContext(), 3);
-
-        order1.setReady(true);
-        order1.addItem(2, "Köttbullar");
-        order1.addItem(1, "Pizza");
-        order1.addItem(3, "Coca Cola");
-
-        orderList.addView(order1);
-
-
-        OrderCardComponent order2 = new OrderCardComponent(getContext(), 5);
-
-        order2.addItem(1, "Lasagne");
-        order2.addItem(1, "Carbonara");
-        order2.addItem(1, "Fanta");
-        order2.addItem(1, "Ramlösa");
-
-        orderList.addView(order2);*/
-
         loadOrders(new LoadingCallback() {
             @Override
             public void finishedLoading() {
@@ -97,17 +74,39 @@ public class ViewOrdersFragment extends Fragment
 
     private void loadOrders(final LoadingCallback callback)
     {
-        final LinearLayout orderList = getView().findViewById(R.id.orderList);
+        if(getView() == null) {
+            return;
+        }
+        ((LinearLayout)getView().findViewById(R.id.orderList)).removeAllViews();
 
-        orderList.removeAllViews();
+        getReadyOrders(new LoadingCallback() {
+            @Override
+            public void finishedLoading()
+            {
+                getUnreadyOrders(new LoadingCallback() {
+                    @Override
+                    public void finishedLoading() {
+                        callback.finishedLoading();
+
+                    }
+                });
+            }
+        });
+    }
+
+    private void getReadyOrders(final LoadingCallback callback)
+    {
+        if(getView() == null) {
+            return;
+        }
+
+        final LinearLayout orderList = getView().findViewById(R.id.orderList);
 
         HttpRequest.Response response = new HttpRequest.Response()
         {
             @Override
             public void processFinish(String output, int status)
             {
-                System.out.println(status);
-
                 if(status != 200)
                 {
                     Toast.makeText(getActivity(), "Kunde inte hämta beställningar. Felkod: " + status,
@@ -122,14 +121,13 @@ public class ViewOrdersFragment extends Fragment
 
                     int prev_id = -1;
 
-                    for (int i = 0; i < jsonArr.length(); i++) {
+                    for (int i = 0; i < jsonArr.length(); i++)
+                    {
                         JSONObject obj = jsonArr.getJSONObject(i);
 
                         int id = obj.getJSONObject("dinnertable").getInt("dinnertableid");
 
                         int readyStatus = obj.getInt("ready");
-
-                        if(readyStatus == 2) continue;
 
                         if (id == prev_id)
                         {
@@ -163,6 +161,75 @@ public class ViewOrdersFragment extends Fragment
         HttpRequest httpRequest = new HttpRequest(response);
         httpRequest.setRequestMethod("GET");
 
-        httpRequest.execute(DatabaseURL.getOrders);
+        httpRequest.execute(DatabaseURL.getReadyOrders);
+    }
+
+    private void getUnreadyOrders(final LoadingCallback callback)
+    {
+        if(getView() == null) {
+            return;
+        }
+
+        final LinearLayout orderList = getView().findViewById(R.id.orderList);
+
+        HttpRequest.Response response = new HttpRequest.Response()
+        {
+            @Override
+            public void processFinish(String output, int status)
+            {
+                if(status != 200)
+                {
+                    Toast.makeText(getActivity(), "Kunde inte hämta beställningar. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    return;
+                }
+
+                try {
+                    JSONArray jsonArr = new JSONArray(output);
+
+                    int prev_id = -1;
+
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        JSONObject obj = jsonArr.getJSONObject(i);
+
+                        int id = obj.getJSONObject("dinnertable").getInt("dinnertableid");
+
+                        int readyStatus = obj.getInt("ready");
+
+                        if (id == prev_id)
+                        {
+                            OrderCardComponent order = (OrderCardComponent) orderList.getChildAt(orderList.getChildCount() - 1);
+                            order.addItem(obj.getInt("amount"), obj.getJSONObject("item").getString("title"));
+                        }
+                        else
+                        {
+                            OrderCardComponent order = new OrderCardComponent(getContext(), id);
+
+                            order.setReady(readyStatus);
+
+                            order.addItem(obj.getInt("amount"), obj.getJSONObject("item").getString("title"));
+
+                            orderList.addView(order);
+                        }
+                        prev_id = id;
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    callback.finishedLoading();
+                }
+            }
+        };
+
+        HttpRequest httpRequest = new HttpRequest(response);
+        httpRequest.setRequestMethod("GET");
+
+        httpRequest.execute(DatabaseURL.getUnreadyOrders);
     }
 }

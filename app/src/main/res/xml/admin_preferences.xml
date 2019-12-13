@@ -5,6 +5,7 @@
     <PreferenceCategory
         android:visibility="gone"
         app:title="Admin">
+
         <Preference
             android:key="editLunchPreference"
             android:summary="Klicka här för att rediga veckans lunch"
@@ -36,6 +37,16 @@
             android:singleLine="true"
             android:title="Redigera schema"
             app:summary="Klicka här för att göra en ändring i schemat" />
+
+        <Preference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="Default value"
+            android:key="editUsersPreference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Redigera Användare"
+            app:summary="Klicka här för att redigera användare" />
 
     </PreferenceCategory>
 
