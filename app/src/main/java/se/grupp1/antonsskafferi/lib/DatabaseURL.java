@@ -152,6 +152,8 @@ public class DatabaseURL {
     // -- Skicka lunch till db
     public static final String postLunch = base + "post/todayslunch?todayslunch=";
 
+    public static final String deleteAllLunches = base + "lunches/delete/all";
+
     private DatabaseURL() {
     }
 }

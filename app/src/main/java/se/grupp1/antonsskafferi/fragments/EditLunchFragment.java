@@ -10,33 +10,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import se.grupp1.antonsskafferi.R;
+import se.grupp1.antonsskafferi.lib.DatabaseURL;
+import se.grupp1.antonsskafferi.lib.HttpRequest;
 
 public class EditLunchFragment extends Fragment
 {
+    private int dayId = 1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         final View root = inflater.inflate(R.layout.fragment_edit_lunch, container, false);
 
-        Spinner spinner = root.findViewById(R.id.alternativeDropdown);
+        ((RadioButton)root.findViewById(R.id.mondayRadio)).setChecked(true);
 
-        ArrayList<String> alternativeArray = new ArrayList<>();
-
-        alternativeArray.add("Alternativ 1");
-        alternativeArray.add("Alternativ 2");
-        alternativeArray.add("Alternativ 3");
-
-
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, alternativeArray);
-
-        spinner.setAdapter(adapter);
-
+        ((RadioGroup)root.findViewById(R.id.daysRadioButtons)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                handleRadioButtonClicked(root.findViewById(checkedId));
+            }
+        });
 
         root.findViewById(R.id.addLunchButton).setOnClickListener(new View.OnClickListener()
         {
@@ -46,8 +51,8 @@ public class EditLunchFragment extends Fragment
                 EditText titleEditText = root.findViewById(R.id.titleLunchInputText);
                 String title = titleEditText.getText().toString();
 
-                EditText descriptionEditText = root.findViewById(R.id.typeLunchInputText);
-                String description = descriptionEditText.getText().toString();
+                EditText typeEditText = root.findViewById(R.id.typeLunchInputText);
+                String type = typeEditText.getText().toString();
 
                 //EditText dateEditText = root.findViewById(R.id.dateLunchInputText);
                 //String date = dateEditText.getText().toString();
@@ -59,9 +64,9 @@ public class EditLunchFragment extends Fragment
 
                     titleEditText.setError("Lägg till en titel");
                 }
-                if(description.isEmpty()){
+                if(type.isEmpty()){
                     emptyInputField = true;
-                    descriptionEditText.setError("Lägg till en beskrivning");
+                    typeEditText.setError("Lägg till en typ");
 
                 }
                 /*if(date.isEmpty()){
@@ -72,16 +77,94 @@ public class EditLunchFragment extends Fragment
 
                 if(emptyInputField) return;
 
-                addLunch(title, description);
+                addLunch(title, type);
+            }
+        });
+
+        root.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteAllLunches();
             }
         });
 
         return root;
     }
 
-    public void addLunch(String title, String description){
+    private void addLunch(String title, String type){
 
-        //Send to POST request
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                if(status != 200)
+                {
+                    Toast.makeText(getActivity(), "Kunde inte skicka till databsen, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        };
+        JSONObject object = new JSONObject();
+
+        try
+        {
+            object.put("mealname", title);
+
+            object.put("days", dayId);
+            object.put("type", type);
+
+            HttpRequest request = new HttpRequest(response);
+            request.setRequestMethod("POST");
+            request.execute(DatabaseURL.postLunch);
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteAllLunches()
+    {
+        HttpRequest.Response response = new HttpRequest.Response() {
+            @Override
+            public void processFinish(String output, int status) {
+                if(status != 200)
+                {
+                    Toast.makeText(getActivity(), "Kunde inte ta bort från databsen, var vänlig försök igen. Felkod: " + status,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        };
+
+        HttpRequest request = new HttpRequest(response);
+        request.setRequestMethod("DELETE");
+        request.execute(DatabaseURL.deleteAllLunches);
+
+    }
+
+
+    private void handleRadioButtonClicked(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()){
+            case R.id.mondayRadio:
+                if (checked) dayId = 1;
+                break;
+            case R.id.tuesdayRadio:
+                if (checked) dayId = 2;
+                break;
+            case R.id.wednesdayRadio:
+                if (checked) dayId = 3;
+                break;
+            case R.id.thursdayRadio:
+                if (checked) dayId = 4;
+                break;
+            case R.id.fridayRadio:
+                if (checked) dayId = 5;
+                break;
+
+        }
     }
 
 

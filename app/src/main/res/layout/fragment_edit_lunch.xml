@@ -41,11 +41,6 @@
             android:text="Typ"
             android:textSize="18sp" />
 
-        <Spinner
-            android:id="@+id/alternativeDropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <TextView
             android:id="@+id/chooseDay"
             android:layout_width="wrap_content"
@@ -103,8 +98,23 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/daysRadioButtons"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@+id/daysRadioButtons" />
+
+        <Button
+            android:id="@+id/deleteLunchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#EB2121"
+            android:ems="12"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="Ta bort alla"
+            android:textColor="#FFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addLunchButton" />
 
     </LinearLayout>
 
