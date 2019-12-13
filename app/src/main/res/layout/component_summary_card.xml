@@ -38,7 +38,7 @@
                 android:id="@+id/summaryPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="right|end"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="Pris: "
