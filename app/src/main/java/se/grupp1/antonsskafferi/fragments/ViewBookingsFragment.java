@@ -145,6 +145,7 @@ public class ViewBookingsFragment extends Fragment {
                 try {
                 JSONArray jsonArr = new JSONArray(output);
 
+
                 for (int i = 0; i < jsonArr.length(); i++) {
                     JSONObject obj = jsonArr.getJSONObject(i);
 
