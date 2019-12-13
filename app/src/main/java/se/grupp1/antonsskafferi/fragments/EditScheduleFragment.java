@@ -304,6 +304,10 @@ public class EditScheduleFragment extends Fragment
                     Toast.makeText(getActivity(), "Kunde inte skicka till databsen, var vänlig försök igen. Felkod: " + status,
                             Toast.LENGTH_SHORT
                     ).show();
+                } else {
+                    Toast.makeText(getActivity(), "Du har lagt till ett nytt event i schemat.",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
         };
