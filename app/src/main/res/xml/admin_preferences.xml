@@ -35,7 +35,7 @@
             android:key="editSchedulePreference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Redigera schema"
+            android:title="Lägg till pass till schema"
             app:summary="Klicka här för att göra en ändring i schemat" />
 
         <Preference
@@ -45,7 +45,7 @@
             android:key="editUsersPreference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Redigera Användare"
+            android:title="Registrera användare"
             app:summary="Klicka här för att redigera användare" />
 
     </PreferenceCategory>

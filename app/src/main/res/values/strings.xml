@@ -89,9 +89,93 @@
     <string name="edit_schedule_start_time_label">Starttid</string>
     <string name="edit_schedule_end_time_label">sluttid</string>
     <string name="edit_schedule_choose_date_time_label">välj</string>
+    <string name="edit_schedule_add_btn">LÄGG TILL</string>
 
     <!-- Swap schedule times -->
     <string name="swap_times_pick_time_hint">Välj tid</string>
     <string name="swap_times_pick_time_title">Välj den tid du vill byta ut:</string>
+
+    <!-- Visa bokningar -->
+    <string name="view_booking_date">Datum</string>
+    <string name="view_booking_reference">Bokningsreferens</string>
+    <string name="view_booking_nrOfPersons">Antal</string>
+    <string name="view_booking_time">Tid</string>
+    <string name="view_booking_pick_date">Välj datum</string>
+
+    <!-- Byta tid -->
+    <string name="swap_times_swap_with">Byt tid med </string>
+    <string name="swap_times_time">Kl: </string>
+    <string name="swap_times_send_request">Skicka förfrågan</string>
+
+    <!-- Redigera middag-->
+    <string name="edit_dinner_edit">Redigera</string>
+
+    <!-- Multiline text -->
+    <string name="multiline_write_here">Skriv här</string>
+
+    <!-- Summering av order-->
+    <string name="order_summary_head_txt">Summering av order</string>
+    <string name="order_summary_order_text">Beställ</string>
+
+    <!-- Bokningsalternativ -->
+    <string name="todo">TODO</string>
+
+    <!-- Orderkomponent -->
+    <string name="order_component">Beställt</string>
+
+    <!-- Schemakomponent -->
+    <string name="schedule_component_timedefault">14:00 - 18:00</string>
+    <string name="schedule_component_switch_btn">Byt</string>
+
+    <!-- Sammanfattningskomponent -->
+    <string name="summary_component_price">Pris: </string>
+    <string name="summary_component_food">Mat</string>
+    <string name="summary_component_amount">Antal</string>
+
+    <!-- Bordskomponent -->
+    <string name="table_component_number">0 </string>
+
+    <!-- Redigera lunch-->
+    <string name="edit_lunch_edit_title">Redigera dagens lunch</string>
+    <string name="edit_lunch_title_text">Title</string>
+    <string name="edit_lunch_type">Typ</string>
+    <string name="edit_lunch_pick_day">Välj dag: </string>
+    <string name="edit_lunch_mon">Måndag</string>
+    <string name="edit_lunch_tis">Tisdag</string>
+    <string name="edit_lunch_ons">Onsdag</string>
+    <string name="edit_lunch_tors">Torsdag</string>
+    <string name="edit_lunch_fre">Fredag</string>
+    <string name="edit_lunch_add">Lägg till</string>
+    <string name="edit_lunch_remove_all">Ta bort alla</string>
+
+    <!--Edit users-->
+    <string name="edit_users_register">REGISTRERA</string>
+    <string name="edit_users_firstname">Förnamn</string>
+    <string name="edit_users_surname">Efternamn</string>
+    <string name="edit_users_password">Lösenord</string>
+    <string name="edit_users_write_password_again">Skriv Lösenord igen</string>
+    <string name="edit_users_admin">Admin</string>
+
+    <!-- Event -->
+    <string name="event_register">REGISTRERA</string>
+    <string name="event_title">Titel</string>
+    <string name="event_description">Beskrivning</string>
+    <string name="event_add_pic">Lägg till Bild</string>
+    <string name="event_create">Skapa event</string>
+
+    <!-- Ny order -->
+    <string name="new_order_drink">Dryck</string>
+    <string name="new_order_food">Mat</string>
+    <string name="new_order_summary">SUMMERING</string>
+
+    <!-- Schedule -->
+    <string name="schedule_date">Date</string>
+
+    <!-- Visa nota -->
+    <string name="show_check_total">TOTAL: </string>
+
+    <!-- Visa nota -->
+    <string name="table_overview_new_booking">NY BOKNING</string>
+    <string name="table_overview_show_booking">VISA BOKNINGAR</string>
 
 </resources>
