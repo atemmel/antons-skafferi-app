@@ -28,7 +28,6 @@
             android:id="@+id/titleEventInputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:hint="@string/event_title"
             android:textSize="18sp" />
 
@@ -43,7 +42,6 @@
         android:layout_width="301dp"
         android:layout_height="55dp"
         android:ems="12"
-        android:gravity="center"
         android:hint="@string/event_description"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
