@@ -28,7 +28,7 @@
             android:layout_height="24dp"
             android:layout_marginRight="12dp"
             android:background="@android:color/transparent"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/todo"
             android:src="@drawable/ic_close_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

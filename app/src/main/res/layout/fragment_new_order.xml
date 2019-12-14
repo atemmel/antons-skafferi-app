@@ -33,7 +33,7 @@
                     android:id="@+id/drinksLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dryck"
+                    android:text="@string/new_order_drink"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
             </LinearLayout>
 
@@ -52,7 +52,7 @@
                     android:id="@+id/foodLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mat"
+                    android:text="@string/new_order_food"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </LinearLayout>
@@ -70,7 +70,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="SUMMERING"
+        android:text="@string/new_order_summary"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

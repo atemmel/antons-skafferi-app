@@ -12,42 +12,45 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/eventTitleView"
-            android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/eventTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_register"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/titleEventInputText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Redigera event"
-            android:textSize="30sp" />
+            android:gravity="center"
+            android:hint="@string/event_title"
+            android:textSize="18sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titleEventInputText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Titel"
-                android:textSize="18sp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/descriptionEventInputText"
+        android:layout_width="301dp"
+        android:layout_height="55dp"
+        android:ems="12"
+        android:gravity="center"
+        android:hint="@string/event_description"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleEventInputText" />
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descriptionEventInputText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Beskrivning"
-                android:textSize="18sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/dateEventInputText"
@@ -75,30 +78,30 @@
                 android:gravity="left" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/addEventButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            android:background="@color/colorPrimary"
-            android:ems="12"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="Lägg till Bild"
-            android:textSize="18sp" />
+    <Button
+        android:id="@+id/addEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:background="@color/colorPrimary"
+        android:ems="12"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/event_add_pic"
+        android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/addEventButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/addEventButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
-            android:ems="12"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="Skapa Event"
-            android:textSize="18sp" />
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:ems="12"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/event_create"
+        android:textSize="18sp" />
 
 
     </LinearLayout>

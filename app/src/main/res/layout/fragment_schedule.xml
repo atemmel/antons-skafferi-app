@@ -39,7 +39,7 @@
                     android:layout_height="47dp"
                     android:background="#37D46300"
                     android:gravity="center"
-                    android:text="Date"
+                    android:text="@string/schedule_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0" />
 

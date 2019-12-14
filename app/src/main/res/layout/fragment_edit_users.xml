@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="REGISTRERA"
+                    android:text="@string/edit_users_register"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserRegister"
                     android:background="@color/editTextBG"
-                    android:hint="Förnamn"
+                    android:hint="@string/edit_users_firstname"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
 
@@ -118,7 +118,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserRegister2"
                     android:background="@color/editTextBG"
-                    android:hint="Efternamn"
+                    android:hint="@string/edit_users_surname"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
 
@@ -147,7 +147,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserPassword"
                     android:background="@color/editTextBG"
-                    android:hint="Lösenord"
+                    android:hint="@string/edit_users_password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -178,7 +178,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imageUserPassword1"
                     android:background="@color/editTextBG"
-                    android:hint="Skriv Lösenord igen"
+                    android:hint="@string/edit_users_write_password_again"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -193,7 +193,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/relativeLayoutUPassword1"
-                android:text="Admin"
+                android:text="@string/edit_users_admin"
                 />
 
             <Button
@@ -207,10 +207,8 @@
                 android:layout_marginBottom="30dp"
                 android:background="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed-medium"
-                android:text="REGISTRERA"
+                android:text="@string/edit_users_register"
                 android:textColor="@color/white" />
-
-
 
         </RelativeLayout>
 

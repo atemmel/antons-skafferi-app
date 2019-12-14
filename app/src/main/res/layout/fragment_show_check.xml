@@ -18,6 +18,6 @@
         android:layout_marginTop="16dp"
         android:gravity="right|end"
         android:paddingRight="32dp"
-        android:text="TOTAL: "
+        android:text="@string/show_check_total"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>
