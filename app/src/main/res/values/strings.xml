@@ -94,4 +94,7 @@
     <string name="swap_times_pick_time_hint">Välj tid</string>
     <string name="swap_times_pick_time_title">Välj den tid du vill byta ut:</string>
 
+
+    <!-- Splash screen -->
+    <string name="splashscreen_loading_text">Loggar in…</string>
 </resources>

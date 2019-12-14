@@ -20,17 +20,15 @@ public class LoginActivity extends AppCompatActivity
 {
     public static boolean IS_ADMIN = false;
 
+    interface LoginCheckCallback
+    {
+        void onEvaluated(boolean correctLogin);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences prefs = getSharedPreferences("loginProfile", Context.MODE_PRIVATE);
-        String username = prefs.getString("username", "");
-        String password = prefs.getString("password", "");
-
-        if(!username.isEmpty() && !password.isEmpty())
-            evaluateCredentials(username, password);
 
         setContentView(R.layout.activity_login);
 
@@ -50,10 +48,10 @@ public class LoginActivity extends AppCompatActivity
     public void evaluateLogin()
     {
         EditText usernameEditText = findViewById(R.id.usernameEditText);
-        String username = usernameEditText.getText().toString();
+        final String username = usernameEditText.getText().toString();
 
         EditText passwordEditText = findViewById(R.id.passwordEditText);
-        String password = passwordEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
 
         boolean emptyFields = false;
 
@@ -70,24 +68,43 @@ public class LoginActivity extends AppCompatActivity
 
         if(emptyFields) return;
 
-        evaluateCredentials(username, password);
+        evaluateCredentials(username, password, new LoginCheckCallback() {
+            @Override
+            public void onEvaluated(boolean correctLogin) {
+
+                System.out.println("Callback");
+
+                if(correctLogin)
+                {
+                    SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+                            "loginProfile", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
+
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Username and password didn't match",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
-    void displayInvalidLogin()
-    {
-        Toast.makeText(this, "Username and password didn't match",
-                Toast.LENGTH_LONG).show();
-    }
-
-    public void evaluateCredentials(String username, String password)
+    public static void evaluateCredentials(String username, String password, final LoginCheckCallback callback)
     {
         //TODO: När det känns lämpligt, ta bort detta
         //Tillåt inloggning som admin även om backend ej är igång
         if(username.equals("admin"))
         {
             IS_ADMIN = true;
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            callback.onEvaluated(true);
             return;
         }
 
@@ -98,36 +115,20 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void processFinish(String output, int status)
             {
-
                 //Om det ej finns ett svar från databasen är inloggningen felaktig
                 if(output.isEmpty())
                 {
-                    displayInvalidLogin();
+                    callback.onEvaluated(false);
                     return;
                 }
 
-                /*
-                    Annars är inloggningen korrekt, kolla om det är en admin-inloggning eller ej
-                    och skicka vidare användaren till appens startsida.
-                 */
                 try
                 {
                     JSONObject obj = new JSONObject(output);
 
                     IS_ADMIN = obj.getBoolean("administrator");
 
-                    String username = obj.getString("username");
-                    String password = obj.getString("password");
-
-                    SharedPreferences prefs = getSharedPreferences(
-                            "loginProfile", Context.MODE_PRIVATE);
-
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("username", username);
-                    editor.putString("password", password);
-                    editor.apply();
-
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    callback.onEvaluated(true);
                 }
                 catch (Exception e)
                 {

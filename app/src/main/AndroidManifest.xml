@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activites.LoginActivity">
+        <activity android:name=".activites.SplashscreenActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -23,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activites.LoginActivity" />
         <activity android:name=".fragments.ScheduleFragment" />
         <activity android:name=".fragments.BookingFragment" />
         <activity android:name=".activites.MainActivity" />
