@@ -50,17 +50,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
        final NavController navController = Navigation.findNavController(getView());
 
-        Preference addEventPicturesPreference = findPreference("addEventPicturesPreference");
-        addEventPicturesPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference)
-            {
-                navController.navigate(R.id.navigation_add_event_pictures);
-
-                return true;
-            }
-        });
-
         if(LoginActivity.IS_ADMIN) {
 
             Preference lunchPreference = findPreference("editLunchPreference");

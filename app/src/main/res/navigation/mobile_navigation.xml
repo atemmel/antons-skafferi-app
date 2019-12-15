@@ -30,9 +30,6 @@
         <action
             android:id="@+id/action_navigation_settings_to_addUsersFragment"
             app:destination="@id/navigation_edit_users" />
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_add_event_pictures2"
-            app:destination="@id/navigation_add_event_pictures" />
     </fragment>
     <fragment
         android:id="@+id/navigation_edit_lunch"
@@ -103,9 +100,4 @@
         android:id="@+id/navigation_edit_users"
         android:name="se.grupp1.antonsskafferi.fragments.EditUsersFragment"
         android:label="Redigera användare" />
-    <fragment
-        android:id="@+id/navigation_add_event_pictures"
-        android:name="se.grupp1.antonsskafferi.fragments.AddEventPicturesFragment"
-        android:label="Lägg till eventbilder"
-        tools:layout="@layout/fragment_add_event_pictures" />
 </navigation>
