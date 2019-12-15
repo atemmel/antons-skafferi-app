@@ -15,7 +15,7 @@ import se.grupp1.antonsskafferi.data.BookingData;
 import se.grupp1.antonsskafferi.popups.BookingOptionsPopup;
 
 public class BookingCardComponent extends CardView
-{
+{//test
 
     public BookingCardComponent(final Context context, final BookingData bookingData)
     {

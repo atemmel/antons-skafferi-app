@@ -14,7 +14,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
         android:gravity="start"
-        android:text="Redigera"
+        android:text="@string/edit_dinner_edit"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
