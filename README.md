@@ -64,6 +64,8 @@ Development är den aktiva utvecklingsbranchen. När en ny funktion ska implemen
 
 Se till att informera alla om vilken branch man jobbar i så att det inte blir onödiga merge conflicts. När man är färdig att jobba med en funktion mergeas feature branchen till development och kan därefter tas bort. Inför en ny sprint mergeas allt till master branchen och nya feature branches skapas efter behov.
 
+![alt text](/img/gitWorkflow.png)
+
 ## Git howTo guide
 Några bra-att-ha kommandon för git
 
