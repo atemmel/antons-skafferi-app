@@ -4,11 +4,6 @@
     <PreferenceCategory android:title="@string/settings_users_title">
 
         <Preference
-            android:key="addEventPicturesPreference"
-            android:title="@string/settings_add_event_picture"
-            android:summary="Klicka här för att lägga till bilder för event" />
-
-        <Preference
             android:defaultValue="true"
             android:key="logoutButtonPreference"
             android:selectAllOnFocus="true"

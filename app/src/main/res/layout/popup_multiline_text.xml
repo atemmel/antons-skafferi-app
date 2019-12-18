@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Skriv här"
+        android:hint="@string/multiline_write_here"
         android:inputType="textMultiLine"
         android:minLines="3"
         android:singleLine="true" />

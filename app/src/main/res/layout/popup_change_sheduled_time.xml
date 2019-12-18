@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:text="Byt tid med "
+                    android:text="@string/swap_times_swap_with"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:id="@+id/chosenTimeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kl:"
+                    android:text="@string/swap_times_time"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 <TextView
@@ -104,7 +104,7 @@
                 android:id="@+id/datePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="välj" />
+                android:text="@string/v_lj_datum" />
         </LinearLayout>
 
         <TextView
@@ -127,9 +127,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Skicka förfrågan" />
-
-
+            android:text="@string/swap_times_send_request" />
     </LinearLayout>
 
 

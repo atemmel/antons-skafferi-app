@@ -28,7 +28,7 @@
                 android:background="@color/schedule_others_color"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="14:00 - 18:00" />
+                android:text="@string/schedule_component_timedefault" />
 
             <LinearLayout
                 android:id="@+id/scheduleName"
@@ -45,7 +45,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/rounded_button"
                 android:gravity="center"
-                android:text="Byt" />
+                android:text="@string/schedule_component_switch_btn" />
         </TableRow>
 
     </TableLayout>

@@ -21,7 +21,7 @@
             android:id="@+id/lunchTitleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Redigera dagens lunch"
+            android:text="@string/edit_lunch_edit_title"
             android:textSize="30sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:ems="12"
                 android:textSize="18sp"
-                android:autofillHints="Titel"
-                android:hint="Titel" />
+                android:autofillHints="@string/edit_lunch_title_text"
+                android:hint="@string/edit_lunch_title_text" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -52,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="12"
-                android:autofillHints="Typ"
-                android:hint="Typ"
+                android:autofillHints="@string/edit_lunch_type"
+                android:hint="@string/edit_lunch_type"
                 android:textSize="18sp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +61,7 @@
             android:id="@+id/chooseDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Välj dag: "
+            android:text="@string/edit_lunch_pick_day"
             android:textSize="18sp" />
 
         <RadioGroup
@@ -73,31 +73,31 @@
                 android:id="@+id/mondayRadio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Måndag" />
+                android:text="@string/edit_lunch_mon" />
 
             <RadioButton
                 android:id="@+id/tuesdayRadio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tisdag" />
+                android:text="@string/edit_lunch_tis" />
 
             <RadioButton
                 android:id="@+id/wednesdayRadio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Onsdag" />
+                android:text="@string/edit_lunch_ons" />
 
             <RadioButton
                 android:id="@+id/thursdayRadio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Torsdag" />
+                android:text="@string/edit_lunch_tors" />
 
             <RadioButton
                 android:id="@+id/fridayRadio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fredag" />
+                android:text="@string/edit_lunch_fre" />
         </RadioGroup>
 
         <Button
@@ -109,7 +109,7 @@
             android:ems="12"
             android:gravity="center"
             android:padding="20dp"
-            android:text="Lägg till"
+            android:text="@string/edit_lunch_add"
             android:textColor="#FFFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +125,7 @@
             android:ems="12"
             android:gravity="center"
             android:padding="20dp"
-            android:text="Ta bort alla"
+            android:text="@string/edit_lunch_remove_all"
             android:textColor="#FFFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"

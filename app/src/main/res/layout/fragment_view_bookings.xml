@@ -10,11 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="start|left"
             android:orientation="horizontal">
 
@@ -23,21 +25,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/view_booking_date"
+                />
 
             <Button
                 android:id="@+id/DatepickerBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Datum" />
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/view_booking_pick_date"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
             android:paddingTop="16dp"
-            android:paddingRight="16dp"
             android:paddingBottom="16dp"
             android:stretchColumns="*">
 
@@ -51,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Datum"
+                    android:text="@string/view_booking_date"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
@@ -60,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Namn"
+                    android:text="@string/view_booking_reference"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
@@ -69,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/booking_persons_text"
+                    android:text="@string/view_booking_nrOfPersons"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
@@ -78,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Tid"
+                    android:text="@string/view_booking_time"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
@@ -87,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Övrigt"
+                    android:text=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
             </TableRow>

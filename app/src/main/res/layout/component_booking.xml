@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:stretchColumns="1,2">
+        android:stretchColumns="*">
 
         <TableRow
             android:layout_width="match_parent"
@@ -24,9 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="Datum"
+                android:text="@string/view_booking_date"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
@@ -34,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Namn"
+                android:text="@string/view_booking_reference"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
@@ -42,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Amount"
+                android:text="@string/view_booking_nrOfPersons"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
@@ -50,15 +48,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Tid"
+                android:text="@string/view_booking_time"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="+" />
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/edit_item"
+                app:srcCompat="@drawable/ic_edit_24dp" />
         </TableRow>
 
     </TableLayout>

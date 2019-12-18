@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:padding="16dp"
-                android:text="NY BOKNING"
+                android:text="@string/table_overview_new_booking"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <Button
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:padding="16dp"
-                android:text="VISA BOKNINGAR"
+                android:text="@string/table_overview_show_booking"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 

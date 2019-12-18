@@ -3,7 +3,6 @@ package se.grupp1.antonsskafferi.components;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class OrderCardComponent extends CardView
 
     private int tableId;
 
-    //ArrayList<String> items = new ArrayList<>();
+    //ArrayList<String> items = new ArrayList<>();//
 
     public OrderCardComponent(Context context, int tableId)
     {
