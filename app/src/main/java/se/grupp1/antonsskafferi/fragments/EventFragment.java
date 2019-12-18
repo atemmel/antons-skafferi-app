@@ -105,9 +105,6 @@ public class EventFragment extends Fragment
                 EditText titleEditText = root.findViewById(R.id.titleEventInputText);
                 String title = titleEditText.getText().toString();
 
-                EditText descriptionEditText = root.findViewById(R.id.descriptionEventInputText);
-                String description = descriptionEditText.getText().toString();
-
 
 
 
@@ -119,11 +116,6 @@ public class EventFragment extends Fragment
                     titleEditText.setError("Lägg till en titel");
                 }
 
-                if(description.isEmpty()){
-                    emptyInputField = true;
-                    descriptionEditText.setError("Lägg till en beskrivning");
-
-                }
 
 
                 if(emptyInputField) return;
@@ -131,6 +123,8 @@ public class EventFragment extends Fragment
                 //String date = "hej";
                 //(title, description, date);
                 sendImage(title,  date);
+                titleEditText.getText().clear();
+                
             }
         });
 
@@ -171,7 +165,7 @@ public class EventFragment extends Fragment
 
             //System.out.println("TITLE: " + title + "DESCRIPTION: " + description + "DATE: " + date);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitMap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+            imageBitMap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
             byte[] imageBytes = baos.toByteArray();
 
             //String image = get64BaseImage(imageBitMap);

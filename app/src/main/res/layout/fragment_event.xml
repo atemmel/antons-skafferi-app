@@ -37,16 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/descriptionEventInputText"
-        android:layout_width="301dp"
-        android:layout_height="55dp"
-        android:ems="12"
-        android:hint="@string/event_description"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEventInputText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

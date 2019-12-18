@@ -225,6 +225,8 @@ public class BookingFragment extends Fragment {
 
                 if(!customerId.isEmpty() && !emptyFields)
                 {
+                    delete(customerId);
+                    /*
                     boolean checkedPrevTable = false;
                     for(int i = 0; i < isChecked.size(); i++)
                     {
@@ -239,7 +241,7 @@ public class BookingFragment extends Fragment {
                     {
                         //TODO delete customer with id customerId from database
                         delete(customerId);
-                    }
+                    }*/
                 }
 
                 for(int i = 0; i < isChecked.size(); i++)
