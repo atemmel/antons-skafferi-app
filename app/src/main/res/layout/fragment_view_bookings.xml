@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="start|left"
             android:orientation="horizontal">
 
             <TextView
@@ -25,8 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/view_booking_date"
-                />
+                android:text="@string/view_booking_date" />
 
             <Button
                 android:id="@+id/DatepickerBtn"
@@ -43,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingLeft="5dp"
             android:stretchColumns="*">
 
             <TableRow
@@ -53,45 +51,40 @@
 
                 <TextView
                     android:id="@+id/tableIdText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:text="@string/view_booking_date"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/bookingReferenceText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/view_booking_reference"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/view_booking_name"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/personsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="@string/view_booking_nrOfPersons"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/nrOfPersonsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text="@string/view_booking_time"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/options"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:text=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp" />
@@ -111,5 +104,4 @@
         </ScrollView>
 
     </LinearLayout>
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

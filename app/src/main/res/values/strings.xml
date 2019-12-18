@@ -101,6 +101,8 @@
     <string name="view_booking_nrOfPersons">Antal</string>
     <string name="view_booking_time">Tid</string>
     <string name="view_booking_pick_date">Välj datum</string>
+    <string name="view_booking_name">Namn</string>
+
 
     <!-- Byta tid -->
     <string name="swap_times_swap_with">Byt tid med </string>
