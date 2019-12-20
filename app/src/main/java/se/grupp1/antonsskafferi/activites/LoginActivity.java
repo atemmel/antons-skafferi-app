@@ -98,16 +98,6 @@ public class LoginActivity extends AppCompatActivity
 
     public static void evaluateCredentials(String username, String password, final LoginCheckCallback callback)
     {
-        //TODO: När det känns lämpligt, ta bort detta
-        //Tillåt inloggning som admin även om backend ej är igång
-        if(username.equals("admin"))
-        {
-            IS_ADMIN = true;
-
-            callback.onEvaluated(true);
-            return;
-        }
-
         HttpRequest request = new HttpRequest(new HttpRequest.Response() {
 
             //TODO: Visa någon form av laddningsanimation tills vi har fått ett svar från databasen
